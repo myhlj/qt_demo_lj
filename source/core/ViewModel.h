@@ -1,0 +1,8 @@
+#ifndef VIEWMODEL_H
+#define VIEWMODEL_H
+
+
+#define HSVFY_MAX_FACE_COUNT 100
+
+
+#endif // VIEWMODEL_H
