@@ -5,6 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui uitools
+QT       += network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -20,7 +21,9 @@ SOURCES += apps/main.cpp\
         apps/view/doublechannelwidget.cpp \
     apps/controller/main_controller.cpp \
     apps/factory/ViewFactory.cpp \
-    apps/view/main_view.cpp
+    apps/view/main_view.cpp \
+    apps/controller/tcpserver.cpp \
+    apps/controller/options.cpp
 
 HEADERS  += apps/view/doublechannelwidget.h \
     apps/controller/main_controller.h \
@@ -30,6 +33,10 @@ HEADERS  += apps/view/doublechannelwidget.h \
     core/IMainView.h \
     core/IView.h \
     core/IViewFactory.h \
-    core/ViewModel.h
+    core/ViewModel.h \
+    apps/controller/tcpserver.h \
+    apps/controller/data_generated.h \
+    apps/controller/options.h \
+    apps/controller/channel_info.h
 
 FORMS    += apps/view/doublechannelwidget.ui

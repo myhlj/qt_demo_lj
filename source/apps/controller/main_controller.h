@@ -9,6 +9,7 @@
 
 class IViewFactory;
 class IMainView;
+class tcpserver;
 
 class MainController : public QObject, public IMainController
 {
@@ -35,7 +36,7 @@ private:
 private:
     IViewFactory *mViewFactory;
     IMainView *mMainView;
-
+    tcpserver *mTcpServer;
 };
 
 #endif

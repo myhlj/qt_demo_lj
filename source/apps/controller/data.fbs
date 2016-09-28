@@ -1,0 +1,122 @@
+namespace MyTransportInfo;
+
+//消息类型
+enum MessType : int
+{
+    OPENGATE=1,       // 开门
+	SETGATE,          // 常开   
+	HEARTBEAT,        // 心跳
+	CLOSETEMINAL,     //关机
+	RESTART,          // 重启
+	VERIFYMODE,       //验证模式切换
+	ADDEXPOSE,        // 增加曝光
+	MINUSEXPOSE,      //减少曝光
+    TRANSPORTINFO,    //tansportinfo消息
+	EXIT              // 退出当前系统
+}
+
+
+//身份证信息
+table IDCardMessage
+{
+    name:string;
+    gender:string;
+    folk:string; birthday:string;
+    code:string;
+    address:string;
+    agency:string;
+    expireStart:string;
+    expireEnd:string;
+}
+
+
+//人脸特征坐标
+struct Point
+{
+    x:int;
+    y:int;
+}
+
+
+//消息头
+table MessageHeader
+{
+    sign:string;
+    messagetype:MessType = HEARTBEAT;
+    version:string;
+    deviceType:string;
+    deviceNum:string;
+    deviceIp:string;
+    capTime:string;
+    handle:int;
+    reservered:string;
+}
+
+
+//车票信息
+table TicketInfo
+{
+    ticketResult:int;
+    KPBH:string;
+    QSZ:string;
+    goTime:string;
+    DDZ:string;
+    arriveTime:string;
+}
+
+//根据阎军的建议,图片不要用flatbuffer序列化,直接发送二进制数据
+table TransportInfo
+{
+    header:MessageHeader;   //消息头
+    idcardInfo:IDCardMessage;//身份证信息
+    ticketInfo:TicketInfo;  //车票信息
+    blackResult:int;        //是否比中黑名单1比中 2未比中 3未比对
+    blackStatus:int;        //名单查询状态比如超时....
+    personType:string;      //人员类型
+    department:string;      //布控单位
+    police:string;          //联系警察
+    phone:string;           //联系电话
+    management:string;      //处理方式
+    
+    warnFlag:int;           //人证合一比对结果1比对通过2比对不通过3未必对
+    faceMatchResult:int;    //人像比对结果1成功2失败3未比对
+    faceScore:int;          //人像比对分数
+    faceQulity:int;         //人像质量分数
+    eyeDis:int;             //两眼间距
+    facePoseAngel:int;      //平面内的角度
+    faceYaw:int;            //水平旋角,姿态角
+    glassType:int;          //（0 没有佩戴眼镜， 1普通眼镜， 2黑边眼镜， -1 ，未能判断）
+    arrFeature:[Point];     //13个特征点坐标
+    fpCapResult:int;        //指纹比对结果1成功2失败3未必对
+    fpQulity:int;           //指纹质量分数
+    fpScore:int;            //指纹比对分数
+    fpFeatExsist:int;       //身份证中是否有指纹信息
+
+    idImageSize:int;        //身份证照片大小
+    idImage:[ubyte];        //身份证照片数据
+    scrImageSize:int;       //现场人像图片大小
+    srcImage:[ubyte];       //现场图片数据
+
+    cropImageSize:int;      //现场裁剪图大小
+    cropImage:[ubyte];      //现场裁剪图片
+
+    fpImageSize:int;        //指纹图片大小
+    fpImage:[ubyte];        //指纹图片数据
+
+    featureL:[ubyte];       //左手指纹特征(身份证中)
+    featureR:[ubyte];       //右手指纹特征
+}
+
+
+
+//左键按下消息控制闸机核验端
+table MessageLBTD
+{
+    messageType:MessType = OPENGATE;   //消息类型
+    channelNum:int;         //通道个数
+    channelIp:string;       
+    param:int;              //当消息类型为常开模式时:1->设置常开0:取消常开 当消息类型为验证模式时:1->比对人脸模式0:证件模式
+}
+
+root_type TransportInfo;
+
