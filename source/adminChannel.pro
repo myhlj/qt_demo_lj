@@ -23,7 +23,8 @@ SOURCES += apps/main.cpp\
     apps/factory/ViewFactory.cpp \
     apps/view/main_view.cpp \
     apps/controller/tcpserver.cpp \
-    apps/controller/options.cpp
+    apps/controller/options.cpp \
+    apps/controller/client.cpp
 
 HEADERS  += apps/view/doublechannelwidget.h \
     apps/controller/main_controller.h \
@@ -37,6 +38,8 @@ HEADERS  += apps/view/doublechannelwidget.h \
     apps/controller/tcpserver.h \
     apps/controller/data_generated.h \
     apps/controller/options.h \
-    apps/controller/channel_info.h
+    apps/controller/channel_info.h \
+    apps/controller/client.h \
+    apps/controller/messagelbtd_generated.h
 
 FORMS    += apps/view/doublechannelwidget.ui

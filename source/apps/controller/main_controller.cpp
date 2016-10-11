@@ -12,18 +12,21 @@
 #include "IViewFactory.h"
 #include "IMainView.h"
 #include "tcpserver.h"
+#include "client.h"
 
 
 MainController::MainController(IViewFactory *factory) :
     mViewFactory(factory),
     mMainView(NULL)
 {
-    mTcpServer = new tcpserver();
+    mTcpServer = new tcpserver(this);
+    mClient = new client();
 }
 
 MainController::~MainController()
 {
-
+    delete mTcpServer;
+    delete mClient;
 }
 
 int MainController:: Execute()
@@ -34,4 +37,15 @@ int MainController:: Execute()
     mMainView->ShowView();
     mTcpServer->Init();
     return 0;
+}
+
+
+void MainController::ShowInfo(const TransportInfo *pInfo)
+{
+    //调用界面接口,显示信息
+}
+
+bool MainController::SendCmd(int nChannelNum, LBTDMessage::MessType type, int param)
+{
+    return mClient->SendCmd(nChannelNum,type,param);
 }
