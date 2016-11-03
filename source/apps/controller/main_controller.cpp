@@ -36,16 +36,18 @@ int MainController:: Execute()
     mMainView->Init();
     mMainView->ShowView();
     mTcpServer->Init();
+    mClient->start();
     return 0;
 }
 
 
-void MainController::ShowInfo(const TransportInfo *pInfo)
+void MainController::ShowInfo(const QByteArray data)
 {
     //调用界面接口,显示信息
+    mMainView->ShowAcrossInfo(data);
 }
 
-bool MainController::SendCmd(int nChannelNum, LBTDMessage::MessType type, int param)
+void MainController::SendCmd(int nChannelNum, LBTDMessage::MessType type,int paramL,string sParamR)
 {
-    return mClient->SendCmd(nChannelNum,type,param);
+    return mClient->SendCmd(nChannelNum,type,sParamR,paramL);
 }

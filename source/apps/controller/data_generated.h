@@ -17,28 +17,7 @@ struct Blacklist;
 
 struct TransportInfo;
 
-enum MessType {
-  MessType_OPENGATE = 1,
-  MessType_SETGATE = 2,
-  MessType_HEARTBEAT = 3,
-  MessType_CLOSETEMINAL = 4,
-  MessType_RESTART = 5,
-  MessType_VERIFYMODE = 6,
-  MessType_ADDEXPOSE = 7,
-  MessType_MINUSEXPOSE = 8,
-  MessType_TRANSPORTINFO = 9,
-  MessType_EXIT = 10,
-  MessType_MIN = MessType_OPENGATE,
-  MessType_MAX = MessType_EXIT
-};
-
-inline const char **EnumNamesMessType() {
-  static const char *names[] = { "OPENGATE", "SETGATE", "HEARTBEAT", "CLOSETEMINAL", "RESTART", "VERIFYMODE", "ADDEXPOSE", "MINUSEXPOSE", "TRANSPORTINFO", "EXIT", nullptr };
-  return names;
-}
-
-inline const char *EnumNameMessType(MessType e) { return EnumNamesMessType()[static_cast<int>(e) - static_cast<int>(MessType_OPENGATE)]; }
-
+/// 身份证信息
 struct IDCardMessage FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   enum {
     VT_NAME = 4,
@@ -149,24 +128,21 @@ inline flatbuffers::Offset<IDCardMessage> CreateIDCardMessageDirect(flatbuffers:
   return CreateIDCardMessage(_fbb, name ? _fbb.CreateString(name) : 0, gender ? _fbb.CreateString(gender) : 0, folk ? _fbb.CreateString(folk) : 0, birthday ? _fbb.CreateString(birthday) : 0, code ? _fbb.CreateString(code) : 0, address ? _fbb.CreateString(address) : 0, agency ? _fbb.CreateString(agency) : 0, expireStart ? _fbb.CreateString(expireStart) : 0, expireEnd ? _fbb.CreateString(expireEnd) : 0);
 }
 
+/// 消息头
 struct MessageHeader FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   enum {
     VT_SIGN = 4,
-    VT_MESSAGETYPE = 6,
-    VT_VERSION = 8,
-    VT_DEVICETYPE = 10,
-    VT_DEVICENUM = 12,
-    VT_DEVICEIP = 14,
-    VT_CAPTIME = 16,
-    VT_HANDLE = 18,
-    VT_RESERVERED = 20
+    VT_DEVICETYPE = 6,
+    VT_DEVICENUM = 8,
+    VT_DEVICEIP = 10,
+    VT_CAPTIME = 12,
+    VT_HANDLE = 14,
+    VT_RESERVERED = 16
   };
+  /// 暂时固定值："HisignGate"
   const flatbuffers::String *sign() const { return GetPointer<const flatbuffers::String *>(VT_SIGN); }
   flatbuffers::String *mutable_sign() { return GetPointer<flatbuffers::String *>(VT_SIGN); }
-  MessType messagetype() const { return static_cast<MessType>(GetField<int32_t>(VT_MESSAGETYPE, 3)); }
-  bool mutate_messagetype(MessType _messagetype) { return SetField(VT_MESSAGETYPE, static_cast<int32_t>(_messagetype)); }
-  const flatbuffers::String *version() const { return GetPointer<const flatbuffers::String *>(VT_VERSION); }
-  flatbuffers::String *mutable_version() { return GetPointer<flatbuffers::String *>(VT_VERSION); }
+  /// 暂时固定值："person"
   const flatbuffers::String *deviceType() const { return GetPointer<const flatbuffers::String *>(VT_DEVICETYPE); }
   flatbuffers::String *mutable_deviceType() { return GetPointer<flatbuffers::String *>(VT_DEVICETYPE); }
   const flatbuffers::String *deviceNum() const { return GetPointer<const flatbuffers::String *>(VT_DEVICENUM); }
@@ -183,9 +159,6 @@ struct MessageHeader FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
     return VerifyTableStart(verifier) &&
            VerifyField<flatbuffers::uoffset_t>(verifier, VT_SIGN) &&
            verifier.Verify(sign()) &&
-           VerifyField<int32_t>(verifier, VT_MESSAGETYPE) &&
-           VerifyField<flatbuffers::uoffset_t>(verifier, VT_VERSION) &&
-           verifier.Verify(version()) &&
            VerifyField<flatbuffers::uoffset_t>(verifier, VT_DEVICETYPE) &&
            verifier.Verify(deviceType()) &&
            VerifyField<flatbuffers::uoffset_t>(verifier, VT_DEVICENUM) &&
@@ -205,8 +178,6 @@ struct MessageHeaderBuilder {
   flatbuffers::FlatBufferBuilder &fbb_;
   flatbuffers::uoffset_t start_;
   void add_sign(flatbuffers::Offset<flatbuffers::String> sign) { fbb_.AddOffset(MessageHeader::VT_SIGN, sign); }
-  void add_messagetype(MessType messagetype) { fbb_.AddElement<int32_t>(MessageHeader::VT_MESSAGETYPE, static_cast<int32_t>(messagetype), 3); }
-  void add_version(flatbuffers::Offset<flatbuffers::String> version) { fbb_.AddOffset(MessageHeader::VT_VERSION, version); }
   void add_deviceType(flatbuffers::Offset<flatbuffers::String> deviceType) { fbb_.AddOffset(MessageHeader::VT_DEVICETYPE, deviceType); }
   void add_deviceNum(flatbuffers::Offset<flatbuffers::String> deviceNum) { fbb_.AddOffset(MessageHeader::VT_DEVICENUM, deviceNum); }
   void add_deviceIp(flatbuffers::Offset<flatbuffers::String> deviceIp) { fbb_.AddOffset(MessageHeader::VT_DEVICEIP, deviceIp); }
@@ -216,15 +187,13 @@ struct MessageHeaderBuilder {
   MessageHeaderBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
   MessageHeaderBuilder &operator=(const MessageHeaderBuilder &);
   flatbuffers::Offset<MessageHeader> Finish() {
-    auto o = flatbuffers::Offset<MessageHeader>(fbb_.EndTable(start_, 9));
+    auto o = flatbuffers::Offset<MessageHeader>(fbb_.EndTable(start_, 7));
     return o;
   }
 };
 
 inline flatbuffers::Offset<MessageHeader> CreateMessageHeader(flatbuffers::FlatBufferBuilder &_fbb,
     flatbuffers::Offset<flatbuffers::String> sign = 0,
-    MessType messagetype = MessType_HEARTBEAT,
-    flatbuffers::Offset<flatbuffers::String> version = 0,
     flatbuffers::Offset<flatbuffers::String> deviceType = 0,
     flatbuffers::Offset<flatbuffers::String> deviceNum = 0,
     flatbuffers::Offset<flatbuffers::String> deviceIp = 0,
@@ -238,39 +207,47 @@ inline flatbuffers::Offset<MessageHeader> CreateMessageHeader(flatbuffers::FlatB
   builder_.add_deviceIp(deviceIp);
   builder_.add_deviceNum(deviceNum);
   builder_.add_deviceType(deviceType);
-  builder_.add_version(version);
-  builder_.add_messagetype(messagetype);
   builder_.add_sign(sign);
   return builder_.Finish();
 }
 
 inline flatbuffers::Offset<MessageHeader> CreateMessageHeaderDirect(flatbuffers::FlatBufferBuilder &_fbb,
     const char *sign = nullptr,
-    MessType messagetype = MessType_HEARTBEAT,
-    const char *version = nullptr,
     const char *deviceType = nullptr,
     const char *deviceNum = nullptr,
     const char *deviceIp = nullptr,
     const char *capTime = nullptr,
     int32_t handle = 0,
     const char *reservered = nullptr) {
-  return CreateMessageHeader(_fbb, sign ? _fbb.CreateString(sign) : 0, messagetype, version ? _fbb.CreateString(version) : 0, deviceType ? _fbb.CreateString(deviceType) : 0, deviceNum ? _fbb.CreateString(deviceNum) : 0, deviceIp ? _fbb.CreateString(deviceIp) : 0, capTime ? _fbb.CreateString(capTime) : 0, handle, reservered ? _fbb.CreateString(reservered) : 0);
+  return CreateMessageHeader(_fbb, sign ? _fbb.CreateString(sign) : 0, deviceType ? _fbb.CreateString(deviceType) : 0, deviceNum ? _fbb.CreateString(deviceNum) : 0, deviceIp ? _fbb.CreateString(deviceIp) : 0, capTime ? _fbb.CreateString(capTime) : 0, handle, reservered ? _fbb.CreateString(reservered) : 0);
 }
 
+/// 车票信息
 struct TicketInfo FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   enum {
     VT_TICKETRESULT = 4,
-    VT_TICKETNO = 6,
-    VT_GOSTATION = 8,
-    VT_GOTIME = 10,
-    VT_ARRIVESTATION = 12,
-    VT_ARRIVETIME = 14,
-    VT_BUSNO = 16
+    VT_STATIONNAME = 6,
+    VT_STATIONNO = 8,
+    VT_TICKETNO = 10,
+    VT_BUSNO = 12,
+    VT_SEATNO = 14,
+    VT_GOSTATION = 16,
+    VT_GOTIME = 18,
+    VT_ARRIVESTATION = 20,
+    VT_ARRIVETIME = 22
   };
   int32_t ticketResult() const { return GetField<int32_t>(VT_TICKETRESULT, 0); }
   bool mutate_ticketResult(int32_t _ticketResult) { return SetField(VT_TICKETRESULT, _ticketResult); }
+  const flatbuffers::String *stationName() const { return GetPointer<const flatbuffers::String *>(VT_STATIONNAME); }
+  flatbuffers::String *mutable_stationName() { return GetPointer<flatbuffers::String *>(VT_STATIONNAME); }
+  const flatbuffers::String *stationNO() const { return GetPointer<const flatbuffers::String *>(VT_STATIONNO); }
+  flatbuffers::String *mutable_stationNO() { return GetPointer<flatbuffers::String *>(VT_STATIONNO); }
   const flatbuffers::String *ticketNO() const { return GetPointer<const flatbuffers::String *>(VT_TICKETNO); }
   flatbuffers::String *mutable_ticketNO() { return GetPointer<flatbuffers::String *>(VT_TICKETNO); }
+  const flatbuffers::String *busNO() const { return GetPointer<const flatbuffers::String *>(VT_BUSNO); }
+  flatbuffers::String *mutable_busNO() { return GetPointer<flatbuffers::String *>(VT_BUSNO); }
+  const flatbuffers::String *seatNo() const { return GetPointer<const flatbuffers::String *>(VT_SEATNO); }
+  flatbuffers::String *mutable_seatNo() { return GetPointer<flatbuffers::String *>(VT_SEATNO); }
   const flatbuffers::String *goStation() const { return GetPointer<const flatbuffers::String *>(VT_GOSTATION); }
   flatbuffers::String *mutable_goStation() { return GetPointer<flatbuffers::String *>(VT_GOSTATION); }
   const flatbuffers::String *goTime() const { return GetPointer<const flatbuffers::String *>(VT_GOTIME); }
@@ -279,13 +256,19 @@ struct TicketInfo FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   flatbuffers::String *mutable_arriveStation() { return GetPointer<flatbuffers::String *>(VT_ARRIVESTATION); }
   const flatbuffers::String *arriveTime() const { return GetPointer<const flatbuffers::String *>(VT_ARRIVETIME); }
   flatbuffers::String *mutable_arriveTime() { return GetPointer<flatbuffers::String *>(VT_ARRIVETIME); }
-  const flatbuffers::String *busNo() const { return GetPointer<const flatbuffers::String *>(VT_BUSNO); }
-  flatbuffers::String *mutable_busNo() { return GetPointer<flatbuffers::String *>(VT_BUSNO); }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<int32_t>(verifier, VT_TICKETRESULT) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, VT_STATIONNAME) &&
+           verifier.Verify(stationName()) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, VT_STATIONNO) &&
+           verifier.Verify(stationNO()) &&
            VerifyField<flatbuffers::uoffset_t>(verifier, VT_TICKETNO) &&
            verifier.Verify(ticketNO()) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, VT_BUSNO) &&
+           verifier.Verify(busNO()) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, VT_SEATNO) &&
+           verifier.Verify(seatNo()) &&
            VerifyField<flatbuffers::uoffset_t>(verifier, VT_GOSTATION) &&
            verifier.Verify(goStation()) &&
            VerifyField<flatbuffers::uoffset_t>(verifier, VT_GOTIME) &&
@@ -294,8 +277,6 @@ struct TicketInfo FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
            verifier.Verify(arriveStation()) &&
            VerifyField<flatbuffers::uoffset_t>(verifier, VT_ARRIVETIME) &&
            verifier.Verify(arriveTime()) &&
-           VerifyField<flatbuffers::uoffset_t>(verifier, VT_BUSNO) &&
-           verifier.Verify(busNo()) &&
            verifier.EndTable();
   }
 };
@@ -304,66 +285,89 @@ struct TicketInfoBuilder {
   flatbuffers::FlatBufferBuilder &fbb_;
   flatbuffers::uoffset_t start_;
   void add_ticketResult(int32_t ticketResult) { fbb_.AddElement<int32_t>(TicketInfo::VT_TICKETRESULT, ticketResult, 0); }
+  void add_stationName(flatbuffers::Offset<flatbuffers::String> stationName) { fbb_.AddOffset(TicketInfo::VT_STATIONNAME, stationName); }
+  void add_stationNO(flatbuffers::Offset<flatbuffers::String> stationNO) { fbb_.AddOffset(TicketInfo::VT_STATIONNO, stationNO); }
   void add_ticketNO(flatbuffers::Offset<flatbuffers::String> ticketNO) { fbb_.AddOffset(TicketInfo::VT_TICKETNO, ticketNO); }
+  void add_busNO(flatbuffers::Offset<flatbuffers::String> busNO) { fbb_.AddOffset(TicketInfo::VT_BUSNO, busNO); }
+  void add_seatNo(flatbuffers::Offset<flatbuffers::String> seatNo) { fbb_.AddOffset(TicketInfo::VT_SEATNO, seatNo); }
   void add_goStation(flatbuffers::Offset<flatbuffers::String> goStation) { fbb_.AddOffset(TicketInfo::VT_GOSTATION, goStation); }
   void add_goTime(flatbuffers::Offset<flatbuffers::String> goTime) { fbb_.AddOffset(TicketInfo::VT_GOTIME, goTime); }
   void add_arriveStation(flatbuffers::Offset<flatbuffers::String> arriveStation) { fbb_.AddOffset(TicketInfo::VT_ARRIVESTATION, arriveStation); }
   void add_arriveTime(flatbuffers::Offset<flatbuffers::String> arriveTime) { fbb_.AddOffset(TicketInfo::VT_ARRIVETIME, arriveTime); }
-  void add_busNo(flatbuffers::Offset<flatbuffers::String> busNo) { fbb_.AddOffset(TicketInfo::VT_BUSNO, busNo); }
   TicketInfoBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
   TicketInfoBuilder &operator=(const TicketInfoBuilder &);
   flatbuffers::Offset<TicketInfo> Finish() {
-    auto o = flatbuffers::Offset<TicketInfo>(fbb_.EndTable(start_, 7));
+    auto o = flatbuffers::Offset<TicketInfo>(fbb_.EndTable(start_, 10));
     return o;
   }
 };
 
 inline flatbuffers::Offset<TicketInfo> CreateTicketInfo(flatbuffers::FlatBufferBuilder &_fbb,
     int32_t ticketResult = 0,
+    flatbuffers::Offset<flatbuffers::String> stationName = 0,
+    flatbuffers::Offset<flatbuffers::String> stationNO = 0,
     flatbuffers::Offset<flatbuffers::String> ticketNO = 0,
+    flatbuffers::Offset<flatbuffers::String> busNO = 0,
+    flatbuffers::Offset<flatbuffers::String> seatNo = 0,
     flatbuffers::Offset<flatbuffers::String> goStation = 0,
     flatbuffers::Offset<flatbuffers::String> goTime = 0,
     flatbuffers::Offset<flatbuffers::String> arriveStation = 0,
-    flatbuffers::Offset<flatbuffers::String> arriveTime = 0,
-    flatbuffers::Offset<flatbuffers::String> busNo = 0) {
+    flatbuffers::Offset<flatbuffers::String> arriveTime = 0) {
   TicketInfoBuilder builder_(_fbb);
-  builder_.add_busNo(busNo);
   builder_.add_arriveTime(arriveTime);
   builder_.add_arriveStation(arriveStation);
   builder_.add_goTime(goTime);
   builder_.add_goStation(goStation);
+  builder_.add_seatNo(seatNo);
+  builder_.add_busNO(busNO);
   builder_.add_ticketNO(ticketNO);
+  builder_.add_stationNO(stationNO);
+  builder_.add_stationName(stationName);
   builder_.add_ticketResult(ticketResult);
   return builder_.Finish();
 }
 
 inline flatbuffers::Offset<TicketInfo> CreateTicketInfoDirect(flatbuffers::FlatBufferBuilder &_fbb,
     int32_t ticketResult = 0,
+    const char *stationName = nullptr,
+    const char *stationNO = nullptr,
     const char *ticketNO = nullptr,
+    const char *busNO = nullptr,
+    const char *seatNo = nullptr,
     const char *goStation = nullptr,
     const char *goTime = nullptr,
     const char *arriveStation = nullptr,
-    const char *arriveTime = nullptr,
-    const char *busNo = nullptr) {
-  return CreateTicketInfo(_fbb, ticketResult, ticketNO ? _fbb.CreateString(ticketNO) : 0, goStation ? _fbb.CreateString(goStation) : 0, goTime ? _fbb.CreateString(goTime) : 0, arriveStation ? _fbb.CreateString(arriveStation) : 0, arriveTime ? _fbb.CreateString(arriveTime) : 0, busNo ? _fbb.CreateString(busNo) : 0);
+    const char *arriveTime = nullptr) {
+  return CreateTicketInfo(_fbb, ticketResult, stationName ? _fbb.CreateString(stationName) : 0, stationNO ? _fbb.CreateString(stationNO) : 0, ticketNO ? _fbb.CreateString(ticketNO) : 0, busNO ? _fbb.CreateString(busNO) : 0, seatNo ? _fbb.CreateString(seatNo) : 0, goStation ? _fbb.CreateString(goStation) : 0, goTime ? _fbb.CreateString(goTime) : 0, arriveStation ? _fbb.CreateString(arriveStation) : 0, arriveTime ? _fbb.CreateString(arriveTime) : 0);
 }
 
+/// 黑名单信息
 struct Blacklist FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   enum {
     VT_BLACKRESULT = 4,
     VT_BLACKSTATUS = 6,
-    VT_PERSONINFO = 8
+    VT_BLACKJOBID = 8,
+    VT_PERSONINFO = 10
   };
+  /// 是否比中黑名单，1：比中；2：未比中；3：未比对
   int32_t blackResult() const { return GetField<int32_t>(VT_BLACKRESULT, 0); }
   bool mutate_blackResult(int32_t _blackResult) { return SetField(VT_BLACKRESULT, _blackResult); }
+  /// 名单查询状态，0：正常；比如超时-4、-5，到管理屏提示：网络异常
+  /// -6、-90、-91、-98、-99，管理屏提示：数据查询异常
   int32_t blackStatus() const { return GetField<int32_t>(VT_BLACKSTATUS, 0); }
   bool mutate_blackStatus(int32_t _blackStatus) { return SetField(VT_BLACKSTATUS, _blackStatus); }
+  /// jobID
+  const flatbuffers::String *blackJobID() const { return GetPointer<const flatbuffers::String *>(VT_BLACKJOBID); }
+  flatbuffers::String *mutable_blackJobID() { return GetPointer<flatbuffers::String *>(VT_BLACKJOBID); }
+  /// 人员类型 json
   const flatbuffers::String *personInfo() const { return GetPointer<const flatbuffers::String *>(VT_PERSONINFO); }
   flatbuffers::String *mutable_personInfo() { return GetPointer<flatbuffers::String *>(VT_PERSONINFO); }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<int32_t>(verifier, VT_BLACKRESULT) &&
            VerifyField<int32_t>(verifier, VT_BLACKSTATUS) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, VT_BLACKJOBID) &&
+           verifier.Verify(blackJobID()) &&
            VerifyField<flatbuffers::uoffset_t>(verifier, VT_PERSONINFO) &&
            verifier.Verify(personInfo()) &&
            verifier.EndTable();
@@ -375,11 +379,12 @@ struct BlacklistBuilder {
   flatbuffers::uoffset_t start_;
   void add_blackResult(int32_t blackResult) { fbb_.AddElement<int32_t>(Blacklist::VT_BLACKRESULT, blackResult, 0); }
   void add_blackStatus(int32_t blackStatus) { fbb_.AddElement<int32_t>(Blacklist::VT_BLACKSTATUS, blackStatus, 0); }
+  void add_blackJobID(flatbuffers::Offset<flatbuffers::String> blackJobID) { fbb_.AddOffset(Blacklist::VT_BLACKJOBID, blackJobID); }
   void add_personInfo(flatbuffers::Offset<flatbuffers::String> personInfo) { fbb_.AddOffset(Blacklist::VT_PERSONINFO, personInfo); }
   BlacklistBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
   BlacklistBuilder &operator=(const BlacklistBuilder &);
   flatbuffers::Offset<Blacklist> Finish() {
-    auto o = flatbuffers::Offset<Blacklist>(fbb_.EndTable(start_, 3));
+    auto o = flatbuffers::Offset<Blacklist>(fbb_.EndTable(start_, 4));
     return o;
   }
 };
@@ -387,9 +392,11 @@ struct BlacklistBuilder {
 inline flatbuffers::Offset<Blacklist> CreateBlacklist(flatbuffers::FlatBufferBuilder &_fbb,
     int32_t blackResult = 0,
     int32_t blackStatus = 0,
+    flatbuffers::Offset<flatbuffers::String> blackJobID = 0,
     flatbuffers::Offset<flatbuffers::String> personInfo = 0) {
   BlacklistBuilder builder_(_fbb);
   builder_.add_personInfo(personInfo);
+  builder_.add_blackJobID(blackJobID);
   builder_.add_blackStatus(blackStatus);
   builder_.add_blackResult(blackResult);
   return builder_.Finish();
@@ -398,10 +405,12 @@ inline flatbuffers::Offset<Blacklist> CreateBlacklist(flatbuffers::FlatBufferBui
 inline flatbuffers::Offset<Blacklist> CreateBlacklistDirect(flatbuffers::FlatBufferBuilder &_fbb,
     int32_t blackResult = 0,
     int32_t blackStatus = 0,
+    const char *blackJobID = nullptr,
     const char *personInfo = nullptr) {
-  return CreateBlacklist(_fbb, blackResult, blackStatus, personInfo ? _fbb.CreateString(personInfo) : 0);
+  return CreateBlacklist(_fbb, blackResult, blackStatus, blackJobID ? _fbb.CreateString(blackJobID) : 0, personInfo ? _fbb.CreateString(personInfo) : 0);
 }
 
+/// 根据阎军的建议，图片不要用flatbuffer序列化，直接发送二进制数据
 struct TransportInfo FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   enum {
     VT_HEADER = 4,
@@ -426,46 +435,67 @@ struct TransportInfo FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
     VT_FPIMAGESIZE = 42,
     VT_FPIMAGE = 44
   };
+  /// 消息头
   const MessageHeader *header() const { return GetPointer<const MessageHeader *>(VT_HEADER); }
   MessageHeader *mutable_header() { return GetPointer<MessageHeader *>(VT_HEADER); }
+  /// 身份证信息
   const IDCardMessage *idcardInfo() const { return GetPointer<const IDCardMessage *>(VT_IDCARDINFO); }
   IDCardMessage *mutable_idcardInfo() { return GetPointer<IDCardMessage *>(VT_IDCARDINFO); }
+  /// 身份证照片大小
   int32_t idImageSize() const { return GetField<int32_t>(VT_IDIMAGESIZE, 0); }
   bool mutate_idImageSize(int32_t _idImageSize) { return SetField(VT_IDIMAGESIZE, _idImageSize); }
+  /// 身份证照片数据
   const flatbuffers::Vector<uint8_t> *idImage() const { return GetPointer<const flatbuffers::Vector<uint8_t> *>(VT_IDIMAGE); }
   flatbuffers::Vector<uint8_t> *mutable_idImage() { return GetPointer<flatbuffers::Vector<uint8_t> *>(VT_IDIMAGE); }
+  /// 身份证中是否有指纹信息
   int32_t fpFeatExsist() const { return GetField<int32_t>(VT_FPFEATEXSIST, 0); }
   bool mutate_fpFeatExsist(int32_t _fpFeatExsist) { return SetField(VT_FPFEATEXSIST, _fpFeatExsist); }
+  /// 左手指纹特征（身份证中）
   const flatbuffers::Vector<uint8_t> *featureL() const { return GetPointer<const flatbuffers::Vector<uint8_t> *>(VT_FEATUREL); }
   flatbuffers::Vector<uint8_t> *mutable_featureL() { return GetPointer<flatbuffers::Vector<uint8_t> *>(VT_FEATUREL); }
+  /// 右手指纹特征
   const flatbuffers::Vector<uint8_t> *featureR() const { return GetPointer<const flatbuffers::Vector<uint8_t> *>(VT_FEATURER); }
   flatbuffers::Vector<uint8_t> *mutable_featureR() { return GetPointer<flatbuffers::Vector<uint8_t> *>(VT_FEATURER); }
+  /// 车票信息
   const TicketInfo *ticketInfo() const { return GetPointer<const TicketInfo *>(VT_TICKETINFO); }
   TicketInfo *mutable_ticketInfo() { return GetPointer<TicketInfo *>(VT_TICKETINFO); }
+  /// 黑名单信息
   const Blacklist *blackInfo() const { return GetPointer<const Blacklist *>(VT_BLACKINFO); }
   Blacklist *mutable_blackInfo() { return GetPointer<Blacklist *>(VT_BLACKINFO); }
+  /// 人证合一比对结果，1：比对通过；2：比对不通过；3：未必对
   int32_t verifyResult() const { return GetField<int32_t>(VT_VERIFYRESULT, 0); }
   bool mutate_verifyResult(int32_t _verifyResult) { return SetField(VT_VERIFYRESULT, _verifyResult); }
+  /// 人像比对结果，1：成功；2：失败；3：未比对
   int32_t faceMatchResult() const { return GetField<int32_t>(VT_FACEMATCHRESULT, 0); }
   bool mutate_faceMatchResult(int32_t _faceMatchResult) { return SetField(VT_FACEMATCHRESULT, _faceMatchResult); }
+  /// 人像比对分数
   int32_t faceScore() const { return GetField<int32_t>(VT_FACESCORE, 0); }
   bool mutate_faceScore(int32_t _faceScore) { return SetField(VT_FACESCORE, _faceScore); }
+  /// 现场人像图片大小
   int32_t scrImageSize() const { return GetField<int32_t>(VT_SCRIMAGESIZE, 0); }
   bool mutate_scrImageSize(int32_t _scrImageSize) { return SetField(VT_SCRIMAGESIZE, _scrImageSize); }
+  /// 现场图片数据
   const flatbuffers::Vector<uint8_t> *srcImage() const { return GetPointer<const flatbuffers::Vector<uint8_t> *>(VT_SRCIMAGE); }
   flatbuffers::Vector<uint8_t> *mutable_srcImage() { return GetPointer<flatbuffers::Vector<uint8_t> *>(VT_SRCIMAGE); }
+  /// 现场裁剪图大小
   int32_t cropImageSize() const { return GetField<int32_t>(VT_CROPIMAGESIZE, 0); }
   bool mutate_cropImageSize(int32_t _cropImageSize) { return SetField(VT_CROPIMAGESIZE, _cropImageSize); }
+  /// 现场裁剪图片
   const flatbuffers::Vector<uint8_t> *cropImage() const { return GetPointer<const flatbuffers::Vector<uint8_t> *>(VT_CROPIMAGE); }
   flatbuffers::Vector<uint8_t> *mutable_cropImage() { return GetPointer<flatbuffers::Vector<uint8_t> *>(VT_CROPIMAGE); }
+  /// 指纹比对结果，1：成功；2：失败；3：未必对
   int32_t fpCapResult() const { return GetField<int32_t>(VT_FPCAPRESULT, 0); }
   bool mutate_fpCapResult(int32_t _fpCapResult) { return SetField(VT_FPCAPRESULT, _fpCapResult); }
+  /// 指纹质量分数
   int32_t fpQulity() const { return GetField<int32_t>(VT_FPQULITY, 0); }
   bool mutate_fpQulity(int32_t _fpQulity) { return SetField(VT_FPQULITY, _fpQulity); }
+  /// 指纹比对分数
   int32_t fpScore() const { return GetField<int32_t>(VT_FPSCORE, 0); }
   bool mutate_fpScore(int32_t _fpScore) { return SetField(VT_FPSCORE, _fpScore); }
+  /// 指纹图片大小
   int32_t fpImageSize() const { return GetField<int32_t>(VT_FPIMAGESIZE, 0); }
   bool mutate_fpImageSize(int32_t _fpImageSize) { return SetField(VT_FPIMAGESIZE, _fpImageSize); }
+  /// 指纹图片数据
   const flatbuffers::Vector<uint8_t> *fpImage() const { return GetPointer<const flatbuffers::Vector<uint8_t> *>(VT_FPIMAGE); }
   flatbuffers::Vector<uint8_t> *mutable_fpImage() { return GetPointer<flatbuffers::Vector<uint8_t> *>(VT_FPIMAGE); }
   bool Verify(flatbuffers::Verifier &verifier) const {

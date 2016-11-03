@@ -20,7 +20,7 @@ private:
     QTcpSocket          *m_p_clientConnection;
     MainController      *m_p_maincontorller;
 signals:
-    void   ShowTransinfo(const TransportInfo* pInfo);
+    void   ShowTransinfo(const QByteArray);
 public slots:
     void   acceptConnection();
     void   readClient();

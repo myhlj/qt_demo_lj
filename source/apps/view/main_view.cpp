@@ -64,3 +64,8 @@ void MainView::closeEvent(QCloseEvent *event)
         event->ignore();
     }
 }
+
+void MainView::ShowAcrossInfo(const QByteArray& data)
+{
+
+}

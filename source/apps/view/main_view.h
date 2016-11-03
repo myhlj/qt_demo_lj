@@ -29,6 +29,7 @@ public:
     void SetController(IMainController *controller);
     void Init();
     void ShowView();
+    void ShowAcrossInfo(const QByteArray& data);
 
     // QWidget interface
 protected:

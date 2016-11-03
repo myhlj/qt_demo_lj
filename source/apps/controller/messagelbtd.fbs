@@ -1,0 +1,23 @@
+namespace LBTDMessage;
+//消息类型
+enum MessType : int
+{
+    OPENGATE=1,       // 开门
+	SETGATE,          // 常开   
+	CLOSETEMINAL,     //关机
+	RESTART,          // 重启
+	VERIFYMODE,       //验证模式切换
+	ADDEXPOSE,        // 增加曝光
+	MINUSEXPOSE,      //减少曝光
+	EXIT              // 退出当前系统
+}
+
+//左键按下消息控制闸机核验端
+table MessageLBTD
+{
+    messageType:MessType = OPENGATE;   //消息类型
+    channelIp:string;       
+    param:int;              //当消息类型为常开模式时:1->设置常开0:取消常开 当消息类型为验证模式时:1->比对人脸模式0:证件模式
+}
+
+root_type MessageLBTD;

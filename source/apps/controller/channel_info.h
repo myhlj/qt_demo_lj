@@ -10,9 +10,8 @@ struct ChannelInfo{
     }
     std::string     strchannelIP;
     bool            bchannelVerifyMode;// true: faceMode     false : CardMode
-    bool            bchannelGateState;// true: ColseMode    false: OpenMode
+    bool            bchannelGateState;// true: OpenMode(常开)    false: CloseMode(常关)
     int             nExposionLevel;//曝光值：
-    //int             nPassCount;//该通道通过人数
 };
 
 #endif // CHANNEL_INFO_H

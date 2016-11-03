@@ -25,13 +25,13 @@ public:
 public:
     // IMainController interface
     int Execute();
-    bool SendCmd(int nChannelNum, LBTDMessage::MessType type, int param);
+    void SendCmd(int nChannelNum, LBTDMessage::MessType type,int paramL = 0,string sParamR = "");
 public:
     // IMainController interface
 
 
 public slots:
-    void ShowInfo(const TransportInfo* pInfo);
+    void ShowInfo(const QByteArray data);
 
 private:
 

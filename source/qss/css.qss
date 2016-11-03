@@ -1,0 +1,201 @@
+#widget_head
+{
+    background-color: #0f2b46;
+    border-color: rgb(15, 70, 102);
+}
+
+#widget_back
+{
+    background-color: #0f2b46;
+}
+
+#toolButton_opengate
+{
+    border-image: url(:/img/page/btn-gate1.png);
+    border-style: flat;
+}
+
+#toolButton_opengate_2
+{
+    border-image: url(:/img/page/btn-gate2.png);
+    border-style: flat;
+}
+
+
+#toolButton_switch
+{
+    border-image: url(":/img/page/btn-verify.png");
+    border-style: flat;
+}
+
+#toolButton_shutdown
+{
+    border-image: url(":/img/page/btn-shutdown.png");
+    border-style: flat;
+}
+
+#toolButton_shutdown:pressed
+{
+    border-image: url(":/img/page/btn-shutdown-pushdown.png");
+    border-style: flat;
+}
+
+#toolButton_restart
+{
+    border-image: url(":/img/page/btn-restart.png");
+    border-style: flat;
+}
+
+#toolButton_restart:pressed
+{
+    border-image: url(":/img/page/btn-restart-pushdown.png");
+    border-style: flat;
+}
+
+#toolButton_exit
+{
+    border-image: url(":/img/page/btn-dropout.png");
+    border-style: flat;
+}
+
+#toolButton_exit:pressed
+{
+    border-image: url(":/img/page/btn-dropout-pushdown.png");
+    border-style: flat;
+}
+
+#label_1,#label_2,#label_curtime
+{
+    font-size:22px;
+    color:#ffffff;
+}
+
+#comboBox_chanel
+{
+    background-color: #0f2b46;
+    border: 1px solid white;
+    font-size: 22px;
+    color: #ffffff;
+    selection-background-color: #2aa1d3;
+}
+
+
+#comboBox_chanel::down-arrow
+{
+    background-image: url(:/img/page/select-right.png);
+    min-width: 14px;
+
+    background-position: center left;
+    background-repeat: no-repeat;
+}
+
+#comboBox_chanel::down-arrow:pressed
+{
+    image: url(:/img/page/select-up.png);
+    min-width: 14px;
+    background-position: center left;
+    background-repeat: no-repeat;
+}
+
+
+#comboBox_chanel::drop-down
+{
+    background-color: #0f2b46;
+}
+
+#page1
+{
+    border-image: url(:/img/page/bg/background.png);
+}
+#page2
+{
+    border-image: url(:/img/page/bg/background.png);
+}
+
+#label_picchannel_3,#label_picchannel
+{
+    border-image: url(:/img/page/btn-gate1-transparent.png);
+}
+
+QLabel
+{
+    font-size: 18px;
+    color: #ffffff;
+    font: Black;
+}
+
+#label_idcardpic_3,#label_idcardpic,#label_idcardpic_2
+{
+    border: 2px solid green;
+}
+
+#label_acrosstime_3,#label_37,#label_ticket_department,#label_station_start,#label_station_end,
+#label_ticket_num,#label_ticket_date,#label_ticket_index,#label_8,#label_11,#label_acrosstime_2
+,#label_acrosstime,#label_station_start_2,#label_station_start_3,#label_station_end_2,#label_station_end_3,
+#label_ticket_num_2,#label_ticket_num_3,#label_ticket_date_2,#label_ticket_date_3,#label_ticket_index_2,
+#label_ticket_index_3,#label_ticket_department_2,#label_ticket_department_3
+{
+    color: green;
+}
+
+#widget_bottom
+{
+    background-color: #0f2b46;
+}
+
+#toolButton_prev
+{
+    border-image: url(:/img/page/btn-turnleft.png);
+}
+
+#toolButton_prev:pressed
+{
+    border-image: url(:/img/page/btn-turnleft-pushdown.png);
+}
+
+#toolButton_next
+{
+    border-image: url(:/img/page/btn-turnright.png);
+}
+
+#toolButton_next:pressed
+{
+    border-image: url(:/img/page/btn-turnright-pushdown.png);
+}
+
+#label_pic1,#label_pic2,#label_pic3,#label_pic4,#label_pic5,#label_pic6,#label_pic7
+{
+    border: 2px solid green;
+}
+
+#toolButton_search,#toolButton_search_2
+{
+    border-image: url(:/img/page/search.png);
+    border-style: flat;
+}
+
+#toolButton_search:pressed,#toolButton_search_2:pressed
+{
+    border-image: url(:/img/page/search-pushdown.png);
+    border-style: flat;
+}
+
+#line_column,#line_row
+{
+    background-color: #0e4768;
+}
+
+#label_picchannel_2
+{
+    border-image: url(:/img/page/btn-gate2-transparent.png);
+}
+
+#label_warn_alise_1
+{
+    border-image: url(:/img/page/check-china.png);
+}
+/*键盘css*/
+#KeyDialog
+{
+    border-image: url(:/img/keyboard/back.png);
+}

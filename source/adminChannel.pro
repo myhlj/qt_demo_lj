@@ -24,7 +24,8 @@ SOURCES += apps/main.cpp\
     apps/view/main_view.cpp \
     apps/controller/tcpserver.cpp \
     apps/controller/options.cpp \
-    apps/controller/client.cpp
+    apps/controller/client.cpp \
+    apps/view/bottompiclabel.cpp
 
 HEADERS  += apps/view/doublechannelwidget.h \
     apps/controller/main_controller.h \
@@ -40,6 +41,15 @@ HEADERS  += apps/view/doublechannelwidget.h \
     apps/controller/options.h \
     apps/controller/channel_info.h \
     apps/controller/client.h \
-    apps/controller/messagelbtd_generated.h
+    apps/controller/messagelbtd_generated.h \
+    apps/view/bottompiclabel.h \
+    apps/view/THIDImageHelper.h \
+    apps/view/THIDErrorDef.h
+
+LIBS += -L /usr/lib/hisign/VerifyEngine \
+        -lTHIDImageHelper
 
 FORMS    += apps/view/doublechannelwidget.ui
+
+RESOURCES += \
+    resource.qrc

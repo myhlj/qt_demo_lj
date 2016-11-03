@@ -7,10 +7,12 @@
 #define  KEYTRANSFLAG "IsTransFlag"
 #define  KEYTRANSIP "TransIP"
 #define  KEYTRANSPORT "TransPort"
+#define  KEYCHANNELINDEX "CurrentChannelIndex"
 
 options::options() : m_nChannelNumber(0)
   ,m_bDataTransFlag(false)
   ,m_nDataTransPort(0)
+  ,m_nCurrentChannelIndex(0)
 {
     m_p_qsetting = new QSettings(CONFIGNAME,QSettings::IniFormat);
     ReadConfigIni();
@@ -32,6 +34,7 @@ void options::SetChannelNumber(int number)
     m_nChannelNumber = number;
     m_p_qsetting->beginGroup(CHANNELGROUP);
     m_p_qsetting->setValue(KEYCHANNELNUMBER,m_nChannelNumber);
+    m_p_qsetting->endGroup();
 }
 
 void options::SetDataTransFlag(bool bflag)
@@ -39,6 +42,7 @@ void options::SetDataTransFlag(bool bflag)
     m_bDataTransFlag = bflag;
     m_p_qsetting->beginGroup(TRANSGROUP);
     m_p_qsetting->setValue(KEYTRANSFLAG,m_bDataTransFlag);
+    m_p_qsetting->endGroup();
 }
 
 void options::SetDataTransIP(const std::__cxx11::string &sIp)
@@ -46,6 +50,7 @@ void options::SetDataTransIP(const std::__cxx11::string &sIp)
     m_strDataTransIP = sIp;
     m_p_qsetting->beginGroup(TRANSGROUP);
     m_p_qsetting->setValue(KEYTRANSIP,m_strDataTransIP.c_str());
+    m_p_qsetting->endGroup();
 }
 
 
@@ -54,6 +59,7 @@ void options::SetDataTransPort(int nport)
     m_nDataTransPort = nport;
     m_p_qsetting->beginGroup(TRANSGROUP);
     m_p_qsetting->setValue(KEYTRANSPORT,m_nDataTransPort);
+    m_p_qsetting->endGroup();
 }
 
 bool options::GetChannelInfo(int index, ChannelInfo &info)
@@ -65,11 +71,20 @@ bool options::GetChannelInfo(int index, ChannelInfo &info)
     return true;
 }
 
+void options::SetCurrentChannelIndex(int nChannelIndex)
+{
+    m_nCurrentChannelIndex = nChannelIndex;
+    m_p_qsetting->beginGroup(CHANNELGROUP);
+    m_p_qsetting->setValue(KEYCHANNELINDEX,m_nCurrentChannelIndex);
+    m_p_qsetting->endGroup();
+}
+
 void options::ReadConfigIni()
 {
     //读取每个通道的信息
     m_p_qsetting->beginGroup(CHANNELGROUP);
     m_nChannelNumber = m_p_qsetting->value(KEYCHANNELNUMBER).toInt();
+    m_nCurrentChannelIndex = m_p_qsetting->value(KEYCHANNELINDEX).toInt();
     for(int i=0;i<m_nChannelNumber;i++){
         ChannelInfo info;
         char sip[64] = {0};//ip
@@ -86,9 +101,11 @@ void options::ReadConfigIni()
         info.nExposionLevel = m_p_qsetting->value(sexposionLevel).toInt();
         m_vector_info.push_back(info);
     }
+    m_p_qsetting->endGroup();
     //读取上传数据的ip和端口
     m_p_qsetting->beginGroup(TRANSGROUP);
     m_bDataTransFlag = m_p_qsetting->value(KEYTRANSFLAG).toBool();
     m_strDataTransIP = m_p_qsetting->value(KEYTRANSIP).toString().toStdString();
     m_nDataTransPort = m_p_qsetting->value(KEYTRANSPORT).toInt();
+    m_p_qsetting->endGroup();
 }

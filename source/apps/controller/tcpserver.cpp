@@ -19,8 +19,10 @@ tcpserver::~tcpserver()
 bool tcpserver::Init()
 {
     //连接和MainContorller的槽通信
-    connect(this,SIGNAL(ShowTransinfo(const TransportInfo*)),
-            m_p_maincontorller,SLOT(ShowInfo(const TransportInfo*)));
+
+    connect(this,SIGNAL(ShowTransinfo(const QByteArray)),
+            m_p_maincontorller,SLOT(ShowInfo(const QByteArray)));
+
     m_p_server = new QTcpServer();
     if(m_p_server->listen(QHostAddress::Any,PORT)){
         connect(m_p_server, SIGNAL(newConnection()), this, SLOT(acceptConnection()));
@@ -41,6 +43,6 @@ void tcpserver::readClient()
     connect(m_p_clientConnection, SIGNAL(disconnected()), m_p_clientConnection, SLOT(deleteLater()));
     //m_p_clientConnection->write("hello disconnected");
     m_p_clientConnection->disconnectFromHost();
-    auto info = GetTransportInfo(data.constData());
-    emit(ShowTransinfo(info));
+    //auto info = GetTransportInfo(data.constData());
+    emit(ShowTransinfo(data));
 }

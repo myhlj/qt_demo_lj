@@ -1,0 +1,47 @@
+<RCC>
+    <qresource prefix="/">
+        <file>qss/css.qss</file>
+        <file>img/page/bg/background.png</file>
+        <file>img/page/wait.gif</file>
+        <file>img/page/search.png</file>
+        <file>img/page/search-pushdown.png</file>
+        <file>img/page/facebox.png</file>
+        <file>img/page/facebox-alarm.png</file>
+        <file>img/page/facebox-alarm-aisle2.png</file>
+        <file>img/page/facebox-alarm-aisle1.png</file>
+        <file>img/page/facebox-aisle2.png</file>
+        <file>img/page/facebox-aisle2-pushdown.png</file>
+        <file>img/page/facebox-aisle1.png</file>
+        <file>img/page/facebox-aisle1-pushdown.png</file>
+        <file>img/page/check-mongolia.png</file>
+        <file>img/page/check-china.png</file>
+        <file>img/page/btn-verify.png</file>
+        <file>img/page/btn-turnright.png</file>
+        <file>img/page/btn-turnright-pushdown.png</file>
+        <file>img/page/btn-turnleft.png</file>
+        <file>img/page/btn-turnleft-pushdown.png</file>
+        <file>img/page/btn-shutdown.png</file>
+        <file>img/page/btn-shutdown-pushdown.png</file>
+        <file>img/page/btn-restart.png</file>
+        <file>img/page/btn-restart-pushdown.png</file>
+        <file>img/page/btn-gate2.png</file>
+        <file>img/page/btn-gate2-transparent.png</file>
+        <file>img/page/btn-gate1.png</file>
+        <file>img/page/btn-gate1-transparent.png</file>
+        <file>img/page/btn-dropout.png</file>
+        <file>img/page/btn-dropout-pushdown.png</file>
+        <file>img/page/btn-compare.png</file>
+        <file>img/page/bg/transparent.png</file>
+        <file>img/page/bg/right_corner.png</file>
+        <file>img/page/bg/left_corner.png</file>
+        <file>img/keyboard/flat-black.png</file>
+        <file>img/keyboard/btn-return.png</file>
+        <file>img/keyboard/btn-other.png</file>
+        <file>img/keyboard/btn-ok.png</file>
+        <file>img/keyboard/back.png</file>
+        <file>img/page/select-up.png</file>
+        <file>img/page/select-right.png</file>
+        <file>img/page/select-check.png</file>
+        <file>img/page/select-back.png</file>
+    </qresource>
+</RCC>

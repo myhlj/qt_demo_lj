@@ -101,16 +101,4 @@ table TransportInfo
     fpImage:[ubyte];        //指纹图片数据
 }
 
-
-
-//左键按下消息控制闸机核验端
-table MessageLBTD
-{
-    messageType:MessType = OPENGATE;   //消息类型
-    channelNum:int;         //通道个数
-    channelIp:string;       
-    param:int;              //当消息类型为常开模式时:1->设置常开0:取消常开 当消息类型为验证模式时:1->比对人脸模式0:证件模式
-}
-
 root_type TransportInfo;
-

@@ -6,28 +6,2404 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>1024</width>
+    <height>768</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>DoubleChannelWidget</string>
   </property>
-  <widget class="QLabel" name="label">
+  <property name="autoFillBackground">
+   <bool>true</bool>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
+  <widget class="QWidget" name="widget_head" native="true">
    <property name="geometry">
     <rect>
-     <x>80</x>
-     <y>40</y>
-     <width>59</width>
-     <height>14</height>
+     <x>0</x>
+     <y>0</y>
+     <width>1024</width>
+     <height>80</height>
     </rect>
    </property>
-   <property name="text">
-    <string>TextLabel</string>
+   <property name="styleSheet">
+    <string notr="true"/>
    </property>
+   <widget class="QToolButton" name="toolButton_exit">
+    <property name="geometry">
+     <rect>
+      <x>958</x>
+      <y>19</y>
+      <width>44</width>
+      <height>43</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="toolButton_switch">
+    <property name="geometry">
+     <rect>
+      <x>766</x>
+      <y>19</y>
+      <width>44</width>
+      <height>43</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_1">
+    <property name="geometry">
+     <rect>
+      <x>22</x>
+      <y>25</y>
+      <width>91</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>通道选择</string>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="comboBox_chanel">
+    <property name="geometry">
+     <rect>
+      <x>118</x>
+      <y>23</y>
+      <width>111</width>
+      <height>33</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="toolButton_shutdown">
+    <property name="geometry">
+     <rect>
+      <x>830</x>
+      <y>19</y>
+      <width>44</width>
+      <height>43</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="toolButton_opengate">
+    <property name="geometry">
+     <rect>
+      <x>342</x>
+      <y>19</y>
+      <width>44</width>
+      <height>43</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="toolButton_restart">
+    <property name="geometry">
+     <rect>
+      <x>894</x>
+      <y>19</y>
+      <width>44</width>
+      <height>43</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>245</x>
+      <y>25</y>
+      <width>91</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>手动开闸</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_curtime">
+    <property name="geometry">
+     <rect>
+      <x>548</x>
+      <y>31</y>
+      <width>201</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>2016/05/27 16:42</string>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="toolButton_opengate_2">
+    <property name="geometry">
+     <rect>
+      <x>402</x>
+      <y>19</y>
+      <width>44</width>
+      <height>43</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QWidget" name="widget_bottom" native="true">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>606</y>
+     <width>1024</width>
+     <height>162</height>
+    </rect>
+   </property>
+   <widget class="QToolButton" name="toolButton_prev">
+    <property name="geometry">
+     <rect>
+      <x>34</x>
+      <y>50</y>
+      <width>39</width>
+      <height>62</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="BottomPicLabel" name="label_pic1">
+    <property name="geometry">
+     <rect>
+      <x>95</x>
+      <y>20</y>
+      <width>102</width>
+      <height>126</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="BottomPicLabel" name="label_pic6">
+    <property name="geometry">
+     <rect>
+      <x>705</x>
+      <y>20</y>
+      <width>102</width>
+      <height>126</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="BottomPicLabel" name="label_pic3">
+    <property name="geometry">
+     <rect>
+      <x>339</x>
+      <y>20</y>
+      <width>102</width>
+      <height>126</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="BottomPicLabel" name="label_pic2">
+    <property name="geometry">
+     <rect>
+      <x>217</x>
+      <y>20</y>
+      <width>102</width>
+      <height>126</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="BottomPicLabel" name="label_pic5">
+    <property name="geometry">
+     <rect>
+      <x>583</x>
+      <y>20</y>
+      <width>102</width>
+      <height>126</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="BottomPicLabel" name="label_pic4">
+    <property name="geometry">
+     <rect>
+      <x>461</x>
+      <y>20</y>
+      <width>102</width>
+      <height>126</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="BottomPicLabel" name="label_pic7">
+    <property name="geometry">
+     <rect>
+      <x>827</x>
+      <y>20</y>
+      <width>102</width>
+      <height>126</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="toolButton_next">
+    <property name="geometry">
+     <rect>
+      <x>951</x>
+      <y>50</y>
+      <width>39</width>
+      <height>62</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QWidget" name="widget_back" native="true">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>80</y>
+     <width>1024</width>
+     <height>527</height>
+    </rect>
+   </property>
+   <widget class="QStackedWidget" name="stackedWidget">
+    <property name="geometry">
+     <rect>
+      <x>22</x>
+      <y>0</y>
+      <width>980</width>
+      <height>527</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <widget class="QWidget" name="page1">
+     <widget class="QLabel" name="label_idcardusetime_3">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>311</y>
+        <width>401</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:0px </string>
+      </property>
+      <property name="text">
+       <string>民国13年</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_27">
+      <property name="geometry">
+       <rect>
+        <x>150</x>
+        <y>107</y>
+        <width>91</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:0px</string>
+      </property>
+      <property name="lineWidth">
+       <number>0</number>
+      </property>
+      <property name="text">
+       <string>姓      名:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_28">
+      <property name="geometry">
+       <rect>
+        <x>150</x>
+        <y>311</y>
+        <width>91</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:0px</string>
+      </property>
+      <property name="lineWidth">
+       <number>0</number>
+      </property>
+      <property name="text">
+       <string>有  效 期:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_29">
+      <property name="geometry">
+       <rect>
+        <x>150</x>
+        <y>253</y>
+        <width>91</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:0px</string>
+      </property>
+      <property name="lineWidth">
+       <number>0</number>
+      </property>
+      <property name="text">
+       <string>身份证号:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_30">
+      <property name="geometry">
+       <rect>
+        <x>150</x>
+        <y>282</y>
+        <width>91</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:0px</string>
+      </property>
+      <property name="lineWidth">
+       <number>0</number>
+      </property>
+      <property name="text">
+       <string>签发机关:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_31">
+      <property name="geometry">
+       <rect>
+        <x>150</x>
+        <y>166</y>
+        <width>91</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:0px</string>
+      </property>
+      <property name="lineWidth">
+       <number>0</number>
+      </property>
+      <property name="text">
+       <string>民      族:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_idcardsex_3">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>137</y>
+        <width>201</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:0px </string>
+      </property>
+      <property name="text">
+       <string>女</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_idcarddepart_3">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>282</y>
+        <width>401</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:0px </string>
+      </property>
+      <property name="text">
+       <string>武林群侠传</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_idcardaddress_3">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>224</y>
+        <width>471</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:0px </string>
+      </property>
+      <property name="text">
+       <string>一剑西来，天外飞仙,白云城主耶古城,西门吹雪决战紫禁之巅</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_idcardnum_3">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>253</y>
+        <width>391</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:0px </string>
+      </property>
+      <property name="text">
+       <string>12478324122313245</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_idcardnation_3">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>166</y>
+        <width>201</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:0px </string>
+      </property>
+      <property name="text">
+       <string>汉族</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_32">
+      <property name="geometry">
+       <rect>
+        <x>150</x>
+        <y>224</y>
+        <width>91</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:0px</string>
+      </property>
+      <property name="lineWidth">
+       <number>0</number>
+      </property>
+      <property name="text">
+       <string>住      址:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_idcardpic_3">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>110</y>
+        <width>102</width>
+        <height>126</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_idcardbirthday_3">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>195</y>
+        <width>201</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:0px </string>
+      </property>
+      <property name="text">
+       <string>1983年9月5日</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_idcardname_3">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>107</y>
+        <width>201</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:0px </string>
+      </property>
+      <property name="text">
+       <string>陆小凤</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_33">
+      <property name="geometry">
+       <rect>
+        <x>150</x>
+        <y>137</y>
+        <width>91</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:0px</string>
+      </property>
+      <property name="lineWidth">
+       <number>0</number>
+      </property>
+      <property name="text">
+       <string>性      别:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_34">
+      <property name="geometry">
+       <rect>
+        <x>150</x>
+        <y>195</y>
+        <width>91</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:0px</string>
+      </property>
+      <property name="lineWidth">
+       <number>0</number>
+      </property>
+      <property name="text">
+       <string>出生年月:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_acrossnum_3">
+      <property name="geometry">
+       <rect>
+        <x>290</x>
+        <y>10</y>
+        <width>91</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:0px </string>
+      </property>
+      <property name="text">
+       <string>110人</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_35">
+      <property name="geometry">
+       <rect>
+        <x>430</x>
+        <y>10</y>
+        <width>91</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:0px</string>
+      </property>
+      <property name="lineWidth">
+       <number>0</number>
+      </property>
+      <property name="text">
+       <string>报警人数:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_36">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>10</y>
+        <width>201</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:0px</string>
+      </property>
+      <property name="lineWidth">
+       <number>0</number>
+      </property>
+      <property name="text">
+       <string>今日该通道通过人数：</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_warnnum_3">
+      <property name="geometry">
+       <rect>
+        <x>520</x>
+        <y>10</y>
+        <width>91</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:0px </string>
+      </property>
+      <property name="text">
+       <string>110人</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_37">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>50</y>
+        <width>91</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:0px</string>
+      </property>
+      <property name="lineWidth">
+       <number>0</number>
+      </property>
+      <property name="text">
+       <string>通过时间:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_acrosstime_3">
+      <property name="geometry">
+       <rect>
+        <x>190</x>
+        <y>50</y>
+        <width>171</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:0px </string>
+      </property>
+      <property name="text">
+       <string>2016/05/27 16:45</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_picchannel_3">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>20</y>
+        <width>54</width>
+        <height>52</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_station_start">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>370</y>
+        <width>100</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>始发站</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_zhi">
+      <property name="geometry">
+       <rect>
+        <x>150</x>
+        <y>370</y>
+        <width>50</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>至</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_station_end">
+      <property name="geometry">
+       <rect>
+        <x>225</x>
+        <y>370</y>
+        <width>100</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>到站</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>401</y>
+        <width>80</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>客票编号:</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_ticket_num">
+      <property name="geometry">
+       <rect>
+        <x>130</x>
+        <y>401</y>
+        <width>150</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>065475</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_4">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>432</y>
+        <width>80</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>乘车日期:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_ticket_date">
+      <property name="geometry">
+       <rect>
+        <x>130</x>
+        <y>432</y>
+        <width>150</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>2015-01-05</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_39">
+      <property name="geometry">
+       <rect>
+        <x>295</x>
+        <y>432</y>
+        <width>70</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>车次:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_ticket_index">
+      <property name="geometry">
+       <rect>
+        <x>380</x>
+        <y>432</y>
+        <width>150</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>70050</string>
+      </property>
+     </widget>
+     <widget class="QToolButton" name="toolButton_search">
+      <property name="geometry">
+       <rect>
+        <x>684</x>
+        <y>470</y>
+        <width>262</width>
+        <height>37</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_warn_alise_1">
+      <property name="geometry">
+       <rect>
+        <x>455</x>
+        <y>159</y>
+        <width>168</width>
+        <height>168</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="page2">
+     <widget class="QLabel" name="label_picchannel">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>20</y>
+        <width>54</width>
+        <height>52</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_idcardpic">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>106</y>
+        <width>102</width>
+        <height>126</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_picchannel_2">
+      <property name="geometry">
+       <rect>
+        <x>510</x>
+        <y>20</y>
+        <width>54</width>
+        <height>52</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_idcardpic_2">
+      <property name="geometry">
+       <rect>
+        <x>510</x>
+        <y>106</y>
+        <width>102</width>
+        <height>126</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_acrosstime">
+      <property name="geometry">
+       <rect>
+        <x>180</x>
+        <y>68</y>
+        <width>171</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:0px </string>
+      </property>
+      <property name="text">
+       <string>2016/05/27 16:45</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_18">
+      <property name="geometry">
+       <rect>
+        <x>140</x>
+        <y>208</y>
+        <width>91</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:0px</string>
+      </property>
+      <property name="lineWidth">
+       <number>0</number>
+      </property>
+      <property name="text">
+       <string>住      址:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_19">
+      <property name="geometry">
+       <rect>
+        <x>640</x>
+        <y>208</y>
+        <width>91</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:0px</string>
+      </property>
+      <property name="lineWidth">
+       <number>0</number>
+      </property>
+      <property name="text">
+       <string>住      址:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_14">
+      <property name="geometry">
+       <rect>
+        <x>140</x>
+        <y>154</y>
+        <width>91</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:0px</string>
+      </property>
+      <property name="lineWidth">
+       <number>0</number>
+      </property>
+      <property name="text">
+       <string>民      族:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_acrossnum_2">
+      <property name="geometry">
+       <rect>
+        <x>770</x>
+        <y>8</y>
+        <width>91</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:0px </string>
+      </property>
+      <property name="text">
+       <string>110人</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_12">
+      <property name="geometry">
+       <rect>
+        <x>140</x>
+        <y>127</y>
+        <width>91</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:0px</string>
+      </property>
+      <property name="lineWidth">
+       <number>0</number>
+      </property>
+      <property name="text">
+       <string>性      别:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_5">
+      <property name="geometry">
+       <rect>
+        <x>90</x>
+        <y>8</y>
+        <width>201</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:0px</string>
+      </property>
+      <property name="lineWidth">
+       <number>0</number>
+      </property>
+      <property name="text">
+       <string>今日该通道通过人数：</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_21">
+      <property name="geometry">
+       <rect>
+        <x>640</x>
+        <y>261</y>
+        <width>91</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:0px</string>
+      </property>
+      <property name="lineWidth">
+       <number>0</number>
+      </property>
+      <property name="text">
+       <string>身份证号:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_idcardusetime_2">
+      <property name="geometry">
+       <rect>
+        <x>740</x>
+        <y>315</y>
+        <width>251</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:0px </string>
+      </property>
+      <property name="text">
+       <string>民国13年</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_22">
+      <property name="geometry">
+       <rect>
+        <x>140</x>
+        <y>288</y>
+        <width>91</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:0px</string>
+      </property>
+      <property name="lineWidth">
+       <number>0</number>
+      </property>
+      <property name="text">
+       <string>签发机关:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_acrossnum">
+      <property name="geometry">
+       <rect>
+        <x>280</x>
+        <y>8</y>
+        <width>91</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:0px </string>
+      </property>
+      <property name="text">
+       <string>110人</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_24">
+      <property name="geometry">
+       <rect>
+        <x>140</x>
+        <y>315</y>
+        <width>91</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:0px</string>
+      </property>
+      <property name="lineWidth">
+       <number>0</number>
+      </property>
+      <property name="text">
+       <string>有  效 期:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_idcardbirthday">
+      <property name="geometry">
+       <rect>
+        <x>240</x>
+        <y>181</y>
+        <width>251</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:0px </string>
+      </property>
+      <property name="text">
+       <string>1983年9月5日</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_idcardnum">
+      <property name="geometry">
+       <rect>
+        <x>240</x>
+        <y>261</y>
+        <width>251</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:0px </string>
+      </property>
+      <property name="text">
+       <string>12478324122313245</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_10">
+      <property name="geometry">
+       <rect>
+        <x>140</x>
+        <y>100</y>
+        <width>91</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:0px</string>
+      </property>
+      <property name="lineWidth">
+       <number>0</number>
+      </property>
+      <property name="text">
+       <string>姓      名:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_9">
+      <property name="geometry">
+       <rect>
+        <x>580</x>
+        <y>38</y>
+        <width>91</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:0px</string>
+      </property>
+      <property name="lineWidth">
+       <number>0</number>
+      </property>
+      <property name="text">
+       <string>报警人数:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_idcarddepart">
+      <property name="geometry">
+       <rect>
+        <x>240</x>
+        <y>288</y>
+        <width>251</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:0px </string>
+      </property>
+      <property name="text">
+       <string>武林群侠传</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_7">
+      <property name="geometry">
+       <rect>
+        <x>90</x>
+        <y>38</y>
+        <width>91</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:0px</string>
+      </property>
+      <property name="lineWidth">
+       <number>0</number>
+      </property>
+      <property name="text">
+       <string>报警人数:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_idcardbirthday_2">
+      <property name="geometry">
+       <rect>
+        <x>740</x>
+        <y>181</y>
+        <width>251</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:0px </string>
+      </property>
+      <property name="text">
+       <string>1983年9月5日</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_idcardname">
+      <property name="geometry">
+       <rect>
+        <x>240</x>
+        <y>100</y>
+        <width>251</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:0px </string>
+      </property>
+      <property name="text">
+       <string>陆小凤</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_13">
+      <property name="geometry">
+       <rect>
+        <x>640</x>
+        <y>100</y>
+        <width>91</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:0px</string>
+      </property>
+      <property name="lineWidth">
+       <number>0</number>
+      </property>
+      <property name="text">
+       <string>姓      名:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_idcardnation_2">
+      <property name="geometry">
+       <rect>
+        <x>740</x>
+        <y>154</y>
+        <width>201</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:0px </string>
+      </property>
+      <property name="text">
+       <string>汉族</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_idcardsex_2">
+      <property name="geometry">
+       <rect>
+        <x>740</x>
+        <y>127</y>
+        <width>201</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:0px </string>
+      </property>
+      <property name="text">
+       <string>女</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_25">
+      <property name="geometry">
+       <rect>
+        <x>640</x>
+        <y>315</y>
+        <width>91</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:0px</string>
+      </property>
+      <property name="lineWidth">
+       <number>0</number>
+      </property>
+      <property name="text">
+       <string>有  效 期:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_15">
+      <property name="geometry">
+       <rect>
+        <x>640</x>
+        <y>154</y>
+        <width>91</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:0px</string>
+      </property>
+      <property name="lineWidth">
+       <number>0</number>
+      </property>
+      <property name="text">
+       <string>民      族:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_idcardnum_2">
+      <property name="geometry">
+       <rect>
+        <x>740</x>
+        <y>261</y>
+        <width>251</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:0px </string>
+      </property>
+      <property name="text">
+       <string>12478324122313245</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_16">
+      <property name="geometry">
+       <rect>
+        <x>140</x>
+        <y>181</y>
+        <width>91</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:0px</string>
+      </property>
+      <property name="lineWidth">
+       <number>0</number>
+      </property>
+      <property name="text">
+       <string>出生年月:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_acrosstime_2">
+      <property name="geometry">
+       <rect>
+        <x>670</x>
+        <y>68</y>
+        <width>171</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:0px </string>
+      </property>
+      <property name="text">
+       <string>2016/05/27 16:45</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_warnnum_2">
+      <property name="geometry">
+       <rect>
+        <x>670</x>
+        <y>38</y>
+        <width>91</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:0px </string>
+      </property>
+      <property name="text">
+       <string>110人</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_idcardaddress_2">
+      <property name="geometry">
+       <rect>
+        <x>740</x>
+        <y>208</y>
+        <width>251</width>
+        <height>47</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:0px </string>
+      </property>
+      <property name="text">
+       <string>一剑西来，天外飞仙
+测试</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_warnnum">
+      <property name="geometry">
+       <rect>
+        <x>180</x>
+        <y>38</y>
+        <width>91</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:0px </string>
+      </property>
+      <property name="text">
+       <string>110人</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_idcardsex">
+      <property name="geometry">
+       <rect>
+        <x>240</x>
+        <y>127</y>
+        <width>201</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:0px </string>
+      </property>
+      <property name="text">
+       <string>女</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_idcardname_2">
+      <property name="geometry">
+       <rect>
+        <x>740</x>
+        <y>100</y>
+        <width>251</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:0px </string>
+      </property>
+      <property name="text">
+       <string>陆小凤</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_6">
+      <property name="geometry">
+       <rect>
+        <x>580</x>
+        <y>8</y>
+        <width>201</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:0px</string>
+      </property>
+      <property name="lineWidth">
+       <number>0</number>
+      </property>
+      <property name="text">
+       <string>今日该通道通过人数：</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_26">
+      <property name="geometry">
+       <rect>
+        <x>640</x>
+        <y>181</y>
+        <width>91</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:0px</string>
+      </property>
+      <property name="lineWidth">
+       <number>0</number>
+      </property>
+      <property name="text">
+       <string>出生年月:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_idcardnation">
+      <property name="geometry">
+       <rect>
+        <x>240</x>
+        <y>154</y>
+        <width>201</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:0px </string>
+      </property>
+      <property name="text">
+       <string>汉族</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_idcardusetime">
+      <property name="geometry">
+       <rect>
+        <x>240</x>
+        <y>315</y>
+        <width>251</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:0px </string>
+      </property>
+      <property name="text">
+       <string>民国13年</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_23">
+      <property name="geometry">
+       <rect>
+        <x>640</x>
+        <y>288</y>
+        <width>91</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:0px</string>
+      </property>
+      <property name="lineWidth">
+       <number>0</number>
+      </property>
+      <property name="text">
+       <string>签发机关:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_idcarddepart_2">
+      <property name="geometry">
+       <rect>
+        <x>740</x>
+        <y>288</y>
+        <width>251</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:0px </string>
+      </property>
+      <property name="text">
+       <string>武林群侠传</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_11">
+      <property name="geometry">
+       <rect>
+        <x>580</x>
+        <y>68</y>
+        <width>91</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:0px</string>
+      </property>
+      <property name="lineWidth">
+       <number>0</number>
+      </property>
+      <property name="text">
+       <string>通过时间:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_idcardaddress">
+      <property name="geometry">
+       <rect>
+        <x>240</x>
+        <y>208</y>
+        <width>251</width>
+        <height>47</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+      <property name="text">
+       <string>一剑西来，天外飞仙
+测试</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_8">
+      <property name="geometry">
+       <rect>
+        <x>90</x>
+        <y>68</y>
+        <width>91</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:0px</string>
+      </property>
+      <property name="lineWidth">
+       <number>0</number>
+      </property>
+      <property name="text">
+       <string>通过时间:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_17">
+      <property name="geometry">
+       <rect>
+        <x>640</x>
+        <y>127</y>
+        <width>91</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:0px</string>
+      </property>
+      <property name="lineWidth">
+       <number>0</number>
+      </property>
+      <property name="text">
+       <string>性      别:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_20">
+      <property name="geometry">
+       <rect>
+        <x>140</x>
+        <y>261</y>
+        <width>91</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border:0px</string>
+      </property>
+      <property name="lineWidth">
+       <number>0</number>
+      </property>
+      <property name="text">
+       <string>身份证号:</string>
+      </property>
+     </widget>
+     <widget class="Line" name="line_column">
+      <property name="geometry">
+       <rect>
+        <x>490</x>
+        <y>0</y>
+        <width>1</width>
+        <height>441</height>
+       </rect>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_ticket_index_2">
+      <property name="geometry">
+       <rect>
+        <x>340</x>
+        <y>410</y>
+        <width>150</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>70050</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_40">
+      <property name="geometry">
+       <rect>
+        <x>265</x>
+        <y>410</y>
+        <width>70</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>车次:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_41">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>379</y>
+        <width>80</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>客票编号:</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_station_end_2">
+      <property name="geometry">
+       <rect>
+        <x>265</x>
+        <y>348</y>
+        <width>150</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>到站</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_42">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>410</y>
+        <width>80</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>乘车日期:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_ticket_num_2">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>379</y>
+        <width>150</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>065475</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_station_start_2">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>348</y>
+        <width>150</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>始发站</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_zhi_2">
+      <property name="geometry">
+       <rect>
+        <x>170</x>
+        <y>348</y>
+        <width>50</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>至</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_ticket_date_2">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>410</y>
+        <width>150</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>2015-01-05</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_station_end_3">
+      <property name="geometry">
+       <rect>
+        <x>755</x>
+        <y>348</y>
+        <width>150</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>到站</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_43">
+      <property name="geometry">
+       <rect>
+        <x>510</x>
+        <y>379</y>
+        <width>80</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>客票编号:</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_ticket_index_3">
+      <property name="geometry">
+       <rect>
+        <x>830</x>
+        <y>410</y>
+        <width>150</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>70050</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_ticket_num_3">
+      <property name="geometry">
+       <rect>
+        <x>590</x>
+        <y>379</y>
+        <width>150</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>065475</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_ticket_date_3">
+      <property name="geometry">
+       <rect>
+        <x>590</x>
+        <y>410</y>
+        <width>150</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>2015-01-05</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_zhi_3">
+      <property name="geometry">
+       <rect>
+        <x>660</x>
+        <y>348</y>
+        <width>50</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>至</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_45">
+      <property name="geometry">
+       <rect>
+        <x>755</x>
+        <y>410</y>
+        <width>70</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>车次:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_station_start_3">
+      <property name="geometry">
+       <rect>
+        <x>510</x>
+        <y>348</y>
+        <width>150</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>始发站</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_46">
+      <property name="geometry">
+       <rect>
+        <x>510</x>
+        <y>410</y>
+        <width>80</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>乘车日期:</string>
+      </property>
+     </widget>
+     <widget class="Line" name="line_row">
+      <property name="geometry">
+       <rect>
+        <x>2</x>
+        <y>441</y>
+        <width>976</width>
+        <height>1</height>
+       </rect>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+     <widget class="QToolButton" name="toolButton_search_2">
+      <property name="geometry">
+       <rect>
+        <x>690</x>
+        <y>465</y>
+        <width>262</width>
+        <height>38</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </widget>
+   </widget>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>BottomPicLabel</class>
+   <extends>QLabel</extends>
+   <header>bottompiclabel.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
