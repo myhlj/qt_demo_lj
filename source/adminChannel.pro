@@ -25,7 +25,8 @@ SOURCES += apps/main.cpp\
     apps/controller/tcpserver.cpp \
     apps/controller/options.cpp \
     apps/controller/client.cpp \
-    apps/view/bottompiclabel.cpp
+    apps/view/bottompiclabel.cpp \
+    apps/view/keydialog.cpp
 
 HEADERS  += apps/view/doublechannelwidget.h \
     apps/controller/main_controller.h \
@@ -44,12 +45,14 @@ HEADERS  += apps/view/doublechannelwidget.h \
     apps/controller/messagelbtd_generated.h \
     apps/view/bottompiclabel.h \
     apps/view/THIDImageHelper.h \
-    apps/view/THIDErrorDef.h
+    apps/view/THIDErrorDef.h \
+    apps/view/keydialog.h
 
 LIBS += -L /usr/lib/hisign/VerifyEngine \
         -lTHIDImageHelper
 
-FORMS    += apps/view/doublechannelwidget.ui
+FORMS    += apps/view/doublechannelwidget.ui \
+    apps/view/keydialog.ui
 
 RESOURCES += \
     resource.qrc

@@ -197,5 +197,7 @@ QLabel
 /*键盘css*/
 #KeyDialog
 {
-    border-image: url(:/img/keyboard/back.png);
+    background-image: url(:/img/keyboard/flat-black.png);
+    border-image: url(:/img/keyboard/keyboard-back.png);
 }
+

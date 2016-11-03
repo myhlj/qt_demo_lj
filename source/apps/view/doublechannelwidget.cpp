@@ -11,7 +11,7 @@
 #include "options.h"
 #include "IMainController.h"
 #include "THIDImageHelper.h"
-//#include "keydialog.h"
+#include "keydialog.h"
 
 #define  GATEONE   1 //通道一
 #define  GATETWO   2 //2
@@ -728,26 +728,12 @@ void DoubleChannelWidget::GetNewBatchData()
 
 void DoubleChannelWidget::on_toolButton_search_clicked()
 {
-//    m_pKeyDialog = new KeyDialog(this);
-//    m_pKeyDialog->setWindowFlags(Qt::FramelessWindowHint);//去掉标题栏
-//    m_pKeyDialog->show();
+    KeyDialog* pKeyDialog = new KeyDialog(this);
+    pKeyDialog->exec();
 }
 
 void DoubleChannelWidget::on_toolButton_search_2_clicked()
 {
-//    m_pKeyDialog = new KeyDialog(this);
-//    m_pKeyDialog->setAttribute(Qt::WA_TranslucentBackground, true);
-//    m_pKeyDialog->setWindowOpacity(0.7);
-//    m_pKeyDialog->setWindowFlags(Qt::FramelessWindowHint);//去掉标题栏
-//    m_pKeyDialog->show();
-
-//    m_pKeyDialog->setWindowOpacity(1);
-//    m_pKeyDialog->setWindowFlags(Qt::FramelessWindowHint);
-//    m_pKeyDialog->setAttribute(Qt::WA_TranslucentBackground);
-//    m_pKeyDialog->show();
-//      KeyDialog *pDialog = new KeyDialog(NULL);
-//      pDialog->setWindowOpacity(1);
-//      pDialog->setWindowFlags(Qt::FramelessWindowHint);
-//      pDialog->setAttribute(Qt::WA_TranslucentBackground);
-//      pDialog->show();
+    KeyDialog* pKeyDialog = new KeyDialog(this);
+    pKeyDialog->show();
 }
