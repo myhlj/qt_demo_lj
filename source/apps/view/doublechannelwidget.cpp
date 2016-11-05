@@ -24,9 +24,11 @@ DoubleChannelWidget::DoubleChannelWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::DoubleChannelWidget),
     m_bSwitched(true),//facemode
-    m_nBatch(1)
+    m_nBatch(1),
+    m_pMovie(NULL)
 {
     ui->setupUi(this);
+    m_pMovie = new QMovie(":img/page/wait.gif");
 }
 
 DoubleChannelWidget::~DoubleChannelWidget()
@@ -729,11 +731,42 @@ void DoubleChannelWidget::GetNewBatchData()
 void DoubleChannelWidget::on_toolButton_search_clicked()
 {
     KeyDialog* pKeyDialog = new KeyDialog(this);
-    pKeyDialog->exec();
+    pKeyDialog->setAttribute(Qt::WA_TranslucentBackground);//背景透明
+    pKeyDialog->setModal(true);//modal
+    ui->stackedWidget->setCurrentIndex(2);//背景
+    connect(pKeyDialog,SIGNAL(man_ok()),this,SLOT(keyboardOnOk()));
+    connect(pKeyDialog,SIGNAL(man_destory()),this,SLOT(keyboardDestoryed()));
+    pKeyDialog->show();
 }
 
 void DoubleChannelWidget::on_toolButton_search_2_clicked()
 {
     KeyDialog* pKeyDialog = new KeyDialog(this);
+    pKeyDialog->setAttribute(Qt::WA_TranslucentBackground);
+    pKeyDialog->setModal(true);
+    ui->stackedWidget->setCurrentIndex(2);
+    connect(pKeyDialog,SIGNAL(man_ok()),this,SLOT(keyboardOnOk()));
+    connect(pKeyDialog,SIGNAL(man_destory()),this,SLOT(keyboardDestoryed()));
     pKeyDialog->show();
+}
+
+void DoubleChannelWidget::keyboardDestoryed()
+{
+    switch(ui->comboBox_chanel->currentIndex()){
+    case 0:
+    case 1:
+        ui->stackedWidget->setCurrentIndex(0);
+        break;
+    case 2:
+        ui->stackedWidget->setCurrentIndex(1);
+        break;
+    }
+}
+
+void DoubleChannelWidget::keyboardOnOk()
+{
+    //查询
+    ui->stackedWidget->setCurrentIndex(3);
+    ui->label_gif->setMovie(m_pMovie);
+    m_pMovie->start();
 }

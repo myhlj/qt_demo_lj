@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QVector>
+#include <QMovie>
 #include "IMainView.h"
 
 
@@ -62,6 +63,8 @@ private slots:
 
     void on_toolButton_search_2_clicked();
 
+    void keyboardDestoryed();
+    void keyboardOnOk();
 private:
     Ui::DoubleChannelWidget *ui;
     IMainController *controller;
@@ -73,6 +76,7 @@ private:
         notCompare
     };
     int             m_nBatch;//记录当前批次
+    QMovie*         m_pMovie;//播放gif
 private:
     void InitComboxChanel();
     void SaveToVector(const QByteArray& data);//界面显示7张图片

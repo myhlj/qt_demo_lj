@@ -3,6 +3,7 @@
 #include "options.h"
 using namespace std;
 #define PORT 9529
+#define MAXREADLENGTH 2048
 
 tcpserver::tcpserver(MainController *pMainCtr, QObject *parent) : QObject(parent)
   ,m_p_maincontorller(pMainCtr)
@@ -39,10 +40,24 @@ void tcpserver::acceptConnection()
 
 void tcpserver::readClient()
 {
-    QByteArray data = m_p_clientConnection->readAll();
+    //先读大小,8位
+    QByteArray length = m_p_clientConnection->read(8);
+    QString sLength(length.data());
+    int nLength = sLength.toInt();
+    //然后读数据
+    QByteArray data;
+    char* pBuffer = new char[MAXREADLENGTH];
+    int nTotalLen = 0;
+    while(nTotalLen != nLength){
+        int nReadLen = m_p_clientConnection->read(pBuffer,MAXREADLENGTH);
+        if(nReadLen == 0 || nReadLen == -1){
+            //读取报错
+            return;
+        }
+        nTotalLen += nReadLen;
+    }
     connect(m_p_clientConnection, SIGNAL(disconnected()), m_p_clientConnection, SLOT(deleteLater()));
     //m_p_clientConnection->write("hello disconnected");
     m_p_clientConnection->disconnectFromHost();
-    //auto info = GetTransportInfo(data.constData());
     emit(ShowTransinfo(data));
 }

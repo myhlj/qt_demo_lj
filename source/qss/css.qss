@@ -80,6 +80,16 @@
 }
 
 
+QComboBox QAbstractItemView
+{
+    border:1px solid white;
+    color: #ffffff;
+    background-color: #0f2b46;
+    selection-background-color: #2aa1d3;
+    min-width:109px;
+}
+
+
 #comboBox_chanel::down-arrow
 {
     background-image: url(:/img/page/select-right.png);
@@ -103,13 +113,14 @@
     background-color: #0f2b46;
 }
 
-#page1
+#page1,#page2
 {
     border-image: url(:/img/page/bg/background.png);
 }
-#page2
+
+#page3,#page4
 {
-    border-image: url(:/img/page/bg/background.png);
+    border-image: url(:/img/keyboard/flat-black.png);
 }
 
 #label_picchannel_3,#label_picchannel
@@ -195,9 +206,42 @@ QLabel
     border-image: url(:/img/page/check-china.png);
 }
 /*键盘css*/
-#KeyDialog
+#widget_keyboard
 {
-    background-image: url(:/img/keyboard/flat-black.png);
     border-image: url(:/img/keyboard/keyboard-back.png);
 }
 
+#lineEdit_keyboard
+{
+    border-image: url(:/img/keyboard/input.png);
+    font-size: 24px;
+    color: #ffffff;
+    font: Black;
+}
+
+#pushButton_keyboard_1,#pushButton_keyboard_2,#pushButton_keyboard_3,
+#pushButton_keyboard_4,#pushButton_keyboard_5,#pushButton_keyboard_6,
+#pushButton_keyboard_7,#pushButton_keyboard_8,#pushButton_keyboard_9,
+#pushButton_keyboard_10,#pushButton_keyboard_x,#pushButton_keyboard_resetting
+{
+    border-image: url(:/img/keyboard/btn-other.png);
+    font-size: 24px;
+    color: #ffffff;
+    font: Black;
+}
+
+#pushButton_keyboard_ok
+{
+    border-image: url(:/img/keyboard/btn-ok.png);
+    font-size: 24px;
+    color: #ffffff;
+    font: Black;
+}
+
+#pushButton_keyboard_back
+{
+    border-image: url(:/img/keyboard/btn-return.png);
+    font-size: 24px;
+    color: #ffffff;
+    font: Black;
+}
