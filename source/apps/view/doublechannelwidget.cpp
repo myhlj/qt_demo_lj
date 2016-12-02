@@ -1,4 +1,4 @@
-#include "doublechannelwidget.h"
+﻿#include "doublechannelwidget.h"
 #include "ui_doublechannelwidget.h"
 
 #include <QUiLoader>
@@ -121,6 +121,9 @@ void DoubleChannelWidget::InitComboxChanel()
 void DoubleChannelWidget::ShowAcrossInfo(const QByteArray& data)
 {
     const TransportInfo* pInfo = GetTransportInfo(data.constData());
+    if(pInfo == NULL){
+        return;
+    }
     //是否存储在内存供界面显示
     int nIndex = ui->comboBox_chanel->currentIndex();//当前界面选择index
     switch(nIndex){

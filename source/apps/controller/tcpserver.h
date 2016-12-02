@@ -1,4 +1,4 @@
-#ifndef TCPSERVER_H
+﻿#ifndef TCPSERVER_H
 #define TCPSERVER_H
 
 #include <QObject>
@@ -17,13 +17,12 @@ public:
     bool Init();
 private:
     QTcpServer          *m_p_server;
-    QTcpSocket          *m_p_clientConnection;
     MainController      *m_p_maincontorller;
 signals:
     void   ShowTransinfo(const QByteArray);
 public slots:
     void   acceptConnection();
-    void   readClient();
+    void   readClient(QTcpSocket* pClient);
 };
 
 #endif // TCPSERVER_H

@@ -1,10 +1,11 @@
-#include "client.h"
+﻿#include "client.h"
 #include "options.h"
 #include <iostream>
+#include <stdio.h>
 
 using namespace std;
 using namespace LBTDMessage;
-#define GATESPORT 9531
+#define GATESPORT 88991
 
 client::client(QObject *parent) : QThread(parent),m_bStop(false)
 {
@@ -40,12 +41,12 @@ bool client::Send(const string &sIP, int port, const char *data, int length,stri
 {
     QTcpSocket* m_p_client = new QTcpSocket(NULL);
 
-//    connect(m_p_client,SIGNAL(readyRead()),this,SLOT(readMessage()));
-//    connect(m_p_client,SIGNAL(connected()),this,SLOT(connected()));
-//    connect(m_p_client, SIGNAL(disconnected()), this, SLOT(disconnected()));
-
     m_p_client->connectToHost(sIP.c_str(),port);
     if(m_p_client->waitForConnected()){
+        //先发一个固定的8位包长度
+        char sLength[9] = {0};
+        snprintf(sLength,9,"%08d",length);
+        m_p_client->write(sLength,8);
         if(length == m_p_client->write(data,length)){
             if(m_p_client->waitForBytesWritten()){
                 m_p_client->disconnectFromHost();

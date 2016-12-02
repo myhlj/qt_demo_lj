@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include "tcpserver.h"
 #include "options.h"
 using namespace std;
@@ -8,7 +8,6 @@ using namespace std;
 tcpserver::tcpserver(MainController *pMainCtr, QObject *parent) : QObject(parent)
   ,m_p_maincontorller(pMainCtr)
 {
-    options::get_instance();
 }
 
 tcpserver::~tcpserver()
@@ -34,30 +33,34 @@ bool tcpserver::Init()
 
 void tcpserver::acceptConnection()
 {
-    m_p_clientConnection = m_p_server->nextPendingConnection();
-    connect(m_p_clientConnection, SIGNAL(readyRead()), this, SLOT(readClient()));
+     QTcpSocket *p_clientConnection = m_p_server->nextPendingConnection();
+     readClient(p_clientConnection);
 }
 
-void tcpserver::readClient()
+void tcpserver::readClient(QTcpSocket* pClient)
 {
-    //先读大小,8位
-    QByteArray length = m_p_clientConnection->read(8);
-    QString sLength(length.data());
-    int nLength = sLength.toInt();
-    //然后读数据
     QByteArray data;
-    char* pBuffer = new char[MAXREADLENGTH];
-    int nTotalLen = 0;
-    while(nTotalLen != nLength){
-        int nReadLen = m_p_clientConnection->read(pBuffer,MAXREADLENGTH);
-        if(nReadLen == 0 || nReadLen == -1){
-            //读取报错
+    if(pClient->waitForReadyRead()){
+        //先读大小,8位
+        QByteArray length = pClient->read(8);
+        QString sLength(length.data());
+        int nLength = sLength.toInt();
+        if(nLength <= 0){
             return;
         }
-        nTotalLen += nReadLen;
+        //然后读数据
+        char* pBuffer = new char[nLength];
+        int nTotalLen = 0;
+        if(pClient->waitForReadyRead()){
+            nTotalLen = pClient->read(pBuffer,nLength);
+            if(nTotalLen == 0 || nTotalLen == -1){//读取报错
+                cout<<"read failed:"<<nTotalLen<<endl;
+                return;
+            }
+            data.append(pBuffer,nTotalLen);
+        }
+        connect(pClient, SIGNAL(disconnected()), pClient, SLOT(deleteLater()));
+        pClient->disconnectFromHost();
     }
-    connect(m_p_clientConnection, SIGNAL(disconnected()), m_p_clientConnection, SLOT(deleteLater()));
-    //m_p_clientConnection->write("hello disconnected");
-    m_p_clientConnection->disconnectFromHost();
     emit(ShowTransinfo(data));
 }
