@@ -1,4 +1,4 @@
-#include "keydialog.h"
+﻿#include "keydialog.h"
 #include "ui_keydialog.h"
 
 KeyDialog::KeyDialog(QWidget *parent) :
@@ -6,6 +6,8 @@ KeyDialog::KeyDialog(QWidget *parent) :
     ui(new Ui::KeyDialog)
 {
     ui->setupUi(this);
+    ui->lineEdit_keyboard->setReadOnly(true);
+    ui->lineEdit_keyboard->setMaxLength(18);
 }
 
 KeyDialog::~KeyDialog()
@@ -85,12 +87,14 @@ void KeyDialog::on_pushButton_keyboard_10_clicked()
 
 void KeyDialog::on_pushButton_keyboard_x_clicked()
 {
-    ui->lineEdit_keyboard->backspace();
+    QString sText = ui->lineEdit_keyboard->text();
+    sText += ui->pushButton_keyboard_x->text();
+    ui->lineEdit_keyboard->setText(sText);
 }
 
 void KeyDialog::on_pushButton_keyboard_resetting_clicked()
 {
-    ui->lineEdit_keyboard->setText("");//置空
+    ui->lineEdit_keyboard->clear();//置空
 }
 
 void KeyDialog::on_pushButton_keyboard_back_clicked()
