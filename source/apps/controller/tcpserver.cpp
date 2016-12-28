@@ -3,7 +3,6 @@
 #include "options.h"
 using namespace std;
 #define PORT 9529
-#define MAXREADLENGTH 2048
 
 tcpserver::tcpserver(MainController *pMainCtr, QObject *parent) : QObject(parent)
   ,m_p_maincontorller(pMainCtr)
@@ -48,16 +47,22 @@ void tcpserver::readClient(QTcpSocket* pClient)
         if(nLength <= 0){
             return;
         }
+
         //然后读数据
         char* pBuffer = new char[nLength];
         int nTotalLen = 0;
-        if(pClient->waitForReadyRead()){
-            nTotalLen = pClient->read(pBuffer,nLength);
-            if(nTotalLen == 0 || nTotalLen == -1){//读取报错
-                cout<<"read failed:"<<nTotalLen<<endl;
-                return;
+        while(true){
+            if(pClient->waitForReadyRead()){
+                int readLen = pClient->read(pBuffer,nLength);
+                if(readLen == 0 || readLen == -1){//读取报错
+                    cout<<"read failed:"<<nTotalLen<<endl;
+                    return;
+                }
+                data.append(pBuffer,readLen);
+                nTotalLen += readLen;
+                if(nTotalLen == nLength)
+                    break;
             }
-            data.append(pBuffer,nTotalLen);
         }
         connect(pClient, SIGNAL(disconnected()), pClient, SLOT(deleteLater()));
         pClient->disconnectFromHost();
