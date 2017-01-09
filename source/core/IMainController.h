@@ -1,4 +1,4 @@
-#ifndef IMAINCONTROLLER_H
+﻿#ifndef IMAINCONTROLLER_H
 #define IMAINCONTROLLER_H
 
 #include <string>

@@ -1,10 +1,13 @@
-#ifndef DOUBLECHANNELWIDGET_H
+﻿#ifndef DOUBLECHANNELWIDGET_H
 #define DOUBLECHANNELWIDGET_H
 
 #include <QWidget>
 #include <QVector>
 #include "IMainView.h"
 
+#if _MSC_VER >= 1600
+#pragma execution_character_set("utf-8")
+#endif
 
 class BottomPicLabel;
 
@@ -72,21 +75,20 @@ private:
         notBlack,
         notCompare
     };
-    int             m_nBatch;//记录当前批次
+    int             m_nBatch;
 private:
     void InitComboxChanel();
-    void SaveToVector(const QByteArray& data);//界面显示7张图片
+    void SaveToVector(const QByteArray& data);
     void ShowCardInfo(const TransportInfo *pInfo,int index);
     void ShowCardPic(const TransportInfo *pInfo,int index);
     void ShowTicketInfo(const TransportInfo *pInfo,int index);
     void ShowBottomPic();
     void ShowPic(BottomPicLabel* pLabel,const TransportInfo* pInfo);
     void LabelPicPushDownShow(BottomPicLabel* pLabel,const TransportInfo *pInfo);
-    //接收一条数据都存储,存储文件格式为 日期时间_身份证号_通道
     bool SaveData(const QByteArray& data,const TransportInfo* pInfo);
-    void GetPrevBatchData();//获取上一批数据,每批7条数据
-    void GetNextBatchData();//获取下一批数据
-    void GetNewBatchData();//获取最新的一批数据
+    void GetPrevBatchData();
+    void GetNextBatchData();
+    void GetNewBatchData();
 };
 
 #endif // DOUBLECHANNELWIDGET_H

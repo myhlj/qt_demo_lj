@@ -1,4 +1,4 @@
-#include "doublechannelwidget.h"
+﻿#include "doublechannelwidget.h"
 #include "ui_doublechannelwidget.h"
 
 #include <QUiLoader>
