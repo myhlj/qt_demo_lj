@@ -43,5 +43,7 @@
         <file>img/page/select-right.png</file>
         <file>img/page/select-check.png</file>
         <file>img/page/select-back.png</file>
+        <file>img/keyboard/keyboard-back.png</file>
+        <file>img/keyboard/input.png</file>
     </qresource>
 </RCC>

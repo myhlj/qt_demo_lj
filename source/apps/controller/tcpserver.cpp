@@ -1,4 +1,4 @@
-#include <iostream>
+﻿#include <iostream>
 #include "tcpserver.h"
 #include "options.h"
 using namespace std;
@@ -7,7 +7,6 @@ using namespace std;
 tcpserver::tcpserver(MainController *pMainCtr, QObject *parent) : QObject(parent)
   ,m_p_maincontorller(pMainCtr)
 {
-    options::get_instance();
 }
 
 tcpserver::~tcpserver()
@@ -33,16 +32,40 @@ bool tcpserver::Init()
 
 void tcpserver::acceptConnection()
 {
-    m_p_clientConnection = m_p_server->nextPendingConnection();
-    connect(m_p_clientConnection, SIGNAL(readyRead()), this, SLOT(readClient()));
+     QTcpSocket *p_clientConnection = m_p_server->nextPendingConnection();
+     readClient(p_clientConnection);
 }
 
-void tcpserver::readClient()
+void tcpserver::readClient(QTcpSocket* pClient)
 {
-    QByteArray data = m_p_clientConnection->readAll();
-    connect(m_p_clientConnection, SIGNAL(disconnected()), m_p_clientConnection, SLOT(deleteLater()));
-    //m_p_clientConnection->write("hello disconnected");
-    m_p_clientConnection->disconnectFromHost();
-    //auto info = GetTransportInfo(data.constData());
+    QByteArray data;
+    if(pClient->waitForReadyRead()){
+        //先读大小,8位
+        QByteArray length = pClient->read(8);
+        QString sLength(length.data());
+        int nLength = sLength.toInt();
+        if(nLength <= 0){
+            return;
+        }
+
+        //然后读数据
+        char* pBuffer = new char[nLength];
+        int nTotalLen = 0;
+        while(true){
+            if(pClient->waitForReadyRead()){
+                int readLen = pClient->read(pBuffer,nLength);
+                if(readLen == 0 || readLen == -1){//读取报错
+                    cout<<"read failed:"<<nTotalLen<<endl;
+                    return;
+                }
+                data.append(pBuffer,readLen);
+                nTotalLen += readLen;
+                if(nTotalLen == nLength)
+                    break;
+            }
+        }
+        connect(pClient, SIGNAL(disconnected()), pClient, SLOT(deleteLater()));
+        pClient->disconnectFromHost();
+    }
     emit(ShowTransinfo(data));
 }
