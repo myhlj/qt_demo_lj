@@ -23,31 +23,26 @@ struct IDCardMessage FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
     VT_NAME = 4,
     VT_GENDER = 6,
     VT_FOLK = 8,
-    VT_BIRTHDAY = 10,
-    VT_CODE = 12,
-    VT_ADDRESS = 14,
-    VT_AGENCY = 16,
-    VT_EXPIRESTART = 18,
-    VT_EXPIREEND = 20
+    VT_NATIONCODE = 10,
+    VT_BIRTHDAY = 12,
+    VT_CODE = 14,
+    VT_ADDRESS = 16,
+    VT_AGENCY = 18,
+    VT_EXPIRESTART = 20,
+    VT_EXPIREEND = 22
   };
   const flatbuffers::String *name() const { return GetPointer<const flatbuffers::String *>(VT_NAME); }
-  flatbuffers::String *mutable_name() { return GetPointer<flatbuffers::String *>(VT_NAME); }
   const flatbuffers::String *gender() const { return GetPointer<const flatbuffers::String *>(VT_GENDER); }
-  flatbuffers::String *mutable_gender() { return GetPointer<flatbuffers::String *>(VT_GENDER); }
+  /// 民族
   const flatbuffers::String *folk() const { return GetPointer<const flatbuffers::String *>(VT_FOLK); }
-  flatbuffers::String *mutable_folk() { return GetPointer<flatbuffers::String *>(VT_FOLK); }
+  /// 民族代码
+  const flatbuffers::String *nationCode() const { return GetPointer<const flatbuffers::String *>(VT_NATIONCODE); }
   const flatbuffers::String *birthday() const { return GetPointer<const flatbuffers::String *>(VT_BIRTHDAY); }
-  flatbuffers::String *mutable_birthday() { return GetPointer<flatbuffers::String *>(VT_BIRTHDAY); }
   const flatbuffers::String *code() const { return GetPointer<const flatbuffers::String *>(VT_CODE); }
-  flatbuffers::String *mutable_code() { return GetPointer<flatbuffers::String *>(VT_CODE); }
   const flatbuffers::String *address() const { return GetPointer<const flatbuffers::String *>(VT_ADDRESS); }
-  flatbuffers::String *mutable_address() { return GetPointer<flatbuffers::String *>(VT_ADDRESS); }
   const flatbuffers::String *agency() const { return GetPointer<const flatbuffers::String *>(VT_AGENCY); }
-  flatbuffers::String *mutable_agency() { return GetPointer<flatbuffers::String *>(VT_AGENCY); }
   const flatbuffers::String *expireStart() const { return GetPointer<const flatbuffers::String *>(VT_EXPIRESTART); }
-  flatbuffers::String *mutable_expireStart() { return GetPointer<flatbuffers::String *>(VT_EXPIRESTART); }
   const flatbuffers::String *expireEnd() const { return GetPointer<const flatbuffers::String *>(VT_EXPIREEND); }
-  flatbuffers::String *mutable_expireEnd() { return GetPointer<flatbuffers::String *>(VT_EXPIREEND); }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<flatbuffers::uoffset_t>(verifier, VT_NAME) &&
@@ -56,6 +51,8 @@ struct IDCardMessage FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
            verifier.Verify(gender()) &&
            VerifyField<flatbuffers::uoffset_t>(verifier, VT_FOLK) &&
            verifier.Verify(folk()) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, VT_NATIONCODE) &&
+           verifier.Verify(nationCode()) &&
            VerifyField<flatbuffers::uoffset_t>(verifier, VT_BIRTHDAY) &&
            verifier.Verify(birthday()) &&
            VerifyField<flatbuffers::uoffset_t>(verifier, VT_CODE) &&
@@ -78,6 +75,7 @@ struct IDCardMessageBuilder {
   void add_name(flatbuffers::Offset<flatbuffers::String> name) { fbb_.AddOffset(IDCardMessage::VT_NAME, name); }
   void add_gender(flatbuffers::Offset<flatbuffers::String> gender) { fbb_.AddOffset(IDCardMessage::VT_GENDER, gender); }
   void add_folk(flatbuffers::Offset<flatbuffers::String> folk) { fbb_.AddOffset(IDCardMessage::VT_FOLK, folk); }
+  void add_nationCode(flatbuffers::Offset<flatbuffers::String> nationCode) { fbb_.AddOffset(IDCardMessage::VT_NATIONCODE, nationCode); }
   void add_birthday(flatbuffers::Offset<flatbuffers::String> birthday) { fbb_.AddOffset(IDCardMessage::VT_BIRTHDAY, birthday); }
   void add_code(flatbuffers::Offset<flatbuffers::String> code) { fbb_.AddOffset(IDCardMessage::VT_CODE, code); }
   void add_address(flatbuffers::Offset<flatbuffers::String> address) { fbb_.AddOffset(IDCardMessage::VT_ADDRESS, address); }
@@ -87,7 +85,7 @@ struct IDCardMessageBuilder {
   IDCardMessageBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
   IDCardMessageBuilder &operator=(const IDCardMessageBuilder &);
   flatbuffers::Offset<IDCardMessage> Finish() {
-    auto o = flatbuffers::Offset<IDCardMessage>(fbb_.EndTable(start_, 9));
+    auto o = flatbuffers::Offset<IDCardMessage>(fbb_.EndTable(start_, 10));
     return o;
   }
 };
@@ -96,6 +94,7 @@ inline flatbuffers::Offset<IDCardMessage> CreateIDCardMessage(flatbuffers::FlatB
     flatbuffers::Offset<flatbuffers::String> name = 0,
     flatbuffers::Offset<flatbuffers::String> gender = 0,
     flatbuffers::Offset<flatbuffers::String> folk = 0,
+    flatbuffers::Offset<flatbuffers::String> nationCode = 0,
     flatbuffers::Offset<flatbuffers::String> birthday = 0,
     flatbuffers::Offset<flatbuffers::String> code = 0,
     flatbuffers::Offset<flatbuffers::String> address = 0,
@@ -109,6 +108,7 @@ inline flatbuffers::Offset<IDCardMessage> CreateIDCardMessage(flatbuffers::FlatB
   builder_.add_address(address);
   builder_.add_code(code);
   builder_.add_birthday(birthday);
+  builder_.add_nationCode(nationCode);
   builder_.add_folk(folk);
   builder_.add_gender(gender);
   builder_.add_name(name);
@@ -119,13 +119,14 @@ inline flatbuffers::Offset<IDCardMessage> CreateIDCardMessageDirect(flatbuffers:
     const char *name = nullptr,
     const char *gender = nullptr,
     const char *folk = nullptr,
+    const char *nationCode = nullptr,
     const char *birthday = nullptr,
     const char *code = nullptr,
     const char *address = nullptr,
     const char *agency = nullptr,
     const char *expireStart = nullptr,
     const char *expireEnd = nullptr) {
-  return CreateIDCardMessage(_fbb, name ? _fbb.CreateString(name) : 0, gender ? _fbb.CreateString(gender) : 0, folk ? _fbb.CreateString(folk) : 0, birthday ? _fbb.CreateString(birthday) : 0, code ? _fbb.CreateString(code) : 0, address ? _fbb.CreateString(address) : 0, agency ? _fbb.CreateString(agency) : 0, expireStart ? _fbb.CreateString(expireStart) : 0, expireEnd ? _fbb.CreateString(expireEnd) : 0);
+  return CreateIDCardMessage(_fbb, name ? _fbb.CreateString(name) : 0, gender ? _fbb.CreateString(gender) : 0, folk ? _fbb.CreateString(folk) : 0, nationCode ? _fbb.CreateString(nationCode) : 0, birthday ? _fbb.CreateString(birthday) : 0, code ? _fbb.CreateString(code) : 0, address ? _fbb.CreateString(address) : 0, agency ? _fbb.CreateString(agency) : 0, expireStart ? _fbb.CreateString(expireStart) : 0, expireEnd ? _fbb.CreateString(expireEnd) : 0);
 }
 
 /// 消息头
@@ -141,20 +142,13 @@ struct MessageHeader FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   };
   /// 暂时固定值："HisignGate"
   const flatbuffers::String *sign() const { return GetPointer<const flatbuffers::String *>(VT_SIGN); }
-  flatbuffers::String *mutable_sign() { return GetPointer<flatbuffers::String *>(VT_SIGN); }
   /// 暂时固定值："person"
   const flatbuffers::String *deviceType() const { return GetPointer<const flatbuffers::String *>(VT_DEVICETYPE); }
-  flatbuffers::String *mutable_deviceType() { return GetPointer<flatbuffers::String *>(VT_DEVICETYPE); }
   const flatbuffers::String *deviceNum() const { return GetPointer<const flatbuffers::String *>(VT_DEVICENUM); }
-  flatbuffers::String *mutable_deviceNum() { return GetPointer<flatbuffers::String *>(VT_DEVICENUM); }
   const flatbuffers::String *deviceIp() const { return GetPointer<const flatbuffers::String *>(VT_DEVICEIP); }
-  flatbuffers::String *mutable_deviceIp() { return GetPointer<flatbuffers::String *>(VT_DEVICEIP); }
   const flatbuffers::String *capTime() const { return GetPointer<const flatbuffers::String *>(VT_CAPTIME); }
-  flatbuffers::String *mutable_capTime() { return GetPointer<flatbuffers::String *>(VT_CAPTIME); }
   int32_t handle() const { return GetField<int32_t>(VT_HANDLE, 0); }
-  bool mutate_handle(int32_t _handle) { return SetField(VT_HANDLE, _handle); }
   const flatbuffers::String *reservered() const { return GetPointer<const flatbuffers::String *>(VT_RESERVERED); }
-  flatbuffers::String *mutable_reservered() { return GetPointer<flatbuffers::String *>(VT_RESERVERED); }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<flatbuffers::uoffset_t>(verifier, VT_SIGN) &&
@@ -225,39 +219,33 @@ inline flatbuffers::Offset<MessageHeader> CreateMessageHeaderDirect(flatbuffers:
 /// 车票信息
 struct TicketInfo FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   enum {
-    VT_TICKETRESULT = 4,
-    VT_STATIONNAME = 6,
-    VT_STATIONNO = 8,
-    VT_TICKETNO = 10,
-    VT_BUSNO = 12,
-    VT_SEATNO = 14,
-    VT_GOSTATION = 16,
-    VT_GOTIME = 18,
-    VT_ARRIVESTATION = 20,
-    VT_ARRIVETIME = 22
+    VT_TICKETTYPE = 4,
+    VT_TICKETRESULT = 6,
+    VT_STATIONNAME = 8,
+    VT_STATIONNO = 10,
+    VT_TICKETNO = 12,
+    VT_BUSNO = 14,
+    VT_SEATNO = 16,
+    VT_GOSTATION = 18,
+    VT_GOTIME = 20,
+    VT_ARRIVESTATION = 22,
+    VT_ARRIVETIME = 24
   };
+  /// 车票类型，1：火车票；2：客车票；3：飞机票
+  int32_t ticketType() const { return GetField<int32_t>(VT_TICKETTYPE, 0); }
   int32_t ticketResult() const { return GetField<int32_t>(VT_TICKETRESULT, 0); }
-  bool mutate_ticketResult(int32_t _ticketResult) { return SetField(VT_TICKETRESULT, _ticketResult); }
   const flatbuffers::String *stationName() const { return GetPointer<const flatbuffers::String *>(VT_STATIONNAME); }
-  flatbuffers::String *mutable_stationName() { return GetPointer<flatbuffers::String *>(VT_STATIONNAME); }
   const flatbuffers::String *stationNO() const { return GetPointer<const flatbuffers::String *>(VT_STATIONNO); }
-  flatbuffers::String *mutable_stationNO() { return GetPointer<flatbuffers::String *>(VT_STATIONNO); }
   const flatbuffers::String *ticketNO() const { return GetPointer<const flatbuffers::String *>(VT_TICKETNO); }
-  flatbuffers::String *mutable_ticketNO() { return GetPointer<flatbuffers::String *>(VT_TICKETNO); }
   const flatbuffers::String *busNO() const { return GetPointer<const flatbuffers::String *>(VT_BUSNO); }
-  flatbuffers::String *mutable_busNO() { return GetPointer<flatbuffers::String *>(VT_BUSNO); }
   const flatbuffers::String *seatNo() const { return GetPointer<const flatbuffers::String *>(VT_SEATNO); }
-  flatbuffers::String *mutable_seatNo() { return GetPointer<flatbuffers::String *>(VT_SEATNO); }
   const flatbuffers::String *goStation() const { return GetPointer<const flatbuffers::String *>(VT_GOSTATION); }
-  flatbuffers::String *mutable_goStation() { return GetPointer<flatbuffers::String *>(VT_GOSTATION); }
   const flatbuffers::String *goTime() const { return GetPointer<const flatbuffers::String *>(VT_GOTIME); }
-  flatbuffers::String *mutable_goTime() { return GetPointer<flatbuffers::String *>(VT_GOTIME); }
   const flatbuffers::String *arriveStation() const { return GetPointer<const flatbuffers::String *>(VT_ARRIVESTATION); }
-  flatbuffers::String *mutable_arriveStation() { return GetPointer<flatbuffers::String *>(VT_ARRIVESTATION); }
   const flatbuffers::String *arriveTime() const { return GetPointer<const flatbuffers::String *>(VT_ARRIVETIME); }
-  flatbuffers::String *mutable_arriveTime() { return GetPointer<flatbuffers::String *>(VT_ARRIVETIME); }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
+           VerifyField<int32_t>(verifier, VT_TICKETTYPE) &&
            VerifyField<int32_t>(verifier, VT_TICKETRESULT) &&
            VerifyField<flatbuffers::uoffset_t>(verifier, VT_STATIONNAME) &&
            verifier.Verify(stationName()) &&
@@ -284,6 +272,7 @@ struct TicketInfo FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
 struct TicketInfoBuilder {
   flatbuffers::FlatBufferBuilder &fbb_;
   flatbuffers::uoffset_t start_;
+  void add_ticketType(int32_t ticketType) { fbb_.AddElement<int32_t>(TicketInfo::VT_TICKETTYPE, ticketType, 0); }
   void add_ticketResult(int32_t ticketResult) { fbb_.AddElement<int32_t>(TicketInfo::VT_TICKETRESULT, ticketResult, 0); }
   void add_stationName(flatbuffers::Offset<flatbuffers::String> stationName) { fbb_.AddOffset(TicketInfo::VT_STATIONNAME, stationName); }
   void add_stationNO(flatbuffers::Offset<flatbuffers::String> stationNO) { fbb_.AddOffset(TicketInfo::VT_STATIONNO, stationNO); }
@@ -297,12 +286,13 @@ struct TicketInfoBuilder {
   TicketInfoBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
   TicketInfoBuilder &operator=(const TicketInfoBuilder &);
   flatbuffers::Offset<TicketInfo> Finish() {
-    auto o = flatbuffers::Offset<TicketInfo>(fbb_.EndTable(start_, 10));
+    auto o = flatbuffers::Offset<TicketInfo>(fbb_.EndTable(start_, 11));
     return o;
   }
 };
 
 inline flatbuffers::Offset<TicketInfo> CreateTicketInfo(flatbuffers::FlatBufferBuilder &_fbb,
+    int32_t ticketType = 0,
     int32_t ticketResult = 0,
     flatbuffers::Offset<flatbuffers::String> stationName = 0,
     flatbuffers::Offset<flatbuffers::String> stationNO = 0,
@@ -324,10 +314,12 @@ inline flatbuffers::Offset<TicketInfo> CreateTicketInfo(flatbuffers::FlatBufferB
   builder_.add_stationNO(stationNO);
   builder_.add_stationName(stationName);
   builder_.add_ticketResult(ticketResult);
+  builder_.add_ticketType(ticketType);
   return builder_.Finish();
 }
 
 inline flatbuffers::Offset<TicketInfo> CreateTicketInfoDirect(flatbuffers::FlatBufferBuilder &_fbb,
+    int32_t ticketType = 0,
     int32_t ticketResult = 0,
     const char *stationName = nullptr,
     const char *stationNO = nullptr,
@@ -338,7 +330,7 @@ inline flatbuffers::Offset<TicketInfo> CreateTicketInfoDirect(flatbuffers::FlatB
     const char *goTime = nullptr,
     const char *arriveStation = nullptr,
     const char *arriveTime = nullptr) {
-  return CreateTicketInfo(_fbb, ticketResult, stationName ? _fbb.CreateString(stationName) : 0, stationNO ? _fbb.CreateString(stationNO) : 0, ticketNO ? _fbb.CreateString(ticketNO) : 0, busNO ? _fbb.CreateString(busNO) : 0, seatNo ? _fbb.CreateString(seatNo) : 0, goStation ? _fbb.CreateString(goStation) : 0, goTime ? _fbb.CreateString(goTime) : 0, arriveStation ? _fbb.CreateString(arriveStation) : 0, arriveTime ? _fbb.CreateString(arriveTime) : 0);
+  return CreateTicketInfo(_fbb, ticketType, ticketResult, stationName ? _fbb.CreateString(stationName) : 0, stationNO ? _fbb.CreateString(stationNO) : 0, ticketNO ? _fbb.CreateString(ticketNO) : 0, busNO ? _fbb.CreateString(busNO) : 0, seatNo ? _fbb.CreateString(seatNo) : 0, goStation ? _fbb.CreateString(goStation) : 0, goTime ? _fbb.CreateString(goTime) : 0, arriveStation ? _fbb.CreateString(arriveStation) : 0, arriveTime ? _fbb.CreateString(arriveTime) : 0);
 }
 
 /// 黑名单信息
@@ -351,17 +343,13 @@ struct Blacklist FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   };
   /// 是否比中黑名单，1：比中；2：未比中；3：未比对
   int32_t blackResult() const { return GetField<int32_t>(VT_BLACKRESULT, 0); }
-  bool mutate_blackResult(int32_t _blackResult) { return SetField(VT_BLACKRESULT, _blackResult); }
   /// 名单查询状态，0：正常；比如超时-4、-5，到管理屏提示：网络异常
   /// -6、-90、-91、-98、-99，管理屏提示：数据查询异常
   int32_t blackStatus() const { return GetField<int32_t>(VT_BLACKSTATUS, 0); }
-  bool mutate_blackStatus(int32_t _blackStatus) { return SetField(VT_BLACKSTATUS, _blackStatus); }
   /// jobID
   const flatbuffers::String *blackJobID() const { return GetPointer<const flatbuffers::String *>(VT_BLACKJOBID); }
-  flatbuffers::String *mutable_blackJobID() { return GetPointer<flatbuffers::String *>(VT_BLACKJOBID); }
   /// 人员类型 json
   const flatbuffers::String *personInfo() const { return GetPointer<const flatbuffers::String *>(VT_PERSONINFO); }
-  flatbuffers::String *mutable_personInfo() { return GetPointer<flatbuffers::String *>(VT_PERSONINFO); }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<int32_t>(verifier, VT_BLACKRESULT) &&
@@ -425,79 +413,64 @@ struct TransportInfo FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
     VT_VERIFYRESULT = 22,
     VT_FACEMATCHRESULT = 24,
     VT_FACESCORE = 26,
-    VT_SCRIMAGESIZE = 28,
-    VT_SRCIMAGE = 30,
-    VT_CROPIMAGESIZE = 32,
-    VT_CROPIMAGE = 34,
-    VT_FPCAPRESULT = 36,
-    VT_FPQULITY = 38,
-    VT_FPSCORE = 40,
-    VT_FPIMAGESIZE = 42,
-    VT_FPIMAGE = 44
+    VT_FACEQUALITYSCORE = 28,
+    VT_SCRIMAGESIZE = 30,
+    VT_SRCIMAGE = 32,
+    VT_CROPIMAGESIZE = 34,
+    VT_CROPIMAGE = 36,
+    VT_FPCAPRESULT = 38,
+    VT_FPCOMPAREFEATUREID = 40,
+    VT_FPQULITY = 42,
+    VT_FPSCORE = 44,
+    VT_FPIMAGESIZE = 46,
+    VT_FPIMAGE = 48
   };
   /// 消息头
   const MessageHeader *header() const { return GetPointer<const MessageHeader *>(VT_HEADER); }
-  MessageHeader *mutable_header() { return GetPointer<MessageHeader *>(VT_HEADER); }
   /// 身份证信息
   const IDCardMessage *idcardInfo() const { return GetPointer<const IDCardMessage *>(VT_IDCARDINFO); }
-  IDCardMessage *mutable_idcardInfo() { return GetPointer<IDCardMessage *>(VT_IDCARDINFO); }
   /// 身份证照片大小
   int32_t idImageSize() const { return GetField<int32_t>(VT_IDIMAGESIZE, 0); }
-  bool mutate_idImageSize(int32_t _idImageSize) { return SetField(VT_IDIMAGESIZE, _idImageSize); }
   /// 身份证照片数据
   const flatbuffers::Vector<uint8_t> *idImage() const { return GetPointer<const flatbuffers::Vector<uint8_t> *>(VT_IDIMAGE); }
-  flatbuffers::Vector<uint8_t> *mutable_idImage() { return GetPointer<flatbuffers::Vector<uint8_t> *>(VT_IDIMAGE); }
   /// 身份证中是否有指纹信息
   int32_t fpFeatExsist() const { return GetField<int32_t>(VT_FPFEATEXSIST, 0); }
-  bool mutate_fpFeatExsist(int32_t _fpFeatExsist) { return SetField(VT_FPFEATEXSIST, _fpFeatExsist); }
   /// 左手指纹特征（身份证中）
   const flatbuffers::Vector<uint8_t> *featureL() const { return GetPointer<const flatbuffers::Vector<uint8_t> *>(VT_FEATUREL); }
-  flatbuffers::Vector<uint8_t> *mutable_featureL() { return GetPointer<flatbuffers::Vector<uint8_t> *>(VT_FEATUREL); }
   /// 右手指纹特征
   const flatbuffers::Vector<uint8_t> *featureR() const { return GetPointer<const flatbuffers::Vector<uint8_t> *>(VT_FEATURER); }
-  flatbuffers::Vector<uint8_t> *mutable_featureR() { return GetPointer<flatbuffers::Vector<uint8_t> *>(VT_FEATURER); }
   /// 车票信息
   const TicketInfo *ticketInfo() const { return GetPointer<const TicketInfo *>(VT_TICKETINFO); }
-  TicketInfo *mutable_ticketInfo() { return GetPointer<TicketInfo *>(VT_TICKETINFO); }
   /// 黑名单信息
   const Blacklist *blackInfo() const { return GetPointer<const Blacklist *>(VT_BLACKINFO); }
-  Blacklist *mutable_blackInfo() { return GetPointer<Blacklist *>(VT_BLACKINFO); }
   /// 人证合一比对结果，1：比对通过；2：比对不通过；3：未必对
   int32_t verifyResult() const { return GetField<int32_t>(VT_VERIFYRESULT, 0); }
-  bool mutate_verifyResult(int32_t _verifyResult) { return SetField(VT_VERIFYRESULT, _verifyResult); }
   /// 人像比对结果，1：成功；2：失败；3：未比对
   int32_t faceMatchResult() const { return GetField<int32_t>(VT_FACEMATCHRESULT, 0); }
-  bool mutate_faceMatchResult(int32_t _faceMatchResult) { return SetField(VT_FACEMATCHRESULT, _faceMatchResult); }
   /// 人像比对分数
   int32_t faceScore() const { return GetField<int32_t>(VT_FACESCORE, 0); }
-  bool mutate_faceScore(int32_t _faceScore) { return SetField(VT_FACESCORE, _faceScore); }
+  /// 质量分数
+  int32_t faceQualityScore() const { return GetField<int32_t>(VT_FACEQUALITYSCORE, 0); }
   /// 现场人像图片大小
   int32_t scrImageSize() const { return GetField<int32_t>(VT_SCRIMAGESIZE, 0); }
-  bool mutate_scrImageSize(int32_t _scrImageSize) { return SetField(VT_SCRIMAGESIZE, _scrImageSize); }
   /// 现场图片数据
   const flatbuffers::Vector<uint8_t> *srcImage() const { return GetPointer<const flatbuffers::Vector<uint8_t> *>(VT_SRCIMAGE); }
-  flatbuffers::Vector<uint8_t> *mutable_srcImage() { return GetPointer<flatbuffers::Vector<uint8_t> *>(VT_SRCIMAGE); }
   /// 现场裁剪图大小
   int32_t cropImageSize() const { return GetField<int32_t>(VT_CROPIMAGESIZE, 0); }
-  bool mutate_cropImageSize(int32_t _cropImageSize) { return SetField(VT_CROPIMAGESIZE, _cropImageSize); }
   /// 现场裁剪图片
   const flatbuffers::Vector<uint8_t> *cropImage() const { return GetPointer<const flatbuffers::Vector<uint8_t> *>(VT_CROPIMAGE); }
-  flatbuffers::Vector<uint8_t> *mutable_cropImage() { return GetPointer<flatbuffers::Vector<uint8_t> *>(VT_CROPIMAGE); }
   /// 指纹比对结果，1：成功；2：失败；3：未必对
   int32_t fpCapResult() const { return GetField<int32_t>(VT_FPCAPRESULT, 0); }
-  bool mutate_fpCapResult(int32_t _fpCapResult) { return SetField(VT_FPCAPRESULT, _fpCapResult); }
+  /// 比中的指纹ID
+  int32_t fpCompareFeatureId() const { return GetField<int32_t>(VT_FPCOMPAREFEATUREID, 0); }
   /// 指纹质量分数
   int32_t fpQulity() const { return GetField<int32_t>(VT_FPQULITY, 0); }
-  bool mutate_fpQulity(int32_t _fpQulity) { return SetField(VT_FPQULITY, _fpQulity); }
   /// 指纹比对分数
   int32_t fpScore() const { return GetField<int32_t>(VT_FPSCORE, 0); }
-  bool mutate_fpScore(int32_t _fpScore) { return SetField(VT_FPSCORE, _fpScore); }
   /// 指纹图片大小
   int32_t fpImageSize() const { return GetField<int32_t>(VT_FPIMAGESIZE, 0); }
-  bool mutate_fpImageSize(int32_t _fpImageSize) { return SetField(VT_FPIMAGESIZE, _fpImageSize); }
   /// 指纹图片数据
   const flatbuffers::Vector<uint8_t> *fpImage() const { return GetPointer<const flatbuffers::Vector<uint8_t> *>(VT_FPIMAGE); }
-  flatbuffers::Vector<uint8_t> *mutable_fpImage() { return GetPointer<flatbuffers::Vector<uint8_t> *>(VT_FPIMAGE); }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<flatbuffers::uoffset_t>(verifier, VT_HEADER) &&
@@ -519,6 +492,7 @@ struct TransportInfo FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
            VerifyField<int32_t>(verifier, VT_VERIFYRESULT) &&
            VerifyField<int32_t>(verifier, VT_FACEMATCHRESULT) &&
            VerifyField<int32_t>(verifier, VT_FACESCORE) &&
+           VerifyField<int32_t>(verifier, VT_FACEQUALITYSCORE) &&
            VerifyField<int32_t>(verifier, VT_SCRIMAGESIZE) &&
            VerifyField<flatbuffers::uoffset_t>(verifier, VT_SRCIMAGE) &&
            verifier.Verify(srcImage()) &&
@@ -526,6 +500,7 @@ struct TransportInfo FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
            VerifyField<flatbuffers::uoffset_t>(verifier, VT_CROPIMAGE) &&
            verifier.Verify(cropImage()) &&
            VerifyField<int32_t>(verifier, VT_FPCAPRESULT) &&
+           VerifyField<int32_t>(verifier, VT_FPCOMPAREFEATUREID) &&
            VerifyField<int32_t>(verifier, VT_FPQULITY) &&
            VerifyField<int32_t>(verifier, VT_FPSCORE) &&
            VerifyField<int32_t>(verifier, VT_FPIMAGESIZE) &&
@@ -550,11 +525,13 @@ struct TransportInfoBuilder {
   void add_verifyResult(int32_t verifyResult) { fbb_.AddElement<int32_t>(TransportInfo::VT_VERIFYRESULT, verifyResult, 0); }
   void add_faceMatchResult(int32_t faceMatchResult) { fbb_.AddElement<int32_t>(TransportInfo::VT_FACEMATCHRESULT, faceMatchResult, 0); }
   void add_faceScore(int32_t faceScore) { fbb_.AddElement<int32_t>(TransportInfo::VT_FACESCORE, faceScore, 0); }
+  void add_faceQualityScore(int32_t faceQualityScore) { fbb_.AddElement<int32_t>(TransportInfo::VT_FACEQUALITYSCORE, faceQualityScore, 0); }
   void add_scrImageSize(int32_t scrImageSize) { fbb_.AddElement<int32_t>(TransportInfo::VT_SCRIMAGESIZE, scrImageSize, 0); }
   void add_srcImage(flatbuffers::Offset<flatbuffers::Vector<uint8_t>> srcImage) { fbb_.AddOffset(TransportInfo::VT_SRCIMAGE, srcImage); }
   void add_cropImageSize(int32_t cropImageSize) { fbb_.AddElement<int32_t>(TransportInfo::VT_CROPIMAGESIZE, cropImageSize, 0); }
   void add_cropImage(flatbuffers::Offset<flatbuffers::Vector<uint8_t>> cropImage) { fbb_.AddOffset(TransportInfo::VT_CROPIMAGE, cropImage); }
   void add_fpCapResult(int32_t fpCapResult) { fbb_.AddElement<int32_t>(TransportInfo::VT_FPCAPRESULT, fpCapResult, 0); }
+  void add_fpCompareFeatureId(int32_t fpCompareFeatureId) { fbb_.AddElement<int32_t>(TransportInfo::VT_FPCOMPAREFEATUREID, fpCompareFeatureId, 0); }
   void add_fpQulity(int32_t fpQulity) { fbb_.AddElement<int32_t>(TransportInfo::VT_FPQULITY, fpQulity, 0); }
   void add_fpScore(int32_t fpScore) { fbb_.AddElement<int32_t>(TransportInfo::VT_FPSCORE, fpScore, 0); }
   void add_fpImageSize(int32_t fpImageSize) { fbb_.AddElement<int32_t>(TransportInfo::VT_FPIMAGESIZE, fpImageSize, 0); }
@@ -562,7 +539,7 @@ struct TransportInfoBuilder {
   TransportInfoBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
   TransportInfoBuilder &operator=(const TransportInfoBuilder &);
   flatbuffers::Offset<TransportInfo> Finish() {
-    auto o = flatbuffers::Offset<TransportInfo>(fbb_.EndTable(start_, 21));
+    auto o = flatbuffers::Offset<TransportInfo>(fbb_.EndTable(start_, 23));
     return o;
   }
 };
@@ -580,11 +557,13 @@ inline flatbuffers::Offset<TransportInfo> CreateTransportInfo(flatbuffers::FlatB
     int32_t verifyResult = 0,
     int32_t faceMatchResult = 0,
     int32_t faceScore = 0,
+    int32_t faceQualityScore = 0,
     int32_t scrImageSize = 0,
     flatbuffers::Offset<flatbuffers::Vector<uint8_t>> srcImage = 0,
     int32_t cropImageSize = 0,
     flatbuffers::Offset<flatbuffers::Vector<uint8_t>> cropImage = 0,
     int32_t fpCapResult = 0,
+    int32_t fpCompareFeatureId = 0,
     int32_t fpQulity = 0,
     int32_t fpScore = 0,
     int32_t fpImageSize = 0,
@@ -594,11 +573,13 @@ inline flatbuffers::Offset<TransportInfo> CreateTransportInfo(flatbuffers::FlatB
   builder_.add_fpImageSize(fpImageSize);
   builder_.add_fpScore(fpScore);
   builder_.add_fpQulity(fpQulity);
+  builder_.add_fpCompareFeatureId(fpCompareFeatureId);
   builder_.add_fpCapResult(fpCapResult);
   builder_.add_cropImage(cropImage);
   builder_.add_cropImageSize(cropImageSize);
   builder_.add_srcImage(srcImage);
   builder_.add_scrImageSize(scrImageSize);
+  builder_.add_faceQualityScore(faceQualityScore);
   builder_.add_faceScore(faceScore);
   builder_.add_faceMatchResult(faceMatchResult);
   builder_.add_verifyResult(verifyResult);
@@ -627,21 +608,21 @@ inline flatbuffers::Offset<TransportInfo> CreateTransportInfoDirect(flatbuffers:
     int32_t verifyResult = 0,
     int32_t faceMatchResult = 0,
     int32_t faceScore = 0,
+    int32_t faceQualityScore = 0,
     int32_t scrImageSize = 0,
     const std::vector<uint8_t> *srcImage = nullptr,
     int32_t cropImageSize = 0,
     const std::vector<uint8_t> *cropImage = nullptr,
     int32_t fpCapResult = 0,
+    int32_t fpCompareFeatureId = 0,
     int32_t fpQulity = 0,
     int32_t fpScore = 0,
     int32_t fpImageSize = 0,
     const std::vector<uint8_t> *fpImage = nullptr) {
-  return CreateTransportInfo(_fbb, header, idcardInfo, idImageSize, idImage ? _fbb.CreateVector<uint8_t>(*idImage) : 0, fpFeatExsist, featureL ? _fbb.CreateVector<uint8_t>(*featureL) : 0, featureR ? _fbb.CreateVector<uint8_t>(*featureR) : 0, ticketInfo, blackInfo, verifyResult, faceMatchResult, faceScore, scrImageSize, srcImage ? _fbb.CreateVector<uint8_t>(*srcImage) : 0, cropImageSize, cropImage ? _fbb.CreateVector<uint8_t>(*cropImage) : 0, fpCapResult, fpQulity, fpScore, fpImageSize, fpImage ? _fbb.CreateVector<uint8_t>(*fpImage) : 0);
+  return CreateTransportInfo(_fbb, header, idcardInfo, idImageSize, idImage ? _fbb.CreateVector<uint8_t>(*idImage) : 0, fpFeatExsist, featureL ? _fbb.CreateVector<uint8_t>(*featureL) : 0, featureR ? _fbb.CreateVector<uint8_t>(*featureR) : 0, ticketInfo, blackInfo, verifyResult, faceMatchResult, faceScore, faceQualityScore, scrImageSize, srcImage ? _fbb.CreateVector<uint8_t>(*srcImage) : 0, cropImageSize, cropImage ? _fbb.CreateVector<uint8_t>(*cropImage) : 0, fpCapResult, fpCompareFeatureId, fpQulity, fpScore, fpImageSize, fpImage ? _fbb.CreateVector<uint8_t>(*fpImage) : 0);
 }
 
 inline const MyTransportInfo::TransportInfo *GetTransportInfo(const void *buf) { return flatbuffers::GetRoot<MyTransportInfo::TransportInfo>(buf); }
-
-inline TransportInfo *GetMutableTransportInfo(void *buf) { return flatbuffers::GetMutableRoot<TransportInfo>(buf); }
 
 inline bool VerifyTransportInfoBuffer(flatbuffers::Verifier &verifier) { return verifier.VerifyBuffer<MyTransportInfo::TransportInfo>(nullptr); }
 
