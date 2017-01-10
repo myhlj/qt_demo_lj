@@ -1,4 +1,4 @@
-#include "options.h"
+﻿#include "options.h"
 
 #define  CONFIGNAME "channel.ini"
 #define  CHANNELGROUP "ChannelOption"
@@ -45,7 +45,7 @@ void options::SetDataTransFlag(bool bflag)
     m_p_qsetting->endGroup();
 }
 
-void options::SetDataTransIP(const std::__cxx11::string &sIp)
+void options::SetDataTransIP(const std::string &sIp)
 {
     m_strDataTransIP = sIp;
     m_p_qsetting->beginGroup(TRANSGROUP);

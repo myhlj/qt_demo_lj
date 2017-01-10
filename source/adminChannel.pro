@@ -6,6 +6,7 @@
 
 QT       += core gui uitools
 QT       += network
+QMAKE_CXXFLAGS += -std=c++11
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -18,7 +19,7 @@ INCLUDEPATH += . ./include ./include/bson \
                 ./apps/wrapper
 
 SOURCES += apps/main.cpp\
-        apps/view/doublechannelwidget.cpp \
+    apps/view/doublechannelwidget.cpp \
     apps/controller/main_controller.cpp \
     apps/factory/ViewFactory.cpp \
     apps/view/main_view.cpp \
@@ -48,8 +49,16 @@ HEADERS  += apps/view/doublechannelwidget.h \
     apps/view/THIDErrorDef.h \
     apps/view/keydialog.h
 
+unix:!macx{
 LIBS += -L /usr/lib/hisign/VerifyEngine \
         -lTHIDImageHelper
+}
+
+
+win32{
+LIBS += -L../libs/windows \
+        -lTHIDImageHelper
+}
 
 FORMS    += apps/view/doublechannelwidget.ui \
     apps/view/keydialog.ui

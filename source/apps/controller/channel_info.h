@@ -1,4 +1,4 @@
-#ifndef CHANNEL_INFO_H
+﻿#ifndef CHANNEL_INFO_H
 #define CHANNEL_INFO_H
 //通道信息
 struct ChannelInfo{

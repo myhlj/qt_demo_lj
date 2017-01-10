@@ -1,27 +1,15 @@
 namespace MyTransportInfo;
 
-//消息类型
-enum MessType : int
-{
-    OPENGATE=1,       // 开门
-	SETGATE,          // 常开   
-	HEARTBEAT,        // 心跳
-	CLOSETEMINAL,     //关机
-	RESTART,          // 重启
-	VERIFYMODE,       //验证模式切换
-	ADDEXPOSE,        // 增加曝光
-	MINUSEXPOSE,      //减少曝光
-    TRANSPORTINFO,    //tansportinfo消息
-	EXIT              // 退出当前系统
-}
-
-
-//身份证信息
+/// 身份证信息
 table IDCardMessage
 {
     name:string;
     gender:string;
-    folk:string; birthday:string;
+    /// 民族
+    folk:string;
+    /// 民族代码
+    nationCode:string;
+    birthday:string;
     code:string;
     address:string;
     agency:string;
@@ -29,13 +17,12 @@ table IDCardMessage
     expireEnd:string;
 }
 
-
-//消息头
+/// 消息头
 table MessageHeader
 {
+    /// 暂时固定值："HisignGate"
     sign:string;
-    messagetype:MessType = HEARTBEAT;
-    version:string;
+    /// 暂时固定值："person"
     deviceType:string;
     deviceNum:string;
     deviceIp:string;
@@ -44,61 +31,94 @@ table MessageHeader
     reservered:string;
 }
 
-
-//车票信息
+/// 车票信息
 table TicketInfo
 {
+    /// 车票类型，1：火车票；2：客车票；3：飞机票
+    ticketType:int;
     ticketResult:int;
+    stationName:string;
+    stationNO:string;
     ticketNO:string;
+    busNO:string;
+    seatNo:string;
     goStation:string;
     goTime:string;
     arriveStation:string;
     arriveTime:string;
-    busNo:string;
 }
 
+/// 黑名单信息
 table Blacklist
 {
-    blackResult:int;        //是否比中黑名单1比中 2未比中 3未比对
-    blackStatus:int;        //名单查询状态  比如超时
-    personInfo:string;      //人员类型
+    /// 是否比中黑名单，1：比中；2：未比中；3：未比对
+    blackResult:int;
+    /// 名单查询状态，0：正常；比如超时-4、-5，到管理屏提示：网络异常
+    /// -6、-90、-91、-98、-99，管理屏提示：数据查询异常
+    blackStatus:int;
+    /// jobID
+    blackJobID:string;
+    /// 人员类型 json
+    personInfo:string;
 }
 
-
-
-//根据阎军的建议,图片不要用flatbuffer序列化,直接发送二进制数据
+/// 根据阎军的建议，图片不要用flatbuffer序列化，直接发送二进制数据
 table TransportInfo
 {
-    header:MessageHeader;   //消息头
+    /// 消息头
+    header:MessageHeader;
     
-    idcardInfo:IDCardMessage;//身份证信息
-    idImageSize:int;        //身份证照片大小
-    idImage:[ubyte];        //身份证照片数据
-    fpFeatExsist:int;       //身份证中是否有指纹信息
-    featureL:[ubyte];       //左手指纹特征(身份证中)
-    featureR:[ubyte];       //右手指纹特征
+    /// 身份证信息
+    idcardInfo:IDCardMessage;
+    /// 身份证照片大小
+    idImageSize:int;
+    /// 身份证照片数据
+    idImage:[ubyte];
 
+    /// 身份证中是否有指纹信息
+    fpFeatExsist:int;
+    /// 左手指纹特征（身份证中）
+    featureL:[ubyte];
+    /// 右手指纹特征
+    featureR:[ubyte];
 
-    ticketInfo:TicketInfo;  //车票信息
+    /// 车票信息
+    ticketInfo:TicketInfo;
+    /// 黑名单信息
     blackInfo:Blacklist;
    
+    /// 人证合一比对结果，1：比对通过；2：比对不通过；3：未必对
+    verifyResult:int;
+    /// 人像比对结果，1：成功；2：失败；3：未比对
+    faceMatchResult:int;
+    /// 人像比对分数
+    faceScore:int;
+    /// 质量分数
+    faceQualityScore:int;
 
-    verifyResult:int;       //人证合一比对结果1比对通过2比对不通过3未必对
-    faceMatchResult:int;    //人像比对结果1成功2 失败 3未比对
-    faceScore:int;          //人像比对分数
+    /// 现场人像图片大小
+    scrImageSize:int;
+    /// 现场图片数据
+    srcImage:[ubyte];
 
-    scrImageSize:int;       //现场人像图片大小
-    srcImage:[ubyte];       //现场图片数据
-
-    cropImageSize:int;      //现场裁剪图大小
-    cropImage:[ubyte];      //现场裁剪图片
+    /// 现场裁剪图大小
+    cropImageSize:int;
+    /// 现场裁剪图片
+    cropImage:[ubyte];
   
-    fpCapResult:int;        //指纹比对结果1成功2失败3未必对
-    fpQulity:int;           //指纹质量分数
-    fpScore:int;            //指纹比对分数
+    /// 指纹比对结果，1：成功；2：失败；3：未必对
+    fpCapResult:int;
+    /// 比中的指纹ID
+    fpCompareFeatureId:int;
+    /// 指纹质量分数
+    fpQulity:int;
+    /// 指纹比对分数
+    fpScore:int;
 
-    fpImageSize:int;        //指纹图片大小
-    fpImage:[ubyte];        //指纹图片数据
+    /// 指纹图片大小
+    fpImageSize:int;
+    /// 指纹图片数据
+    fpImage:[ubyte];
 }
 
 root_type TransportInfo;
