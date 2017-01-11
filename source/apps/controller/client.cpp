@@ -45,7 +45,11 @@ bool client::Send(const string &sIP, int port, const char *data, int length,stri
     if(m_p_client->waitForConnected()){
         //先发一个固定的8位包长度
         char sLength[9] = {0};
+#ifdef WIN32
+        sprintf(sLength,"%08d",length);
+#elif __linux__
         snprintf(sLength,9,"%08d",length);
+#endif
         m_p_client->write(sLength,8);
         if(length == m_p_client->write(data,length)){
             if(m_p_client->waitForBytesWritten()){
