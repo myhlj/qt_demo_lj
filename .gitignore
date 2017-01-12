@@ -37,4 +37,5 @@ VerifyEnginSo/*
 .*~
 *.*~
 *.user
+build/*
 $tf*/
