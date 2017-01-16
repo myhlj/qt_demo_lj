@@ -8,6 +8,7 @@
 #include <QCloseEvent>
 #include <QDir>
 #include <QDateTime>
+#include <QTimer>
 #include "options.h"
 #include "IMainController.h"
 #include "THIDImageHelper.h"
@@ -85,11 +86,21 @@ void DoubleChannelWidget::Init()
     if(!dir.exists(qs_path)){
         dir.mkdir(qs_path);
     }
+    //timer
+    QTimer* timer = new QTimer(this);
+    connect(timer,SIGNAL(timeout()),this,SLOT(recive_showtime()));
+    timer->start(1000);
+}
+
+void DoubleChannelWidget::recive_showtime()
+{
+    QDateTime time = QDateTime::currentDateTime();//获取系统现在的时间
+    QString strTime = time.toString("yyyy-MM-dd hh:mm:ss"); //设置显示格式
+    ui->label_curtime->setText(strTime);
 }
 
 void DoubleChannelWidget::ShowView()
 {
-//    ui->show();
     this->show();
 }
 

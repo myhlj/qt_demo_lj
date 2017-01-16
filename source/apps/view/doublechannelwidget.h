@@ -29,7 +29,6 @@ public:
     void Init();
     void ShowView();
     void ShowAcrossInfo(const QByteArray& data);
-
     // QWidget interface
 protected:
     void closeEvent(QCloseEvent *);
@@ -68,6 +67,7 @@ private slots:
 
     void keyboardDestoryed();
     void keyboardOnOk();
+    void recive_showtime();
 private:
     Ui::DoubleChannelWidget *ui;
     IMainController *controller;

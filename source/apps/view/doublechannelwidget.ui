@@ -193,9 +193,9 @@
    <widget class="QLabel" name="label_curtime">
     <property name="geometry">
      <rect>
-      <x>548</x>
+      <x>530</x>
       <y>31</y>
-      <width>201</width>
+      <width>231</width>
       <height>22</height>
      </rect>
     </property>
