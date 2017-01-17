@@ -9,6 +9,8 @@
 #include <QDir>
 #include <QDateTime>
 #include <QTimer>
+#include <iostream>
+#include <QPainter>
 #include "options.h"
 #include "IMainController.h"
 #include "THIDImageHelper.h"
@@ -26,7 +28,11 @@ DoubleChannelWidget::DoubleChannelWidget(QWidget *parent) :
     ui(new Ui::DoubleChannelWidget),
     m_bSwitched(true),//facemode
     m_nBatch(1),
-    m_pMovie(NULL)
+    m_pMovie(NULL),
+    m_across_num_chanel1(0),
+    m_across_num_chanel2(0),
+    m_across_warnnum_chanel1(0),
+    m_across_warnnum_chanel2(0)
 {
     ui->setupUi(this);
     m_pMovie = new QMovie(":img/page/wait.gif");
@@ -90,6 +96,9 @@ void DoubleChannelWidget::Init()
     QTimer* timer = new QTimer(this);
     connect(timer,SIGNAL(timeout()),this,SLOT(recive_showtime()));
     timer->start(1000);
+    //加载上次过往的最后一批人员
+    GetNewBatchData();
+    ShowBottomPic();
 }
 
 void DoubleChannelWidget::recive_showtime()
@@ -137,33 +146,41 @@ void DoubleChannelWidget::ShowAcrossInfo(const QByteArray& data)
     }
     //是否存储在内存供界面显示
     int nIndex = ui->comboBox_chanel->currentIndex();//当前界面选择index
+    int nHandle = pInfo->header()->handle();
     switch(nIndex){
-        case 0:
-        if(pInfo->header()->handle() == (nIndex + 1) && (nIndex + 1) == 1){//通道1
-            ui->label_picchannel_3->setStyleSheet("border-image: url(:/img/page/btn-gate1.png);");
-            SaveToVector(data);
-            SaveData(data,pInfo);
+        case 0:{//通道1
+            if(nHandle == GATEONE){
+                ui->label_picchannel_3->setStyleSheet("border-image: url(:/img/page/btn-gate1.png);");
+                SaveToVector(data);
+                SaveData(data,pInfo);
+            }
         }
         break;
-        case 1:
-        if(pInfo->header()->handle() == (nIndex + 1) && (nIndex + 1) == 2){//通道2
-            ui->label_picchannel_3->setStyleSheet("border-image: url(:/img/page/btn-gate2.png);");
-            SaveToVector(data);
-            SaveData(data,pInfo);
+        case 1:{//通道2
+            if(nHandle == GATETWO){
+                ui->label_picchannel_3->setStyleSheet("border-image: url(:/img/page/btn-gate2.png);");
+                SaveToVector(data);
+                SaveData(data,pInfo);
+            }
         }
         break;
-        case 2://双通道
-        ui->label_picchannel->setStyleSheet("border-image: url(:/img/page/btn-gate1.png;");
-        ui->label_picchannel_2->setStyleSheet("border-image: url(:/img/page/btn-gate2.png;");
-        if((pInfo->header()->handle() == (nIndex + 1) && (nIndex + 1) == 1)
-                || (pInfo->header()->handle() == (nIndex + 1) && (nIndex + 1) == 2)){
-            SaveToVector(data);
-            SaveData(data,pInfo);
+        case 2:{//双通道
+            if(nHandle == GATEONE || nHandle == GATETWO){
+                ui->label_picchannel->setStyleSheet("border-image: url(:/img/page/btn-gate1.png;");
+                ui->label_picchannel_2->setStyleSheet("border-image: url(:/img/page/btn-gate2.png;");
+
+                SaveToVector(data);
+                SaveData(data,pInfo);
+            }
         }
         break;
+        default:
+        return;
     }
     ShowCardInfo(pInfo,nIndex);
     ShowTicketInfo(pInfo,nIndex);
+    ShowAcrossNum(pInfo,nIndex);
+    ShowAcrossWarnNum(pInfo,nIndex);
     ShowBottomPic();
 }
 
@@ -178,9 +195,8 @@ void DoubleChannelWidget::SaveToVector(const QByteArray &data)
 void DoubleChannelWidget::ShowCardInfo(const TransportInfo *pInfo, int index)
 {
     switch(index){
-        case 0://单通道
-        case 1:{
-            if(pInfo->header()->handle() == (index + 1)){
+        case 0:{//通道1
+            if(pInfo->header()->handle() == GATEONE){
                 ui->label_acrosstime_3->setText(pInfo->header()->capTime()->c_str());//采集时间
                 ui->label_idcardname_3->setText(pInfo->idcardInfo()->name()->c_str());//名字
                 ui->label_idcardaddress_3->setText(pInfo->idcardInfo()->address()->c_str());//地址
@@ -191,12 +207,28 @@ void DoubleChannelWidget::ShowCardInfo(const TransportInfo *pInfo, int index)
                 ui->label_idcardsex_3->setText(pInfo->idcardInfo()->gender()->c_str());//性别
                 QString start(pInfo->idcardInfo()->expireStart()->c_str());
                 QString end(pInfo->idcardInfo()->expireEnd()->c_str());
-                ui->label_idcardusetime_3->setText(start + "~" + end);//有效期
+                ui->label_idcardusetime_3->setText(start + "-" + end);//有效期
+            }
+        }
+        break;
+        case 1:{
+            if(pInfo->header()->handle() == GATETWO){
+                ui->label_acrosstime_3->setText(pInfo->header()->capTime()->c_str());//采集时间
+                ui->label_idcardname_3->setText(pInfo->idcardInfo()->name()->c_str());//名字
+                ui->label_idcardaddress_3->setText(pInfo->idcardInfo()->address()->c_str());//地址
+                ui->label_idcardbirthday_3->setText(pInfo->idcardInfo()->birthday()->c_str());//生日
+                ui->label_idcarddepart_3->setText(pInfo->idcardInfo()->agency()->c_str());//机构
+                ui->label_idcardnation_3->setText(pInfo->idcardInfo()->folk()->c_str());//民族
+                ui->label_idcardnum_3->setText(pInfo->idcardInfo()->code()->c_str());//身份证号
+                ui->label_idcardsex_3->setText(pInfo->idcardInfo()->gender()->c_str());//性别
+                QString start(pInfo->idcardInfo()->expireStart()->c_str());
+                QString end(pInfo->idcardInfo()->expireEnd()->c_str());
+                ui->label_idcardusetime_3->setText(start + "-" + end);//有效期
             }
         }
         break;
         case 2://双通道
-        if(pInfo->header()->handle() == (index + 1) && (index + 1) == 1){//通道1
+        if(pInfo->header()->handle() == GATEONE){//通道1
             ui->label_acrosstime->setText(pInfo->header()->capTime()->c_str());//采集时间
             ui->label_idcardname->setText(pInfo->idcardInfo()->name()->c_str());//名字
             ui->label_idcardaddress->setText(pInfo->idcardInfo()->address()->c_str());//地址
@@ -207,8 +239,8 @@ void DoubleChannelWidget::ShowCardInfo(const TransportInfo *pInfo, int index)
             ui->label_idcardsex->setText(pInfo->idcardInfo()->gender()->c_str());//性别
             QString start(pInfo->idcardInfo()->expireStart()->c_str());
             QString end(pInfo->idcardInfo()->expireEnd()->c_str());
-            ui->label_idcardusetime->setText(start + "~" + end);//有效期
-        }else if(pInfo->header()->handle() == (index + 1) && (index + 1) == 2){//通道2
+            ui->label_idcardusetime->setText(start + "-" + end);//有效期
+        }else if(pInfo->header()->handle() == GATETWO){//通道2
             ui->label_acrosstime_2->setText(pInfo->header()->capTime()->c_str());//采集时间
             ui->label_idcardname_2->setText(pInfo->idcardInfo()->name()->c_str());//名字
             ui->label_idcardaddress_2->setText(pInfo->idcardInfo()->address()->c_str());//地址
@@ -219,7 +251,7 @@ void DoubleChannelWidget::ShowCardInfo(const TransportInfo *pInfo, int index)
             ui->label_idcardsex_2->setText(pInfo->idcardInfo()->gender()->c_str());//性别
             QString start(pInfo->idcardInfo()->expireStart()->c_str());
             QString end(pInfo->idcardInfo()->expireEnd()->c_str());
-            ui->label_idcardusetime_2->setText(start + "~" + end);//有效期
+            ui->label_idcardusetime_2->setText(start + "-" + end);//有效期
         }
         break;
     }
@@ -230,22 +262,18 @@ void DoubleChannelWidget::ShowCardInfo(const TransportInfo *pInfo, int index)
 
 void DoubleChannelWidget::ShowCardPic(const TransportInfo *pInfo, int index)
 {
-    unsigned char *pbyOutBuffer = NULL;
-    int nEncodeSize = 0;
-    int nRet = THIDEncodeDIBToOtherFormat(pInfo->cropImage()->data(), IMAGE_FORMAT_BMP
-                                           , &pbyOutBuffer, &nEncodeSize);
+    const unsigned char *pbyOutBuffer = pInfo->idImage()->data();
+    int nEncodeSize = pInfo->idImageSize();
+
     switch(index){
-        case 0://单通道
-        case 1:{
-            if(pInfo->header()->handle() == (index + 1)){
-                if(nRet==0){
-                    QImage qTmp;
-                    bool bRet = qTmp.loadFromData((const uchar*)pbyOutBuffer,nEncodeSize);
-                    if(bRet){
-                        qTmp = qTmp.scaled(ui->label_idcardpic_3->width(),
+        case 0:{//单通道
+            if(pInfo->header()->handle() == GATEONE){
+                QImage qTmp;
+                bool bRet = qTmp.loadFromData(pbyOutBuffer,nEncodeSize,"bmp");
+                if(bRet){
+                    qTmp = qTmp.scaled(ui->label_idcardpic_3->width(),
                                            ui->label_idcardpic_3->height(), Qt::KeepAspectRatio);
-                        ui->label_idcardpic_3->setPixmap(QPixmap::fromImage(qTmp.mirrored(true,false)));
-                    }
+                    ui->label_idcardpic_3->setPixmap(QPixmap::fromImage(qTmp.mirrored(false,false)));
                 }
                 switch(pInfo->blackInfo()->blackResult()){//是否比中黑名单
                     case bingo:
@@ -262,17 +290,38 @@ void DoubleChannelWidget::ShowCardPic(const TransportInfo *pInfo, int index)
             }
         }
         break;
-
-        case 2://双通道
-        if(pInfo->header()->handle() == (index + 1) && (index + 1) == 1){//通道1
-            if(nRet==0){
+        case 1:{
+            if(pInfo->header()->handle() == GATETWO){
                 QImage qTmp;
-                bool bRet = qTmp.loadFromData((const uchar*)pbyOutBuffer,nEncodeSize);
+                bool bRet = qTmp.loadFromData(pbyOutBuffer,nEncodeSize,"bmp");
                 if(bRet){
-                    qTmp = qTmp.scaled(ui->label_idcardpic->width(),
-                                       ui->label_idcardpic->height(), Qt::KeepAspectRatio);
-                    ui->label_idcardpic->setPixmap(QPixmap::fromImage(qTmp.mirrored(true,false)));
+                    qTmp = qTmp.scaled(ui->label_idcardpic_3->width(),
+                                           ui->label_idcardpic_3->height(), Qt::KeepAspectRatio);
+                    ui->label_idcardpic_3->setPixmap(QPixmap::fromImage(qTmp.mirrored(false,false)));
                 }
+                switch(pInfo->blackInfo()->blackResult()){//是否比中黑名单
+                    case bingo:
+                    ui->label_idcardpic_3->setStyleSheet("border: 2px solid red;");
+                    ui->label_warn_alise_1->show();//布控人员
+                    break;
+                    case notBlack:
+                    ui->label_idcardpic_3->setStyleSheet("border: 2px solid green;");
+                    ui->label_warn_alise_1->hide();//布控人员
+                    break;
+                    case notCompare:
+                    break;
+                }
+            }
+        }
+        break;
+        case 2://双通道
+        if(pInfo->header()->handle() == GATEONE){//通道1
+            QImage qTmp;
+            bool bRet = qTmp.loadFromData((const uchar*)pbyOutBuffer,nEncodeSize);
+            if(bRet){
+                qTmp = qTmp.scaled(ui->label_idcardpic->width(),
+                                       ui->label_idcardpic->height(), Qt::KeepAspectRatio);
+                ui->label_idcardpic->setPixmap(QPixmap::fromImage(qTmp.mirrored(true,false)));
             }
             switch(pInfo->blackInfo()->blackResult()){//是否比中黑名单
                 case bingo:
@@ -284,17 +333,16 @@ void DoubleChannelWidget::ShowCardPic(const TransportInfo *pInfo, int index)
                 case notCompare:
                 break;
             }
-        }else if(pInfo->header()->handle() == (index + 1) && (index + 1) == 2){
-            if(nRet==0){
-                QImage qTmp;
-                bool bRet = qTmp.loadFromData((const uchar*)pbyOutBuffer,nEncodeSize);
-                if(bRet){
-                    qTmp = qTmp.scaled(ui->label_idcardpic_2->width(),
-                                       ui->label_idcardpic_2->height(), Qt::KeepAspectRatio);
-                    ui->label_idcardpic_2->setPixmap(QPixmap::fromImage(qTmp.mirrored(true,false)));
-                }
-            }
-            switch(pInfo->blackInfo()->blackResult()){//是否比中黑名单
+        }else if(pInfo->header()->handle() == GATETWO){
+           QImage qTmp;
+           bool bRet = qTmp.loadFromData((const uchar*)pbyOutBuffer,nEncodeSize);
+           if(bRet){
+               qTmp = qTmp.scaled(ui->label_idcardpic_2->width(),
+                                  ui->label_idcardpic_2->height(), Qt::KeepAspectRatio);
+               ui->label_idcardpic_2->setPixmap(QPixmap::fromImage(qTmp.mirrored(true,false)));
+           }
+
+           switch(pInfo->blackInfo()->blackResult()){//是否比中黑名单
                 case bingo:
                 ui->label_idcardpic_2->setStyleSheet("border: 2px solid red;");
                 break;
@@ -307,37 +355,82 @@ void DoubleChannelWidget::ShowCardPic(const TransportInfo *pInfo, int index)
         }
         break;
     }
-
-    THIDFreeMemory(pbyOutBuffer);
-    pbyOutBuffer = NULL;
 }
 
 void DoubleChannelWidget::ShowTicketInfo(const TransportInfo *pInfo, int index)
 {
     switch(index){
         case 0://单通道
+        if(pInfo->header()->handle() == GATEONE){
+            ui->label_station_start->setText(
+                        pInfo->ticketInfo()->goStation() == NULL
+                        ? "" : pInfo->ticketInfo()->goStation()->c_str());
+            ui->label_station_end->setText(
+                        pInfo->ticketInfo()->arriveStation() == NULL
+                        ? "" : pInfo->ticketInfo()->arriveStation()->c_str());
+            ui->label_ticket_num->setText(
+                        pInfo->ticketInfo()->ticketNO() == NULL
+                        ? "" : pInfo->ticketInfo()->ticketNO()->c_str());
+            ui->label_ticket_date->setText(
+                        pInfo->ticketInfo()->goTime() == NULL
+                        ? "" : pInfo->ticketInfo()->goTime()->c_str());
+            ui->label_ticket_index->setText(
+                        pInfo->ticketInfo()->busNO() == NULL
+                        ? "" : pInfo->ticketInfo()->busNO()->c_str());
+        }
+        break;
         case 1:
-        if(pInfo->header()->handle() == (index + 1)){
-            ui->label_station_start->setText(pInfo->ticketInfo()->goStation()->c_str());
-            ui->label_station_end->setText(pInfo->ticketInfo()->arriveStation()->c_str());
-            ui->label_ticket_num->setText(pInfo->ticketInfo()->ticketNO()->c_str());
-            ui->label_ticket_date->setText(pInfo->ticketInfo()->goTime()->c_str());
-            ui->label_ticket_index->setText(pInfo->ticketInfo()->busNO()->c_str());
+        if(pInfo->header()->handle() == GATETWO){
+            ui->label_station_start->setText(
+                        pInfo->ticketInfo()->goStation() == NULL
+                        ? "" : pInfo->ticketInfo()->goStation()->c_str());
+            ui->label_station_end->setText(
+                        pInfo->ticketInfo()->arriveStation() == NULL
+                        ? "" : pInfo->ticketInfo()->arriveStation()->c_str());
+            ui->label_ticket_num->setText(
+                        pInfo->ticketInfo()->ticketNO() == NULL
+                        ? "" : pInfo->ticketInfo()->ticketNO()->c_str());
+            ui->label_ticket_date->setText(
+                        pInfo->ticketInfo()->goTime() == NULL
+                        ? "" : pInfo->ticketInfo()->goTime()->c_str());
+            ui->label_ticket_index->setText(
+                        pInfo->ticketInfo()->busNO() == NULL
+                        ? "" : pInfo->ticketInfo()->busNO()->c_str());
         }
         break;
         case 2://双通道
-        if(pInfo->header()->handle() == (index + 1) && (index + 1) == 1){//通道1
-            ui->label_station_start_2->setText(pInfo->ticketInfo()->goStation()->c_str());
-            ui->label_station_end_2->setText(pInfo->ticketInfo()->arriveStation()->c_str());
-            ui->label_ticket_num_2->setText(pInfo->ticketInfo()->ticketNO()->c_str());
-            ui->label_ticket_date_2->setText(pInfo->ticketInfo()->goTime()->c_str());
-            ui->label_ticket_index_2->setText(pInfo->ticketInfo()->busNO()->c_str());
-        }else if(pInfo->header()->handle() == (index + 1) && (index + 1) == 2){//通道2
-            ui->label_station_start_3->setText(pInfo->ticketInfo()->goStation()->c_str());
-            ui->label_station_end_3->setText(pInfo->ticketInfo()->arriveStation()->c_str());
-            ui->label_ticket_num_3->setText(pInfo->ticketInfo()->ticketNO()->c_str());
-            ui->label_ticket_date_3->setText(pInfo->ticketInfo()->goTime()->c_str());
-            ui->label_ticket_index_3->setText(pInfo->ticketInfo()->busNO()->c_str());
+        if(pInfo->header()->handle() == GATEONE){//通道1
+            ui->label_station_start_2->setText(
+                        pInfo->ticketInfo()->goStation() == NULL
+                        ? "" : pInfo->ticketInfo()->goStation()->c_str());
+            ui->label_station_end_2->setText(
+                        pInfo->ticketInfo()->arriveStation() == NULL
+                        ? "" : pInfo->ticketInfo()->arriveStation()->c_str());
+            ui->label_ticket_num_2->setText(
+                        pInfo->ticketInfo()->ticketNO() == NULL
+                        ? "" : pInfo->ticketInfo()->ticketNO()->c_str());
+            ui->label_ticket_date_2->setText(
+                        pInfo->ticketInfo()->goTime() == NULL
+                        ? "" : pInfo->ticketInfo()->goTime()->c_str());
+            ui->label_ticket_index_2->setText(
+                        pInfo->ticketInfo()->busNO() == NULL
+                        ? "" : pInfo->ticketInfo()->busNO()->c_str());
+        }else if(pInfo->header()->handle() == GATETWO){//通道2
+            ui->label_station_start_3->setText(
+                        pInfo->ticketInfo()->goStation() == NULL
+                        ? "" : pInfo->ticketInfo()->goStation()->c_str());
+            ui->label_station_end_3->setText(
+                        pInfo->ticketInfo()->arriveStation() == NULL
+                        ? "" : pInfo->ticketInfo()->arriveStation()->c_str());
+            ui->label_ticket_num_3->setText(
+                        pInfo->ticketInfo()->ticketNO() == NULL
+                        ? "" : pInfo->ticketInfo()->ticketNO()->c_str());
+            ui->label_ticket_date_3->setText(
+                        pInfo->ticketInfo()->goTime() == NULL
+                        ? "" : pInfo->ticketInfo()->goTime()->c_str());
+            ui->label_ticket_index_3->setText(
+                        pInfo->ticketInfo()->busNO() == NULL
+                        ? "" : pInfo->ticketInfo()->busNO()->c_str());
         }
         break;
     }
@@ -351,6 +444,7 @@ void DoubleChannelWidget::on_comboBox_chanel_currentIndexChanged(int index)
         case 0:
         ui->toolButton_opengate->setStyleSheet("border-image: url(:/img/page/btn-gate1.png);");
         ui->toolButton_opengate_2->hide();
+        ui->label_picchannel_3->setStyleSheet("border-image: url(:/img/page/btn-gate1.png);");
         if(ui->stackedWidget->currentIndex() != 0)
             ui->stackedWidget->setCurrentIndex(0);
         pOption->SetCurrentChannelIndex(index + 1);
@@ -358,6 +452,7 @@ void DoubleChannelWidget::on_comboBox_chanel_currentIndexChanged(int index)
         case 1:
         ui->toolButton_opengate->setStyleSheet("border-image: url(:/img/page/btn-gate2.png);");
         ui->toolButton_opengate_2->hide();
+        ui->label_picchannel_3->setStyleSheet("border-image: url(:/img/page/btn-gate2.png);");
         if(ui->stackedWidget->currentIndex() != 0)
             ui->stackedWidget->setCurrentIndex(0);
         pOption->SetCurrentChannelIndex(index + 1);
@@ -476,30 +571,44 @@ void DoubleChannelWidget::ShowBottomPic()
     if(size > 0){
         pInfo = GetTransportInfo(m_vector_data[0].constData());
         ShowPic(ui->label_pic1,pInfo);
+    }else{
+        ClearPic(ui->label_pic1);
     }
     if(size > 1){
         pInfo = GetTransportInfo(m_vector_data[1].constData());
         ShowPic(ui->label_pic2,pInfo);
+    }else{
+        ClearPic(ui->label_pic2);
     }
     if(size > 2){
         pInfo = GetTransportInfo(m_vector_data[2].constData());
         ShowPic(ui->label_pic3,pInfo);
+    }else{
+        ClearPic(ui->label_pic3);
     }
     if(size > 3){
         pInfo = GetTransportInfo(m_vector_data[3].constData());
         ShowPic(ui->label_pic4,pInfo);
+    }else{
+        ClearPic(ui->label_pic4);
     }
     if(size > 4){
         pInfo = GetTransportInfo(m_vector_data[4].constData());
         ShowPic(ui->label_pic5,pInfo);
+    }else{
+        ClearPic(ui->label_pic5);
     }
     if(size > 5){
         pInfo = GetTransportInfo(m_vector_data[5].constData());
         ShowPic(ui->label_pic6,pInfo);
+    }else{
+        ClearPic(ui->label_pic6);
     }
     if(size > 6){
         pInfo = GetTransportInfo(m_vector_data[6].constData());
         ShowPic(ui->label_pic7,pInfo);
+    }else{
+        ClearPic(ui->label_pic7);
     }
 }
 
@@ -520,10 +629,12 @@ void DoubleChannelWidget::LabelPicPushDownShow(BottomPicLabel *pLabel, const Tra
     case notBlack:
         switch(pInfo->header()->handle()){
             case GATEONE:
-            pLabel->setStyleSheet("border-image: url(:/img/page/facebox-aisle1-pushdown.png)");
+            //pLabel->setStyleSheet("border: 0px solid green;");
+            //pLabel->setStyleSheet("border-image: url(:/img/page/facebox-aisle1-pushdown.png)");
             break;
             case GATETWO:
-            pLabel->setStyleSheet("border-image: url(:/img/page/facebox-aisle2-pushdown.png)");
+            //pLabel->setStyleSheet("border: 0px solid green;");
+            //pLabel->setStyleSheet("border-image: url(:/img/page/facebox-aisle2-pushdown.png)");
             break;
         }
         break;
@@ -584,56 +695,99 @@ void DoubleChannelWidget::on_label_pic7_push_down()
 
 void DoubleChannelWidget::ShowPic(BottomPicLabel *pLabel, const TransportInfo *pInfo)
 {
-    if(pInfo->blackInfo()->blackResult() == bingo){//比中黑名单
-        switch(pInfo->header()->handle()){
-        case GATEONE:
-            pLabel->setStyleSheet("border-image: url(:/img/page/facebox-alarm-aisle1.png);");
-            break;
-        case GATETWO:
-            pLabel->setStyleSheet("border-image: url(:/img/page/facebox-alarm-aisle2.png);");
-            break;
-        }
-    }else if(pInfo->blackInfo()->blackResult() == notBlack){//未比中
-        switch(pInfo->header()->handle()){
-        case GATEONE:
-            pLabel->setStyleSheet("border-image: url(:/img/page/facebox-aisle1.png);");
-            break;
-        case GATETWO:
-            pLabel->setStyleSheet("border-image: url(:/img/page/facebox-aisle2.png);");
-            break;
-        }
-    }else if(pInfo->blackInfo()->blackResult() == notCompare){//未必对
-
-    }
-
     //显示图片
-    unsigned char *pbyOutBuffer = NULL;
-    int nEncodeSize = 0;
-    int nRet = THIDEncodeDIBToOtherFormat(pInfo->cropImage()->data(), IMAGE_FORMAT_BMP
-                                           , &pbyOutBuffer, &nEncodeSize);
-    if(nRet==0)
-    {
-        QImage qTmp;
-        bool bRet = qTmp.loadFromData((const uchar*)pbyOutBuffer,nEncodeSize);
-        if(bRet)
-        {
-            qTmp = qTmp.scaled(pLabel->width(), pLabel->height(), Qt::KeepAspectRatio);
-            pLabel->setPixmap(QPixmap::fromImage(qTmp.mirrored(true,false)));
+    const unsigned char *pbyOutBuffer = pInfo->cropImage()->data();
+    int nEncodeSize = pInfo->cropImageSize();
+
+    QImage qTmp;
+    bool bRet = qTmp.loadFromData((const uchar*)pbyOutBuffer,nEncodeSize,"jpg");
+    if(bRet){
+        QPixmap qPix;
+        if(pInfo->blackInfo()->blackResult() == bingo){//比中黑名单
+            switch(pInfo->header()->handle()){
+            case GATEONE:
+                qPix.load(":/img/page/facebox-alarm-aisle1.png");
+                break;
+            case GATETWO:
+                qPix.load(":/img/page/facebox-alarm-aisle2.png");
+                break;
+            }
+        }else if(pInfo->blackInfo()->blackResult() == notBlack){//未比中
+            switch(pInfo->header()->handle()){
+            case GATEONE:
+                qPix.load(":/img/page/facebox-aisle1.png");
+                break;
+            case GATETWO:
+                qPix.load(":/img/page/facebox-aisle2.png");
+                break;
+            }
+        }else if(pInfo->blackInfo()->blackResult() == notCompare){//未必对
+            switch(pInfo->header()->handle()){
+            case GATEONE:
+                qPix.load(":/img/page/facebox-alarm-aisle1.png");
+                break;
+            case GATETWO:
+                qPix.load(":/img/page/facebox-alarm-aisle2.png");
+                break;
+            }
         }
+        pLabel->setStyleSheet("border: 0px solid green;");
+        qTmp = qTmp.scaled(pLabel->width(), pLabel->height());
+        qTmp = qTmp.mirrored(true,false);
+        QPainter painter(&qTmp);
+        painter.drawPixmap(0,0,pLabel->width(),pLabel->height(),qPix);
+        pLabel->setPixmap(QPixmap::fromImage(qTmp));
+    }else{
+        if(pInfo->blackInfo()->blackResult() == bingo){//比中黑名单
+            switch(pInfo->header()->handle()){
+            case GATEONE:
+                qTmp.load(":/img/page/facebox-alarm-aisle1.png");
+                break;
+            case GATETWO:
+                qTmp.load(":/img/page/facebox-alarm-aisle2.png");
+                break;
+            }
+        }else if(pInfo->blackInfo()->blackResult() == notBlack){//未比中
+            switch(pInfo->header()->handle()){
+            case GATEONE:
+                qTmp.load(":/img/page/facebox-aisle1.png");
+                break;
+            case GATETWO:
+                qTmp.load(":/img/page/facebox-aisle2.png");
+                break;
+            }
+        }else if(pInfo->blackInfo()->blackResult() == notCompare){//未必对
+            switch(pInfo->header()->handle()){
+            case GATEONE:
+                qTmp.load(":/img/page/facebox-alarm-aisle1.png");
+                break;
+            case GATETWO:
+                qTmp.load(":/img/page/facebox-alarm-aisle2.png");
+                break;
+            }
+        }
+        pLabel->setStyleSheet("border: 0px solid green;");
+        pLabel->setPixmap(QPixmap::fromImage(qTmp));
     }
-    THIDFreeMemory(pbyOutBuffer);
-    pbyOutBuffer = NULL;
+}
+
+void DoubleChannelWidget::ClearPic(BottomPicLabel *pLabel)
+{
+    QImage qTmp;
+    if(qTmp.load(":/img/page/facebox.png")){
+        pLabel->setPixmap(QPixmap::fromImage(qTmp));
+    }
 }
 
 void DoubleChannelWidget::on_toolButton_next_clicked()
 {
-    GetPrevBatchData();
+    GetNextBatchData();
     ShowBottomPic();
 }
 
 void DoubleChannelWidget::on_toolButton_prev_clicked()
 {
-    GetNextBatchData();
+    GetPrevBatchData();
     ShowBottomPic();
 }
 
@@ -643,19 +797,19 @@ bool DoubleChannelWidget::SaveData(const QByteArray &data, const TransportInfo *
     QString qs_path = QCoreApplication::applicationDirPath();
     qs_path += "/saveData";
     QDir dir(qs_path);
-    if(dir.count() > MAXFILENUM){//本地最多存储数据
+    if(dir.count() >= MAXFILENUM){//本地最多存储数据
         //删除最先创建的一批数据
         dir.setFilter(QDir::Files | QDir::NoSymLinks);
-        dir.setSorting(QDir::Name);
+        dir.setSorting(QDir::Time | QDir::Reversed);
         const QFileInfoList list = dir.entryInfoList();
         QFileInfoList::const_iterator itera = list.begin();
 
-        for(int i = 1;(itera != list.end() && i <= 7);++itera,i++){
+        for(int i = 0;(itera != list.end() && i < SHOWFILENUM);++itera,i++){
             dir.remove(itera->fileName());
         }
     }
 
-    QString strCurTime = time.toString("yyyymmdd-hhmmssddd");
+    QString strCurTime = time.toString("yyyymmdd-hhmmsszzz");
     QString strHandle;
     strHandle.sprintf("%d",pInfo->header()->handle());
     QString strFileName = qs_path + "/" + strCurTime + "_" + pInfo->idcardInfo()->code()->c_str()
@@ -672,12 +826,13 @@ bool DoubleChannelWidget::SaveData(const QByteArray &data, const TransportInfo *
 void DoubleChannelWidget::GetPrevBatchData()
 {
     if(m_nBatch > 1){
+        m_vector_data.clear();
         QString qs_path = QCoreApplication::applicationDirPath();
         qs_path += "/saveData";
         QDir dir(qs_path);
         m_nBatch--;
         dir.setFilter(QDir::Files | QDir::NoSymLinks);
-        dir.setSorting(QDir::Name);
+        dir.setSorting(QDir::Time);
         const QFileInfoList list = dir.entryInfoList();
         QFileInfoList::const_iterator itera = list.begin();
         int nEnd = (m_nBatch - 1) * SHOWFILENUM > 0 ? (m_nBatch - 1) * SHOWFILENUM : 0;
@@ -686,7 +841,7 @@ void DoubleChannelWidget::GetPrevBatchData()
             QString filename = qs_path + "/" + itera->fileName();
             QFile file(filename);
             if(file.open(QIODevice::ReadOnly)){
-                m_vector_data[i] = file.readAll();
+                m_vector_data.push_back(file.readAll());
                 file.close();
             }
         }
@@ -700,12 +855,13 @@ void DoubleChannelWidget::GetNextBatchData()
         qs_path += "/saveData";
         QDir dir(qs_path);
         dir.setFilter(QDir::Files | QDir::NoSymLinks);
-        dir.setSorting(QDir::Name);
+        dir.setSorting(QDir::Time);
         const QFileInfoList list = dir.entryInfoList();
         QFileInfoList::const_iterator itera = list.begin();
         if(m_nBatch * SHOWFILENUM >= dir.count()){
             return;//没有下一页了.
         }
+        m_vector_data.clear();
         int nEnd = m_nBatch * SHOWFILENUM;
         m_nBatch++;
         itera += nEnd;
@@ -713,7 +869,7 @@ void DoubleChannelWidget::GetNextBatchData()
             QString filename = qs_path + "/" + itera->fileName();
             QFile file(filename);
             if(file.open(QIODevice::ReadOnly)){
-                m_vector_data[i] = file.readAll();
+                m_vector_data.push_back(file.readAll());
                 file.close();
             }
         }
@@ -728,7 +884,7 @@ void DoubleChannelWidget::GetNewBatchData()
     QDir dir(qs_path);
 
     dir.setFilter(QDir::Files | QDir::NoSymLinks);
-    dir.setSorting(QDir::Name);
+    dir.setSorting(QDir::Time);
     const QFileInfoList list = dir.entryInfoList();
     QFileInfoList::const_iterator itera = list.begin();
 
@@ -736,7 +892,7 @@ void DoubleChannelWidget::GetNewBatchData()
         QString filename = qs_path + "/" + itera->fileName();
         QFile file(filename);
         if(file.open(QIODevice::ReadOnly)){
-            m_vector_data[i] = file.readAll();
+            m_vector_data.push_back(file.readAll());
             file.close();
         }
     }
@@ -783,4 +939,70 @@ void DoubleChannelWidget::keyboardOnOk()
     ui->stackedWidget->setCurrentIndex(3);
     ui->label_gif->setMovie(m_pMovie);
     m_pMovie->start();
+}
+
+void DoubleChannelWidget::ShowAcrossNum(const TransportInfo *info,int index)
+{
+    switch(index){
+        case 0:{//通道1
+            if(info->header()->handle() == GATEONE){
+                m_across_num_chanel1++;
+                ui->label_acrossnum_3->setText(QString::number(m_across_num_chanel1));
+            }
+        }
+        break;
+        case 1:{
+            if(info->header()->handle() == GATETWO){
+                m_across_num_chanel2++;
+                ui->label_acrossnum_3->setText(QString::number(m_across_num_chanel2));
+            }
+        }
+        break;
+        case 2://双通道
+        if(info->header()->handle() == GATEONE){//通道1
+            m_across_num_chanel1++;
+            ui->label_acrossnum->setText(QString::number(m_across_num_chanel1));
+        }else if(info->header()->handle() == GATETWO){//通道2
+            m_across_num_chanel2++;
+            ui->label_acrossnum_2->setText(QString::number(m_across_num_chanel2));
+        }
+        break;
+    }
+}
+
+void DoubleChannelWidget::ShowAcrossWarnNum(const TransportInfo *info, int index)
+{
+    switch(index){
+        case 0:{//通道1
+            if(info->header()->handle() == GATEONE){
+                if(info->blackInfo()->blackResult() == bingo){
+                    m_across_warnnum_chanel1++;
+                    ui->label_warnnum_3->setText(QString::number(m_across_warnnum_chanel1));
+                }
+            }
+        }
+        break;
+        case 1:{
+            if(info->header()->handle() == GATETWO){
+                if(info->blackInfo()->blackResult() == bingo){
+                    m_across_warnnum_chanel2++;
+                    ui->label_warnnum_3->setText(QString::number(m_across_warnnum_chanel2));
+                }
+            }
+        }
+        break;
+        case 2://双通道
+        if(info->header()->handle() == GATEONE){//通道1
+            if(info->blackInfo()->blackResult() == bingo){
+                m_across_warnnum_chanel1++;
+                ui->label_warnnum->setText(QString::number(m_across_warnnum_chanel1));
+            }
+        }else if(info->header()->handle() == GATETWO){//通道2
+            if(info->blackInfo()->blackResult() == bingo){
+                m_across_warnnum_chanel2++;
+                ui->label_warnnum_2->setText(QString::number(m_across_warnnum_chanel2));
+            }
+        }
+        break;
+    }
 }

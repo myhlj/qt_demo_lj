@@ -67,5 +67,6 @@ void tcpserver::readClient(QTcpSocket* pClient)
         connect(pClient, SIGNAL(disconnected()), pClient, SLOT(deleteLater()));
         pClient->disconnectFromHost();
     }
+
     emit(ShowTransinfo(data));
 }

@@ -80,14 +80,21 @@ private:
     };
     int             m_nBatch;//记录当前批次
     QMovie*         m_pMovie;//播放gif
+    int             m_across_num_chanel1;//通道一当天通过人数
+    int             m_across_warnnum_chanel1;//通道一当天报警人数
+    int             m_across_num_chanel2;
+    int             m_across_warnnum_chanel2;
 private:
     void InitComboxChanel();
     void SaveToVector(const QByteArray& data);
     void ShowCardInfo(const TransportInfo *pInfo,int index);
     void ShowCardPic(const TransportInfo *pInfo,int index);
     void ShowTicketInfo(const TransportInfo *pInfo,int index);
+    void ShowAcrossNum(const TransportInfo *info,int index);
+    void ShowAcrossWarnNum(const TransportInfo *info,int index);
     void ShowBottomPic();
     void ShowPic(BottomPicLabel* pLabel,const TransportInfo* pInfo);
+    void ClearPic(BottomPicLabel* pLabel);
     void LabelPicPushDownShow(BottomPicLabel* pLabel,const TransportInfo *pInfo);
     bool SaveData(const QByteArray& data,const TransportInfo* pInfo);
     void GetPrevBatchData();
