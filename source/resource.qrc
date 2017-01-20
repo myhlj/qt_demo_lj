@@ -45,5 +45,16 @@
         <file>img/page/select-back.png</file>
         <file>img/keyboard/keyboard-back.png</file>
         <file>img/keyboard/input.png</file>
+        <file>img/warndialog/bg/bg1.png</file>
+        <file>img/warndialog/bg/bg2.png</file>
+        <file>img/warndialog/bg/bg3.png</file>
+        <file>img/warndialog/bg/bg4.png</file>
+        <file>img/warndialog/blue_box.png</file>
+        <file>img/warndialog/red_box.png</file>
+        <file>img/warndialog/warn_gate1.png</file>
+        <file>img/warndialog/warn_gate2.png</file>
+        <file>img/warndialog/yellow_box.png</file>
+        <file>img/warndialog/btn.png</file>
+        <file>img/warndialog/btn-press.png</file>
     </qresource>
 </RCC>

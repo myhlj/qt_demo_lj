@@ -4,6 +4,9 @@
 #define FLATBUFFERS_GENERATED_DATA_MYTRANSPORTINFO_H_
 
 #include "flatbuffers/flatbuffers.h"
+#if _MSC_VER >= 1600
+#pragma execution_character_set("utf-8")
+#endif
 
 namespace MyTransportInfo {
 
@@ -338,26 +341,55 @@ struct Blacklist FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   enum {
     VT_BLACKRESULT = 4,
     VT_BLACKSTATUS = 6,
-    VT_BLACKJOBID = 8,
-    VT_PERSONINFO = 10
+    VT_QUERYTYPE = 8,
+    VT_BLACKJOBID = 10,
+    VT_STATUSMESSAGE = 12,
+    VT_PERSONTYPE = 14,
+    VT_DEPARTMENT = 16,
+    VT_POLICENAME = 18,
+    VT_POLICEPHONE = 20,
+    VT_MANAGMENT = 22
   };
   /// 是否比中黑名单，1：比中；2：未比中；3：未比对
   int32_t blackResult() const { return GetField<int32_t>(VT_BLACKRESULT, 0); }
   /// 名单查询状态，0：正常；比如超时-4、-5，到管理屏提示：网络异常
   /// -6、-90、-91、-98、-99，管理屏提示：数据查询异常
   int32_t blackStatus() const { return GetField<int32_t>(VT_BLACKSTATUS, 0); }
+  /// 查询的类型 0：网络名单库    1：本地名单库
+  int32_t queryType() const { return GetField<int32_t>(VT_QUERYTYPE, 0); }
   /// jobID
   const flatbuffers::String *blackJobID() const { return GetPointer<const flatbuffers::String *>(VT_BLACKJOBID); }
-  /// 人员类型 json
-  const flatbuffers::String *personInfo() const { return GetPointer<const flatbuffers::String *>(VT_PERSONINFO); }
+  /// 状态描述
+  const flatbuffers::String *statusMessage() const { return GetPointer<const flatbuffers::String *>(VT_STATUSMESSAGE); }
+  /// 名单类型(犯罪种类)
+  const flatbuffers::String *personType() const { return GetPointer<const flatbuffers::String *>(VT_PERSONTYPE); }
+  /// 信息发布单位
+  const flatbuffers::String *department() const { return GetPointer<const flatbuffers::String *>(VT_DEPARTMENT); }
+  /// 警员
+  const flatbuffers::String *policeName() const { return GetPointer<const flatbuffers::String *>(VT_POLICENAME); }
+  /// 警员联系方式
+  const flatbuffers::String *policePhone() const { return GetPointer<const flatbuffers::String *>(VT_POLICEPHONE); }
+  /// 处置意见
+  const flatbuffers::String *managment() const { return GetPointer<const flatbuffers::String *>(VT_MANAGMENT); }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<int32_t>(verifier, VT_BLACKRESULT) &&
            VerifyField<int32_t>(verifier, VT_BLACKSTATUS) &&
+           VerifyField<int32_t>(verifier, VT_QUERYTYPE) &&
            VerifyField<flatbuffers::uoffset_t>(verifier, VT_BLACKJOBID) &&
            verifier.Verify(blackJobID()) &&
-           VerifyField<flatbuffers::uoffset_t>(verifier, VT_PERSONINFO) &&
-           verifier.Verify(personInfo()) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, VT_STATUSMESSAGE) &&
+           verifier.Verify(statusMessage()) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, VT_PERSONTYPE) &&
+           verifier.Verify(personType()) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, VT_DEPARTMENT) &&
+           verifier.Verify(department()) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, VT_POLICENAME) &&
+           verifier.Verify(policeName()) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, VT_POLICEPHONE) &&
+           verifier.Verify(policePhone()) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, VT_MANAGMENT) &&
+           verifier.Verify(managment()) &&
            verifier.EndTable();
   }
 };
@@ -367,12 +399,18 @@ struct BlacklistBuilder {
   flatbuffers::uoffset_t start_;
   void add_blackResult(int32_t blackResult) { fbb_.AddElement<int32_t>(Blacklist::VT_BLACKRESULT, blackResult, 0); }
   void add_blackStatus(int32_t blackStatus) { fbb_.AddElement<int32_t>(Blacklist::VT_BLACKSTATUS, blackStatus, 0); }
+  void add_queryType(int32_t queryType) { fbb_.AddElement<int32_t>(Blacklist::VT_QUERYTYPE, queryType, 0); }
   void add_blackJobID(flatbuffers::Offset<flatbuffers::String> blackJobID) { fbb_.AddOffset(Blacklist::VT_BLACKJOBID, blackJobID); }
-  void add_personInfo(flatbuffers::Offset<flatbuffers::String> personInfo) { fbb_.AddOffset(Blacklist::VT_PERSONINFO, personInfo); }
+  void add_statusMessage(flatbuffers::Offset<flatbuffers::String> statusMessage) { fbb_.AddOffset(Blacklist::VT_STATUSMESSAGE, statusMessage); }
+  void add_personType(flatbuffers::Offset<flatbuffers::String> personType) { fbb_.AddOffset(Blacklist::VT_PERSONTYPE, personType); }
+  void add_department(flatbuffers::Offset<flatbuffers::String> department) { fbb_.AddOffset(Blacklist::VT_DEPARTMENT, department); }
+  void add_policeName(flatbuffers::Offset<flatbuffers::String> policeName) { fbb_.AddOffset(Blacklist::VT_POLICENAME, policeName); }
+  void add_policePhone(flatbuffers::Offset<flatbuffers::String> policePhone) { fbb_.AddOffset(Blacklist::VT_POLICEPHONE, policePhone); }
+  void add_managment(flatbuffers::Offset<flatbuffers::String> managment) { fbb_.AddOffset(Blacklist::VT_MANAGMENT, managment); }
   BlacklistBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
   BlacklistBuilder &operator=(const BlacklistBuilder &);
   flatbuffers::Offset<Blacklist> Finish() {
-    auto o = flatbuffers::Offset<Blacklist>(fbb_.EndTable(start_, 4));
+    auto o = flatbuffers::Offset<Blacklist>(fbb_.EndTable(start_, 10));
     return o;
   }
 };
@@ -380,11 +418,23 @@ struct BlacklistBuilder {
 inline flatbuffers::Offset<Blacklist> CreateBlacklist(flatbuffers::FlatBufferBuilder &_fbb,
     int32_t blackResult = 0,
     int32_t blackStatus = 0,
+    int32_t queryType = 0,
     flatbuffers::Offset<flatbuffers::String> blackJobID = 0,
-    flatbuffers::Offset<flatbuffers::String> personInfo = 0) {
+    flatbuffers::Offset<flatbuffers::String> statusMessage = 0,
+    flatbuffers::Offset<flatbuffers::String> personType = 0,
+    flatbuffers::Offset<flatbuffers::String> department = 0,
+    flatbuffers::Offset<flatbuffers::String> policeName = 0,
+    flatbuffers::Offset<flatbuffers::String> policePhone = 0,
+    flatbuffers::Offset<flatbuffers::String> managment = 0) {
   BlacklistBuilder builder_(_fbb);
-  builder_.add_personInfo(personInfo);
+  builder_.add_managment(managment);
+  builder_.add_policePhone(policePhone);
+  builder_.add_policeName(policeName);
+  builder_.add_department(department);
+  builder_.add_personType(personType);
+  builder_.add_statusMessage(statusMessage);
   builder_.add_blackJobID(blackJobID);
+  builder_.add_queryType(queryType);
   builder_.add_blackStatus(blackStatus);
   builder_.add_blackResult(blackResult);
   return builder_.Finish();
@@ -393,9 +443,15 @@ inline flatbuffers::Offset<Blacklist> CreateBlacklist(flatbuffers::FlatBufferBui
 inline flatbuffers::Offset<Blacklist> CreateBlacklistDirect(flatbuffers::FlatBufferBuilder &_fbb,
     int32_t blackResult = 0,
     int32_t blackStatus = 0,
+    int32_t queryType = 0,
     const char *blackJobID = nullptr,
-    const char *personInfo = nullptr) {
-  return CreateBlacklist(_fbb, blackResult, blackStatus, blackJobID ? _fbb.CreateString(blackJobID) : 0, personInfo ? _fbb.CreateString(personInfo) : 0);
+    const char *statusMessage = nullptr,
+    const char *personType = nullptr,
+    const char *department = nullptr,
+    const char *policeName = nullptr,
+    const char *policePhone = nullptr,
+    const char *managment = nullptr) {
+  return CreateBlacklist(_fbb, blackResult, blackStatus, queryType, blackJobID ? _fbb.CreateString(blackJobID) : 0, statusMessage ? _fbb.CreateString(statusMessage) : 0, personType ? _fbb.CreateString(personType) : 0, department ? _fbb.CreateString(department) : 0, policeName ? _fbb.CreateString(policeName) : 0, policePhone ? _fbb.CreateString(policePhone) : 0, managment ? _fbb.CreateString(managment) : 0);
 }
 
 /// 根据阎军的建议，图片不要用flatbuffer序列化，直接发送二进制数据

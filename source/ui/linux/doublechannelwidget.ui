@@ -399,9 +399,6 @@
     <property name="styleSheet">
      <string notr="true"/>
     </property>
-    <property name="currentIndex">
-     <number>1</number>
-    </property>
     <widget class="QWidget" name="page1">
      <widget class="QLabel" name="label_idcardusetime_3">
       <property name="geometry">
@@ -445,7 +442,7 @@
        <number>0</number>
       </property>
       <property name="text">
-       <string>姓    名:</string>
+       <string>姓      名:</string>
       </property>
      </widget>
      <widget class="QLabel" name="label_28">
@@ -469,7 +466,7 @@
        <number>0</number>
       </property>
       <property name="text">
-       <string>有 效 期:</string>
+       <string>有  效 期:</string>
       </property>
      </widget>
      <widget class="QLabel" name="label_29">
@@ -541,7 +538,7 @@
        <number>0</number>
       </property>
       <property name="text">
-       <string>民    族:</string>
+       <string>民      族:</string>
       </property>
      </widget>
      <widget class="QLabel" name="label_idcardsex_3">
@@ -670,7 +667,7 @@
        <number>0</number>
       </property>
       <property name="text">
-       <string>住    址:</string>
+       <string>住      址:</string>
       </property>
      </widget>
      <widget class="QLabel" name="label_idcardpic_3">
@@ -749,7 +746,7 @@
        <number>0</number>
       </property>
       <property name="text">
-       <string>性    别:</string>
+       <string>性      别:</string>
       </property>
      </widget>
      <widget class="QLabel" name="label_34">
@@ -1166,13 +1163,13 @@
        <number>0</number>
       </property>
       <property name="text">
-       <string>住    址:</string>
+       <string>住      址:</string>
       </property>
      </widget>
      <widget class="QLabel" name="label_19">
       <property name="geometry">
        <rect>
-        <x>630</x>
+        <x>640</x>
         <y>208</y>
         <width>91</width>
         <height>21</height>
@@ -1190,7 +1187,7 @@
        <number>0</number>
       </property>
       <property name="text">
-       <string>住    址:</string>
+       <string>住      址:</string>
       </property>
      </widget>
      <widget class="QLabel" name="label_14">
@@ -1214,7 +1211,7 @@
        <number>0</number>
       </property>
       <property name="text">
-       <string>民    族:</string>
+       <string>民      族:</string>
       </property>
      </widget>
      <widget class="QLabel" name="label_acrossnum_2">
@@ -1259,7 +1256,7 @@
        <number>0</number>
       </property>
       <property name="text">
-       <string>性    别:</string>
+       <string>性      别:</string>
       </property>
      </widget>
      <widget class="QLabel" name="label_5">
@@ -1289,7 +1286,7 @@
      <widget class="QLabel" name="label_21">
       <property name="geometry">
        <rect>
-        <x>630</x>
+        <x>640</x>
         <y>261</y>
         <width>91</width>
         <height>21</height>
@@ -1313,7 +1310,7 @@
      <widget class="QLabel" name="label_idcardusetime_2">
       <property name="geometry">
        <rect>
-        <x>730</x>
+        <x>740</x>
         <y>315</y>
         <width>251</width>
         <height>21</height>
@@ -1397,7 +1394,7 @@
        <number>0</number>
       </property>
       <property name="text">
-       <string>有 效 期:</string>
+       <string>有  效 期:</string>
       </property>
      </widget>
      <widget class="QLabel" name="label_idcardbirthday">
@@ -1463,7 +1460,7 @@
        <number>0</number>
       </property>
       <property name="text">
-       <string>姓    名:</string>
+       <string>姓      名:</string>
       </property>
      </widget>
      <widget class="QLabel" name="label_9">
@@ -1538,7 +1535,7 @@
      <widget class="QLabel" name="label_idcardbirthday_2">
       <property name="geometry">
        <rect>
-        <x>730</x>
+        <x>740</x>
         <y>181</y>
         <width>251</width>
         <height>21</height>
@@ -1580,7 +1577,7 @@
      <widget class="QLabel" name="label_13">
       <property name="geometry">
        <rect>
-        <x>630</x>
+        <x>640</x>
         <y>100</y>
         <width>91</width>
         <height>21</height>
@@ -1598,13 +1595,13 @@
        <number>0</number>
       </property>
       <property name="text">
-       <string>姓    名:</string>
+       <string>姓      名:</string>
       </property>
      </widget>
      <widget class="QLabel" name="label_idcardnation_2">
       <property name="geometry">
        <rect>
-        <x>730</x>
+        <x>740</x>
         <y>154</y>
         <width>201</width>
         <height>21</height>
@@ -1625,7 +1622,7 @@
      <widget class="QLabel" name="label_idcardsex_2">
       <property name="geometry">
        <rect>
-        <x>730</x>
+        <x>740</x>
         <y>127</y>
         <width>201</width>
         <height>21</height>
@@ -1646,7 +1643,7 @@
      <widget class="QLabel" name="label_25">
       <property name="geometry">
        <rect>
-        <x>630</x>
+        <x>640</x>
         <y>315</y>
         <width>91</width>
         <height>21</height>
@@ -1664,13 +1661,13 @@
        <number>0</number>
       </property>
       <property name="text">
-       <string>有 效 期:</string>
+       <string>有  效 期:</string>
       </property>
      </widget>
      <widget class="QLabel" name="label_15">
       <property name="geometry">
        <rect>
-        <x>630</x>
+        <x>640</x>
         <y>154</y>
         <width>91</width>
         <height>21</height>
@@ -1688,13 +1685,13 @@
        <number>0</number>
       </property>
       <property name="text">
-       <string>民    族:</string>
+       <string>民      族:</string>
       </property>
      </widget>
      <widget class="QLabel" name="label_idcardnum_2">
       <property name="geometry">
        <rect>
-        <x>730</x>
+        <x>740</x>
         <y>261</y>
         <width>251</width>
         <height>21</height>
@@ -1781,7 +1778,7 @@
      <widget class="QLabel" name="label_idcardaddress_2">
       <property name="geometry">
        <rect>
-        <x>730</x>
+        <x>740</x>
         <y>208</y>
         <width>251</width>
         <height>47</height>
@@ -1844,7 +1841,7 @@
      <widget class="QLabel" name="label_idcardname_2">
       <property name="geometry">
        <rect>
-        <x>730</x>
+        <x>740</x>
         <y>100</y>
         <width>251</width>
         <height>21</height>
@@ -1889,7 +1886,7 @@
      <widget class="QLabel" name="label_26">
       <property name="geometry">
        <rect>
-        <x>630</x>
+        <x>640</x>
         <y>181</y>
         <width>91</width>
         <height>21</height>
@@ -1955,7 +1952,7 @@
      <widget class="QLabel" name="label_23">
       <property name="geometry">
        <rect>
-        <x>630</x>
+        <x>640</x>
         <y>288</y>
         <width>91</width>
         <height>21</height>
@@ -1979,7 +1976,7 @@
      <widget class="QLabel" name="label_idcarddepart_2">
       <property name="geometry">
        <rect>
-        <x>730</x>
+        <x>740</x>
         <y>288</y>
         <width>251</width>
         <height>21</height>
@@ -2069,7 +2066,7 @@
      <widget class="QLabel" name="label_17">
       <property name="geometry">
        <rect>
-        <x>630</x>
+        <x>640</x>
         <y>127</y>
         <width>91</width>
         <height>21</height>
@@ -2087,7 +2084,7 @@
        <number>0</number>
       </property>
       <property name="text">
-       <string>性    别:</string>
+       <string>性      别:</string>
       </property>
      </widget>
      <widget class="QLabel" name="label_20">

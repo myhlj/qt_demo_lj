@@ -5,6 +5,7 @@
 #include <QVector>
 #include <QMovie>
 #include "IMainView.h"
+#include "warndialog.h"
 
 #if _MSC_VER >= 1600
 #pragma execution_character_set("utf-8")
@@ -29,7 +30,6 @@ public:
     void Init();
     void ShowView();
     void ShowAcrossInfo(const QByteArray& data);
-    // QWidget interface
 protected:
     void closeEvent(QCloseEvent *);
 
@@ -73,17 +73,13 @@ private:
     IMainController *controller;
     bool            m_bSwitched;
     QVector<QByteArray> m_vector_data;
-    enum blackResult{
-        bingo = 1,
-        notBlack,
-        notCompare
-    };
     int             m_nBatch;//记录当前批次
     QMovie*         m_pMovie;//播放gif
     int             m_across_num_chanel1;//通道一当天通过人数
     int             m_across_warnnum_chanel1;//通道一当天报警人数
     int             m_across_num_chanel2;
     int             m_across_warnnum_chanel2;
+    WarnDialog*     m_warndialog;
 private:
     void InitComboxChanel();
     void SaveToVector(const QByteArray& data);
@@ -100,6 +96,8 @@ private:
     void GetPrevBatchData();
     void GetNextBatchData();
     void GetNewBatchData();
+    void write_acrossnum_to_file();
+    void show_warndialog(int index,const TransportInfo* info);
 };
 
 #endif // DOUBLECHANNELWIDGET_H

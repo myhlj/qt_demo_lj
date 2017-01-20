@@ -30,7 +30,8 @@ SOURCES += apps/main.cpp\
     apps/controller/options.cpp \
     apps/controller/client.cpp \
     apps/view/bottompiclabel.cpp \
-    apps/view/keydialog.cpp
+    apps/view/keydialog.cpp \
+    apps/view/warndialog.cpp
 
 HEADERS  += apps/view/doublechannelwidget.h \
     apps/controller/main_controller.h \
@@ -50,7 +51,10 @@ HEADERS  += apps/view/doublechannelwidget.h \
     apps/view/bottompiclabel.h \
     apps/view/THIDImageHelper.h \
     apps/view/THIDErrorDef.h \
-    apps/view/keydialog.h
+    apps/view/keydialog.h \
+    warnshowwidget.h \
+    apps/controller/common_data.h \
+    apps/view/warndialog.h
 
 unix:!macx{
 LIBS += -L /usr/lib/hisign/VerifyEngine \
@@ -64,7 +68,8 @@ LIBS += -L../libs/windows \
 }
 
 FORMS    += apps/view/doublechannelwidget.ui \
-    apps/view/keydialog.ui
+    apps/view/keydialog.ui \
+    apps/view/warndialog.ui
 
 RESOURCES += \
     resource.qrc

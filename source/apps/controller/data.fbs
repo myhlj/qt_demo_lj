@@ -56,10 +56,22 @@ table Blacklist
     /// 名单查询状态，0：正常；比如超时-4、-5，到管理屏提示：网络异常
     /// -6、-90、-91、-98、-99，管理屏提示：数据查询异常
     blackStatus:int;
+    /// 查询的类型 0：网络名单库    1：本地名单库
+    queryType:int;
     /// jobID
     blackJobID:string;
-    /// 人员类型 json
-    personInfo:string;
+    /// 状态描述
+    statusMessage:string;
+    /// 名单类型(犯罪种类)
+    personType:string;
+    /// 信息发布单位
+    department:string;
+    /// 警员
+    policeName:string;
+    /// 警员联系方式
+    policePhone:string;
+    /// 处置意见
+    managment:string;
 }
 
 /// 根据阎军的建议，图片不要用flatbuffer序列化，直接发送二进制数据

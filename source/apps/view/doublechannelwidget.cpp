@@ -15,13 +15,12 @@
 #include "IMainController.h"
 #include "THIDImageHelper.h"
 #include "keydialog.h"
+#include "common_data.h"
 
-#define  GATEONE   1 //通道一
-#define  GATETWO   2 //2
-#define  GATEBOTH  3 //双通道
+
+
 #define  MAXFILENUM 2100 //最多存储数据
 #define  SHOWFILENUM 7 //界面显示一批7条数据
-
 
 DoubleChannelWidget::DoubleChannelWidget(QWidget *parent) :
     QWidget(parent),
@@ -32,7 +31,8 @@ DoubleChannelWidget::DoubleChannelWidget(QWidget *parent) :
     m_across_num_chanel1(0),
     m_across_num_chanel2(0),
     m_across_warnnum_chanel1(0),
-    m_across_warnnum_chanel2(0)
+    m_across_warnnum_chanel2(0),
+    m_warndialog(NULL)
 {
     ui->setupUi(this);
     m_pMovie = new QMovie(":img/page/wait.gif");
@@ -99,6 +99,11 @@ void DoubleChannelWidget::Init()
     //加载上次过往的最后一批人员
     GetNewBatchData();
     ShowBottomPic();
+    //label自动换行
+    ui->label_idcardaddress->setWordWrap(true);
+    ui->label_idcardaddress->setAlignment(Qt::AlignTop);
+    ui->label_idcardaddress_2->setWordWrap(true);
+    ui->label_idcardaddress_2->setAlignment(Qt::AlignTop);
 }
 
 void DoubleChannelWidget::recive_showtime()
@@ -182,6 +187,8 @@ void DoubleChannelWidget::ShowAcrossInfo(const QByteArray& data)
     ShowAcrossNum(pInfo,nIndex);
     ShowAcrossWarnNum(pInfo,nIndex);
     ShowBottomPic();
+    //弹窗显示异常
+    show_warndialog(nIndex,pInfo);
 }
 
 void DoubleChannelWidget::SaveToVector(const QByteArray &data)
@@ -280,7 +287,7 @@ void DoubleChannelWidget::ShowCardPic(const TransportInfo *pInfo, int index)
                     ui->label_idcardpic_3->setStyleSheet("border: 2px solid red;");
                     ui->label_warn_alise_1->show();//布控人员
                     break;
-                    case notBlack:
+                    case notMatch:
                     ui->label_idcardpic_3->setStyleSheet("border: 2px solid green;");
                     ui->label_warn_alise_1->hide();//布控人员
                     break;
@@ -304,7 +311,7 @@ void DoubleChannelWidget::ShowCardPic(const TransportInfo *pInfo, int index)
                     ui->label_idcardpic_3->setStyleSheet("border: 2px solid red;");
                     ui->label_warn_alise_1->show();//布控人员
                     break;
-                    case notBlack:
+                    case notMatch:
                     ui->label_idcardpic_3->setStyleSheet("border: 2px solid green;");
                     ui->label_warn_alise_1->hide();//布控人员
                     break;
@@ -327,7 +334,7 @@ void DoubleChannelWidget::ShowCardPic(const TransportInfo *pInfo, int index)
                 case bingo:
                 ui->label_idcardpic->setStyleSheet("border: 2px solid red;");
                 break;
-                case notBlack:
+                case notMatch:
                 ui->label_idcardpic->setStyleSheet("border: 2px solid green;");
                 break;
                 case notCompare:
@@ -346,7 +353,7 @@ void DoubleChannelWidget::ShowCardPic(const TransportInfo *pInfo, int index)
                 case bingo:
                 ui->label_idcardpic_2->setStyleSheet("border: 2px solid red;");
                 break;
-                case notBlack:
+                case notMatch:
                 ui->label_idcardpic_2->setStyleSheet("border: 2px solid green;");
                 break;
                 case notCompare:
@@ -626,7 +633,7 @@ void DoubleChannelWidget::LabelPicPushDownShow(BottomPicLabel *pLabel, const Tra
     switch(pInfo->blackInfo()->blackResult()){
     case bingo:
         break;
-    case notBlack:
+    case notMatch:
         switch(pInfo->header()->handle()){
             case GATEONE:
             //pLabel->setStyleSheet("border: 0px solid green;");
@@ -712,7 +719,7 @@ void DoubleChannelWidget::ShowPic(BottomPicLabel *pLabel, const TransportInfo *p
                 qPix.load(":/img/page/facebox-alarm-aisle2.png");
                 break;
             }
-        }else if(pInfo->blackInfo()->blackResult() == notBlack){//未比中
+        }else if(pInfo->blackInfo()->blackResult() == notMatch){//未比中
             switch(pInfo->header()->handle()){
             case GATEONE:
                 qPix.load(":/img/page/facebox-aisle1.png");
@@ -747,7 +754,7 @@ void DoubleChannelWidget::ShowPic(BottomPicLabel *pLabel, const TransportInfo *p
                 qTmp.load(":/img/page/facebox-alarm-aisle2.png");
                 break;
             }
-        }else if(pInfo->blackInfo()->blackResult() == notBlack){//未比中
+        }else if(pInfo->blackInfo()->blackResult() == notMatch){//未比中
             switch(pInfo->header()->handle()){
             case GATEONE:
                 qTmp.load(":/img/page/facebox-aisle1.png");
@@ -1004,5 +1011,22 @@ void DoubleChannelWidget::ShowAcrossWarnNum(const TransportInfo *info, int index
             }
         }
         break;
+    }
+}
+
+void DoubleChannelWidget::write_acrossnum_to_file()
+{
+
+}
+
+void DoubleChannelWidget::show_warndialog(int index,const TransportInfo *info)
+{
+    if(m_warndialog == NULL){
+        m_warndialog = new WarnDialog(index,info,this);
+        m_warndialog->setAttribute(Qt::WA_TranslucentBackground);//背景透明
+        m_warndialog->setModal(true);
+        m_warndialog->show();
+    }else{
+        m_warndialog->set_transport_info(info);
     }
 }
