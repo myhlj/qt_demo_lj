@@ -171,8 +171,8 @@ void DoubleChannelWidget::ShowAcrossInfo(const QByteArray& data)
         break;
         case 2:{//双通道
             if(nHandle == GATEONE || nHandle == GATETWO){
-                ui->label_picchannel->setStyleSheet("border-image: url(:/img/page/btn-gate1.png;");
-                ui->label_picchannel_2->setStyleSheet("border-image: url(:/img/page/btn-gate2.png;");
+                ui->label_picchannel->setStyleSheet("border-image: url(:/img/page/btn-gate1.png);");
+                ui->label_picchannel_2->setStyleSheet("border-image: url(:/img/page/btn-gate2.png);");
 
                 SaveToVector(data);
                 SaveData(data,pInfo);
@@ -188,7 +188,7 @@ void DoubleChannelWidget::ShowAcrossInfo(const QByteArray& data)
     ShowAcrossWarnNum(pInfo,nIndex);
     ShowBottomPic();
     //弹窗显示异常
-    show_warndialog(nIndex,pInfo);
+    show_warndialog(nIndex,pInfo,data);
 }
 
 void DoubleChannelWidget::SaveToVector(const QByteArray &data)
@@ -1019,14 +1019,25 @@ void DoubleChannelWidget::write_acrossnum_to_file()
 
 }
 
-void DoubleChannelWidget::show_warndialog(int index,const TransportInfo *info)
+void DoubleChannelWidget::show_warndialog(int index,const TransportInfo *info,const QByteArray& data)
 {
-    if(m_warndialog == NULL){
-        m_warndialog = new WarnDialog(index,info,this);
-        m_warndialog->setAttribute(Qt::WA_TranslucentBackground);//背景透明
-        m_warndialog->setModal(true);
-        m_warndialog->show();
-    }else{
-        m_warndialog->set_transport_info(info);
+    if(info->blackInfo()->blackResult() == bingo ||
+            info->ticketInfo()->ticketResult() == notMatch ||
+            info->verifyResult() == notMatch){
+        if(m_warndialog == NULL){
+            m_warndialog = new WarnDialog(index,info,data,controller,this);
+            m_warndialog->setAttribute(Qt::WA_TranslucentBackground);//背景透明
+            m_warndialog->setModal(true);
+            m_warndialog->move(this->pos());
+            connect(m_warndialog,SIGNAL(warndialog_destory()),this,SLOT(warnDialogDestoryed()));
+            m_warndialog->show();
+        }else{
+            m_warndialog->set_transport_info(info,data);
+        }
     }
+}
+
+void DoubleChannelWidget::warnDialogDestoryed()
+{
+    m_warndialog = NULL;
 }

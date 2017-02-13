@@ -2,17 +2,23 @@
 #include "ui_warndialog.h"
 #include "options.h"
 #include "common_data.h"
+#include <QTimer>
+#include <QDateTime>
+#include "IMainController.h"
+using namespace std;
 
 #define BLACK_WARN_TEXT "黑名单异常"
 #define TICKET_WARN_TEXT "票务异常"
 #define NOTMATCH_WARN_TEXT "人员核验不匹配异常"
 
-WarnDialog::WarnDialog(int index,const TransportInfo *info,QWidget *parent) :
+WarnDialog::WarnDialog(int index,const TransportInfo *info,const QByteArray& data,IMainController *controller,QWidget *parent) :
     QDialog(parent,Qt::FramelessWindowHint),
     ui(new Ui::WarnDialog)
 {
     m_index = index;
     m_info = info;
+    m_list_info.push_front(data);
+    this->controller = controller;
     ui->setupUi(this);
     init();
 }
@@ -37,6 +43,12 @@ void WarnDialog::init()
     if(nCurrentChannelIndex <= GATEBOTH && nCurrentChannelIndex >= GATEONE)
         ui->comboBox_chanel->setCurrentIndex(nCurrentChannelIndex - 1);
     ui->comboBox_chanel->setDisabled(true);
+    ui->toolButton_exit->setDisabled(true);
+    ui->toolButton_opengate->setDisabled(true);
+    ui->toolButton_opengate_2->setDisabled(true);
+    ui->toolButton_restart->setDisabled(true);
+    ui->toolButton_shutdown->setDisabled(true);
+    ui->toolButton_switch->setDisabled(true);
 
     switch(nCurrentChannelIndex){
         case GATEONE:
@@ -53,18 +65,26 @@ void WarnDialog::init()
         break;
     }
     //显示信息
-    show_cardinfo();
     show_content();
-    show_gate();
+    //timer
+    QTimer* timer = new QTimer(this);
+    connect(timer,SIGNAL(timeout()),this,SLOT(recive_showtime()));
+    timer->start(1000);
 }
 
-void WarnDialog::set_transport_info(const TransportInfo *info)
+void WarnDialog::recive_showtime()
+{
+    QDateTime time = QDateTime::currentDateTime();//获取系统现在的时间
+    QString strTime = time.toString("yyyy-MM-dd hh:mm:ss"); //设置显示格式
+    ui->label_curtime->setText(strTime);
+}
+
+void WarnDialog::set_transport_info(const TransportInfo *info,const QByteArray& data)
 {
     m_info = info;
+    m_list_info.push_front(data);
     //显示信息
-    show_cardinfo();
     show_content();
-    show_gate();
 }
 
 void WarnDialog::show_cardinfo()
@@ -99,7 +119,10 @@ void WarnDialog::show_content()
         ui->pushButton_warn_opengate->hide();
         ui->label_warn_content->setText(BLACK_WARN_TEXT);
         show_label_pic();
-        ui->widget_page_switch->setStyleSheet("border-image: url(:/img/warndialog/bg/bg1.png);");
+        show_switch_bg(":/img/warndialog/bg/bg1.png");
+        ui->label_warn_pic1->setStyleSheet("border: 2px solid red");
+        ui->label_warn_pic2->setStyleSheet("border: 2px solid red");
+        ui->label_warn_pic3->setStyleSheet("border: 2px solid red");
     }else if(m_info->ticketInfo()->ticketResult() == notMatch){//票务
         show_ticketinfo();//显示票务
         ui->pushButton_warn_verifyno->hide();//隐藏认证不同
@@ -107,7 +130,10 @@ void WarnDialog::show_content()
         ui->pushButton_warn_opengate->hide();
         ui->label_warn_content->setText(TICKET_WARN_TEXT);
         show_label_pic();
-        ui->widget_page_switch->setStyleSheet("border-image: url(:/img/warndialog/bg/bg3.png);");
+        show_switch_bg(":/img/warndialog/bg/bg3.png");
+        ui->label_warn_pic1->setStyleSheet("border: 2px solid yellow");
+        ui->label_warn_pic2->setStyleSheet("border: 2px solid yellow");
+        ui->label_warn_pic3->setStyleSheet("border: 2px solid yellow");
     }else if(m_info->verifyResult() == notMatch){
         hide_ticketinfo();//隐藏票务
         ui->pushButton_warn_verifyno->show();//显示人证不同
@@ -115,8 +141,13 @@ void WarnDialog::show_content()
         ui->pushButton_warn_opengate->show();
         ui->label_warn_content->setText(NOTMATCH_WARN_TEXT);
         show_label_pic();
-        ui->widget_page_switch->setStyleSheet("border-image: url(:/img/warndialog/bg/bg4.png);");
+        show_switch_bg(":/img/warndialog/bg/bg2.png");
+        ui->label_warn_pic1->setStyleSheet("border: 2px solid green");
+        ui->label_warn_pic2->setStyleSheet("border: 2px solid green");
+        ui->label_warn_pic3->setStyleSheet("border: 2px solid green");
     }
+    show_cardinfo();
+    show_gate();
 }
 
 void WarnDialog::show_gate()
@@ -224,3 +255,89 @@ void WarnDialog::show_screen_pic()
     }
 }
 
+void WarnDialog::show_switch_bg(const QString& path)
+{
+    QPalette palette;
+    ui->widget_page_switch->setAutoFillBackground(true);
+    QImage image;
+    if(image.load(path))
+    {
+        image = image.scaled(ui->widget_page_switch->width(),
+                             ui->widget_page_switch->height());
+        palette.setBrush(QPalette::Window, QBrush(image));
+        ui->widget_page_switch->setPalette(palette);
+    }
+}
+
+void WarnDialog::on_pushButton_warn_opengate_clicked()
+{
+    //先pop当前的数据
+    QByteArray current_data = m_list_info.front();
+    m_list_info.pop_front();
+    //显示上一条数据
+    if(m_list_info.size() > 0){
+        current_data = m_list_info.front();
+        const TransportInfo* pInfo = GetTransportInfo(current_data.constData());
+        if(pInfo == NULL){
+            return;
+        }
+        m_info = pInfo;
+        show_content();
+        //发送开门消息
+        this->controller->SendCmd(m_info->header()->handle(),
+                                  LBTDMessage::MessType_OPENGATE);
+    }else{
+        const TransportInfo* pInfo = GetTransportInfo(current_data.constData());
+        if(pInfo == NULL){
+            return;
+        }
+        m_info = pInfo;
+        //发送开门消息
+        this->controller->SendCmd(m_info->header()->handle(),
+                                  LBTDMessage::MessType_OPENGATE);
+        emit(warndialog_destory());
+        //销毁本窗口
+        destroy();
+
+    }
+}
+
+void WarnDialog::on_pushButton_warn_verifyno_clicked()
+{
+    //先pop当前的数据
+    m_list_info.pop_front();
+    //显示上一条数据
+    if(m_list_info.size() > 0){
+        QByteArray data = m_list_info.front();
+        const TransportInfo* pInfo = GetTransportInfo(data.constData());
+        if(pInfo == NULL){
+            return;
+        }
+        m_info = pInfo;
+        show_content();
+    }else{
+        //销毁本窗口
+        destroy();
+        emit(warndialog_destory());
+    }
+}
+
+void WarnDialog::on_pushButton_warn_deal_clicked()
+{
+    //先pop当前的数据
+    m_list_info.pop_front();
+    //显示上一条数据
+    if(m_list_info.size() > 0){
+        QByteArray data = m_list_info.front();
+        const TransportInfo* pInfo = GetTransportInfo(data.constData());
+        if(pInfo == NULL){
+            return;
+        }
+        m_info = pInfo;
+        show_content();
+    }else{
+        //销毁本窗口
+        destroy();
+        emit(warndialog_destory());
+    }
+}

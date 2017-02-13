@@ -265,7 +265,7 @@ QLabel
 
 #label_warn_content
 {
-    font-family:"黑体";
+    font-family:"微软雅黑";
     color: #ffffff;
     font-size: 24px;
 }
@@ -274,7 +274,7 @@ QLabel
 #label_warn_static4,#label_warn_static5,#label_warn_static6,
 #label_warn_static7,#label_warn_static8
 {
-    font-family:"黑体";
+    font-family:"微软雅黑";
     color: #ffffff;
     font-size: 18px;
 }
@@ -282,7 +282,7 @@ QLabel
 #label_warn_static10,#label_warn_static12,#label_warn_static11,
 #label_warn_static13,#label_warn_static9
 {
-    font-family:"黑体";
+    font-family:"微软雅黑";
     font-size: 18px;
     color: #ffffff;
 }
@@ -291,14 +291,14 @@ QLabel
 #label_warn_ticket_num,#label_warn_ticket_people,
 #label_warn_ticket_date,#label_warn_ticket_stationnum
 {
-    font-family:"黑体";
+    font-family:"微软雅黑";
     font-size:18px;
     color: #daee00;
 }
 
 #label_warn_pic1,#label_warn_pic2,#label_warn_pic3
 {
-    border-image: url(:/img/warndialog/blue_box.png);
+    border: 2px solid green;
 }
 
 #label_warn_gate
@@ -309,7 +309,7 @@ QLabel
 #pushButton_warn_deal,#pushButton_warn_verifyno,#pushButton_warn_opengate
 {
     border-image: url(:/img/warndialog/btn.png);
-    font-fmaily:"黑体";
+    font-family:"微软雅黑";
     color: #ffffff;
     font-size: 24px;
 }
@@ -317,7 +317,7 @@ QLabel
 #pushButton_warn_deal:pressed,#pushButton_warn_verifyno:pressed,#pushButton_warn_opengate:pressed
 {
     border-image: url(:/img/warndialog/btn-press.png);
-    font-fmaily:"黑体";
+    font-family:"微软雅黑";
     color: #ffffff;
     font-size: 24px;
 }

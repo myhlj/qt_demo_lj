@@ -68,6 +68,7 @@ private slots:
     void keyboardDestoryed();
     void keyboardOnOk();
     void recive_showtime();
+    void warnDialogDestoryed();
 private:
     Ui::DoubleChannelWidget *ui;
     IMainController *controller;
@@ -97,7 +98,7 @@ private:
     void GetNextBatchData();
     void GetNewBatchData();
     void write_acrossnum_to_file();
-    void show_warndialog(int index,const TransportInfo* info);
+    void show_warndialog(int index,const TransportInfo* info,const QByteArray& data);
 };
 
 #endif // DOUBLECHANNELWIDGET_H
