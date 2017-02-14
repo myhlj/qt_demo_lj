@@ -85,6 +85,15 @@ void DoubleChannelWidget::Init()
     }
     //布控人员
     ui->label_warn_alise_1->hide();
+    ui->label_warn_alise_2->hide();
+    ui->label_warn_alise_3->hide();
+    ui->label_black_status_1->hide();
+    ui->label_black_status_2->hide();
+    ui->label_black_status_3->hide();
+    ui->label_black_status_text_1->hide();
+    ui->label_black_status_text_2->hide();
+    ui->label_black_status_text_3->hide();
+
     //创建存储数据文件夹
     QString qs_path = QCoreApplication::applicationDirPath();
     qs_path += "/saveData";
@@ -186,6 +195,7 @@ void DoubleChannelWidget::ShowAcrossInfo(const QByteArray& data)
     ShowTicketInfo(pInfo,nIndex);
     ShowAcrossNum(pInfo,nIndex);
     ShowAcrossWarnNum(pInfo,nIndex);
+    ShowBlackStatusText(pInfo,nIndex);
     ShowBottomPic();
     //弹窗显示异常
     show_warndialog(nIndex,pInfo,data);
@@ -282,17 +292,18 @@ void DoubleChannelWidget::ShowCardPic(const TransportInfo *pInfo, int index)
                                            ui->label_idcardpic_3->height(), Qt::KeepAspectRatio);
                     ui->label_idcardpic_3->setPixmap(QPixmap::fromImage(qTmp.mirrored(false,false)));
                 }
-                switch(pInfo->blackInfo()->blackResult()){//是否比中黑名单
-                    case bingo:
-                    ui->label_idcardpic_3->setStyleSheet("border: 2px solid red;");
+                if(pInfo->blackInfo()->blackResult() == bingo){
+                    ui->label_idcardpic_3->setStyleSheet("border: 3px solid red;");
                     ui->label_warn_alise_1->show();//布控人员
-                    break;
-                    case notMatch:
-                    ui->label_idcardpic_3->setStyleSheet("border: 2px solid green;");
+                }else if(pInfo->ticketInfo()->ticketResult() == notMatch){
+                    ui->label_idcardpic_3->setStyleSheet("border: 3px solid yellow;");
                     ui->label_warn_alise_1->hide();//布控人员
-                    break;
-                    case notCompare:
-                    break;
+                }else if(pInfo->verifyResult() == notMatch){
+                    ui->label_idcardpic_3->setStyleSheet("border: 3px solid #2aa1d3;");
+                    ui->label_warn_alise_1->hide();//布控人员
+                }else{
+                    ui->label_idcardpic_3->setStyleSheet("border: 3px solid green;");
+                    ui->label_warn_alise_1->hide();//布控人员
                 }
             }
         }
@@ -306,17 +317,18 @@ void DoubleChannelWidget::ShowCardPic(const TransportInfo *pInfo, int index)
                                            ui->label_idcardpic_3->height(), Qt::KeepAspectRatio);
                     ui->label_idcardpic_3->setPixmap(QPixmap::fromImage(qTmp.mirrored(false,false)));
                 }
-                switch(pInfo->blackInfo()->blackResult()){//是否比中黑名单
-                    case bingo:
-                    ui->label_idcardpic_3->setStyleSheet("border: 2px solid red;");
+                if(pInfo->blackInfo()->blackResult() == bingo){
+                    ui->label_idcardpic_3->setStyleSheet("border: 3px solid red;");
                     ui->label_warn_alise_1->show();//布控人员
-                    break;
-                    case notMatch:
-                    ui->label_idcardpic_3->setStyleSheet("border: 2px solid green;");
+                }else if(pInfo->ticketInfo()->ticketResult() == notMatch){
+                    ui->label_idcardpic_3->setStyleSheet("border: 3px solid yellow;");
                     ui->label_warn_alise_1->hide();//布控人员
-                    break;
-                    case notCompare:
-                    break;
+                }else if(pInfo->verifyResult() == notMatch){
+                    ui->label_idcardpic_3->setStyleSheet("border: 3px solid #2aa1d3;");
+                    ui->label_warn_alise_1->hide();//布控人员
+                }else{
+                    ui->label_idcardpic_3->setStyleSheet("border: 3px solid green;");
+                    ui->label_warn_alise_1->hide();//布控人员
                 }
             }
         }
@@ -330,15 +342,18 @@ void DoubleChannelWidget::ShowCardPic(const TransportInfo *pInfo, int index)
                                        ui->label_idcardpic->height(), Qt::KeepAspectRatio);
                 ui->label_idcardpic->setPixmap(QPixmap::fromImage(qTmp.mirrored(true,false)));
             }
-            switch(pInfo->blackInfo()->blackResult()){//是否比中黑名单
-                case bingo:
-                ui->label_idcardpic->setStyleSheet("border: 2px solid red;");
-                break;
-                case notMatch:
-                ui->label_idcardpic->setStyleSheet("border: 2px solid green;");
-                break;
-                case notCompare:
-                break;
+            if(pInfo->blackInfo()->blackResult() == bingo){
+                ui->label_idcardpic->setStyleSheet("border: 3px solid red;");
+                ui->label_warn_alise_2->show();
+            }else if(pInfo->ticketInfo()->ticketResult() == notMatch){
+                ui->label_idcardpic->setStyleSheet("border: 3px solid yellow;");
+                ui->label_warn_alise_2->hide();
+            }else if(pInfo->verifyResult() == notMatch){
+                ui->label_idcardpic->setStyleSheet("border: 3px solid #2aa1d3;");
+                ui->label_warn_alise_2->hide();
+            }else{
+                ui->label_idcardpic->setStyleSheet("border: 3px solid green;");
+                ui->label_warn_alise_2->hide();
             }
         }else if(pInfo->header()->handle() == GATETWO){
            QImage qTmp;
@@ -349,16 +364,19 @@ void DoubleChannelWidget::ShowCardPic(const TransportInfo *pInfo, int index)
                ui->label_idcardpic_2->setPixmap(QPixmap::fromImage(qTmp.mirrored(true,false)));
            }
 
-           switch(pInfo->blackInfo()->blackResult()){//是否比中黑名单
-                case bingo:
-                ui->label_idcardpic_2->setStyleSheet("border: 2px solid red;");
-                break;
-                case notMatch:
-                ui->label_idcardpic_2->setStyleSheet("border: 2px solid green;");
-                break;
-                case notCompare:
-                break;
-            }
+           if(pInfo->blackInfo()->blackResult() == bingo){
+               ui->label_idcardpic_2->setStyleSheet("border: 3px solid red;");
+               ui->label_warn_alise_3->show();
+           }else if(pInfo->ticketInfo()->ticketResult() == notMatch){
+               ui->label_idcardpic_2->setStyleSheet("border: 3px solid yellow;");
+               ui->label_warn_alise_3->hide();
+           }else if(pInfo->verifyResult() == notMatch){
+               ui->label_idcardpic_2->setStyleSheet("border: 3px solid #2aa1d3;");
+               ui->label_warn_alise_3->hide();
+           }else{
+               ui->label_idcardpic_2->setStyleSheet("border: 3px solid green;");
+               ui->label_warn_alise_3->hide();
+           }
         }
         break;
     }
@@ -630,25 +648,8 @@ void DoubleChannelWidget::on_label_pic1_push_down()
 void DoubleChannelWidget::LabelPicPushDownShow(BottomPicLabel *pLabel, const TransportInfo *pInfo)
 {
     int nIndex = ui->comboBox_chanel->currentIndex();//当前界面选择index
-    switch(pInfo->blackInfo()->blackResult()){
-    case bingo:
-        break;
-    case notMatch:
-        switch(pInfo->header()->handle()){
-            case GATEONE:
-            //pLabel->setStyleSheet("border: 0px solid green;");
-            //pLabel->setStyleSheet("border-image: url(:/img/page/facebox-aisle1-pushdown.png)");
-            break;
-            case GATETWO:
-            //pLabel->setStyleSheet("border: 0px solid green;");
-            //pLabel->setStyleSheet("border-image: url(:/img/page/facebox-aisle2-pushdown.png)");
-            break;
-        }
-        break;
-    case notCompare:
-        break;
-    }
     ShowCardInfo(pInfo,nIndex);
+    ShowBlackStatusText(pInfo,nIndex);
 }
 
 void DoubleChannelWidget::on_label_pic2_push_down()
@@ -719,22 +720,31 @@ void DoubleChannelWidget::ShowPic(BottomPicLabel *pLabel, const TransportInfo *p
                 qPix.load(":/img/page/facebox-alarm-aisle2.png");
                 break;
             }
-        }else if(pInfo->blackInfo()->blackResult() == notMatch){//未比中
+        }else if(pInfo->ticketInfo()->ticketResult() == notMatch){//车票不符
+            switch(pInfo->header()->handle()){
+            case GATEONE:
+                qPix.load(":/img/page/facebox-yellow1-normal.png");
+                break;
+            case GATETWO:
+                qPix.load(":/img/page/facebox-yellow2-normal.png");
+                break;
+            }
+        }else if(pInfo->verifyResult() == notMatch){
+            switch(pInfo->header()->handle()){
+            case GATEONE:
+                qPix.load(":/img/page/facebox-blue1-normal.png");
+                break;
+            case GATETWO:
+                qPix.load(":/img/page/facebox-blue2-normal.png");
+                break;
+            }
+        }else{
             switch(pInfo->header()->handle()){
             case GATEONE:
                 qPix.load(":/img/page/facebox-aisle1.png");
                 break;
             case GATETWO:
                 qPix.load(":/img/page/facebox-aisle2.png");
-                break;
-            }
-        }else if(pInfo->blackInfo()->blackResult() == notCompare){//未必对
-            switch(pInfo->header()->handle()){
-            case GATEONE:
-                qPix.load(":/img/page/facebox-alarm-aisle1.png");
-                break;
-            case GATETWO:
-                qPix.load(":/img/page/facebox-alarm-aisle2.png");
                 break;
             }
         }
@@ -754,22 +764,31 @@ void DoubleChannelWidget::ShowPic(BottomPicLabel *pLabel, const TransportInfo *p
                 qTmp.load(":/img/page/facebox-alarm-aisle2.png");
                 break;
             }
-        }else if(pInfo->blackInfo()->blackResult() == notMatch){//未比中
+        }else if(pInfo->ticketInfo()->ticketResult() == notMatch){//车票不符
+            switch(pInfo->header()->handle()){
+            case GATEONE:
+                qTmp.load(":/img/page/facebox-yellow1-normal.png");
+                break;
+            case GATETWO:
+                qTmp.load(":/img/page/facebox-yellow2-normal.png");
+                break;
+            }
+        }else if(pInfo->verifyResult() == notMatch){
+            switch(pInfo->header()->handle()){
+            case GATEONE:
+                qTmp.load(":/img/page/facebox-blue1-normal.png");
+                break;
+            case GATETWO:
+                qTmp.load(":/img/page/facebox-blue2-normal.png");
+                break;
+            }
+        }else{
             switch(pInfo->header()->handle()){
             case GATEONE:
                 qTmp.load(":/img/page/facebox-aisle1.png");
                 break;
             case GATETWO:
                 qTmp.load(":/img/page/facebox-aisle2.png");
-                break;
-            }
-        }else if(pInfo->blackInfo()->blackResult() == notCompare){//未必对
-            switch(pInfo->header()->handle()){
-            case GATEONE:
-                qTmp.load(":/img/page/facebox-alarm-aisle1.png");
-                break;
-            case GATETWO:
-                qTmp.load(":/img/page/facebox-alarm-aisle2.png");
                 break;
             }
         }
@@ -1040,4 +1059,63 @@ void DoubleChannelWidget::show_warndialog(int index,const TransportInfo *info,co
 void DoubleChannelWidget::warnDialogDestoryed()
 {
     m_warndialog = NULL;
+}
+
+void DoubleChannelWidget::ShowBlackStatusText(const TransportInfo *info, int index)
+{
+    switch(index){
+        case 0://单通道
+        if(info->header()->handle() == GATEONE){
+            if(info->blackInfo()->blackStatus() != 0){
+                ui->label_black_status_1->show();
+                ui->label_black_status_text_1->show();
+                ui->label_black_status_text_1->setText(
+                            info->blackInfo()->statusMessage() == NULL
+                            ? "" : info->blackInfo()->statusMessage()->c_str());
+            }else{
+                ui->label_black_status_1->hide();
+                ui->label_black_status_text_1->hide();
+            }
+        }
+        break;
+        case 1:
+        if(info->header()->handle() == GATETWO){
+            if(info->blackInfo()->blackStatus() != 0){
+                ui->label_black_status_1->show();
+                ui->label_black_status_text_1->show();
+                ui->label_black_status_text_1->setText(
+                            info->blackInfo()->statusMessage() == NULL
+                            ? "" : info->blackInfo()->statusMessage()->c_str());
+            }else{
+                ui->label_black_status_1->hide();
+                ui->label_black_status_text_1->hide();
+            }
+        }
+        break;
+        case 2://双通道
+        if(info->header()->handle() == GATEONE){//通道1
+            if(info->blackInfo()->blackStatus() != 0){
+                ui->label_black_status_2->show();
+                ui->label_black_status_text_2->show();
+                ui->label_black_status_text_2->setText(
+                            info->blackInfo()->statusMessage() == NULL
+                            ? "" : info->blackInfo()->statusMessage()->c_str());
+            }else{
+                ui->label_black_status_2->hide();
+                ui->label_black_status_text_2->hide();
+            }
+        }else if(info->header()->handle() == GATETWO){//通道2
+            if(info->blackInfo()->blackStatus() != 0){
+                ui->label_black_status_3->show();
+                ui->label_black_status_text_3->show();
+                ui->label_black_status_text_3->setText(
+                            info->blackInfo()->statusMessage() == NULL
+                            ? "" : info->blackInfo()->statusMessage()->c_str());
+            }else{
+                ui->label_black_status_3->hide();
+                ui->label_black_status_text_3->hide();
+            }
+        }
+        break;
+    }
 }

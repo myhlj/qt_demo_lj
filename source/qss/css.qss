@@ -140,7 +140,7 @@ QLabel
 
 #label_idcardpic_3,#label_idcardpic,#label_idcardpic_2
 {
-    border: 2px solid green;
+    border: 3px solid green;
 }
 
 #label_acrosstime_3,#label_37,#label_ticket_department,#label_station_start,#label_station_end,
@@ -208,7 +208,11 @@ QLabel
 {
     border-image: url(:/img/page/check-china.png);
 }
-/*¼üÅÌcss*/
+#label_warn_alise_2,#label_warn_alise_3
+{
+    border-image: url(:/img/page/check-china2.png);
+}
+
 #widget_keyboard
 {
     border-image: url(:/img/keyboard/keyboard-back.png);
@@ -298,7 +302,7 @@ QLabel
 
 #label_warn_pic1,#label_warn_pic2,#label_warn_pic3
 {
-    border: 2px solid green;
+    border: 3px solid green;
 }
 
 #label_warn_gate
@@ -320,4 +324,16 @@ QLabel
     font-family:"微软雅黑";
     color: #ffffff;
     font-size: 24px;
+}
+
+#label_black_status_1,#label_black_status_2,#label_black_status_3
+{
+    border-image: url(:/img/page/black-status.png);
+}
+
+#label_black_status_text_1,#label_black_status_text_2,#label_black_status_text_3
+{
+    font-family:"微软雅黑";
+    color: red;
+    font-size: 18px;
 }

@@ -89,6 +89,7 @@ private:
     void ShowTicketInfo(const TransportInfo *pInfo,int index);
     void ShowAcrossNum(const TransportInfo *info,int index);
     void ShowAcrossWarnNum(const TransportInfo *info,int index);
+    void ShowBlackStatusText(const TransportInfo *info,int index);
     void ShowBottomPic();
     void ShowPic(BottomPicLabel* pLabel,const TransportInfo* pInfo);
     void ClearPic(BottomPicLabel* pLabel);

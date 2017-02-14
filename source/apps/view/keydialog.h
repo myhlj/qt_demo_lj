@@ -1,7 +1,9 @@
-#ifndef KEYDIALOG_H
+﻿#ifndef KEYDIALOG_H
 #define KEYDIALOG_H
 
 #include <QDialog>
+#include <string>
+using namespace std;
 
 namespace Ui {
 class KeyDialog;
@@ -43,7 +45,8 @@ private slots:
     void on_pushButton_keyboard_back_clicked();
 
     void on_pushButton_keyboard_ok_clicked();
-
+private:
+    bool verify_idnumber(string a);
 private:
     Ui::KeyDialog *ui;
 signals:

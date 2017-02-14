@@ -31,7 +31,9 @@ SOURCES += apps/main.cpp\
     apps/controller/client.cpp \
     apps/view/bottompiclabel.cpp \
     apps/view/keydialog.cpp \
-    apps/view/warndialog.cpp
+    apps/view/warndialog.cpp \
+    core/hs_vf_core_http_timeout.cpp \
+    core/hs_vf_core_http.cpp
 
 HEADERS  += apps/view/doublechannelwidget.h \
     apps/controller/main_controller.h \
@@ -54,7 +56,9 @@ HEADERS  += apps/view/doublechannelwidget.h \
     apps/view/keydialog.h \
     warnshowwidget.h \
     apps/controller/common_data.h \
-    apps/view/warndialog.h
+    apps/view/warndialog.h \
+    core/hs_vf_core_http_timeout.h \
+    core/hs_vf_core_http.h
 
 unix:!macx{
 LIBS += -L /usr/lib/hisign/VerifyEngine \

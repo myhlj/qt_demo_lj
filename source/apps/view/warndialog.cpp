@@ -120,9 +120,9 @@ void WarnDialog::show_content()
         ui->label_warn_content->setText(BLACK_WARN_TEXT);
         show_label_pic();
         show_switch_bg(":/img/warndialog/bg/bg1.png");
-        ui->label_warn_pic1->setStyleSheet("border: 2px solid red");
-        ui->label_warn_pic2->setStyleSheet("border: 2px solid red");
-        ui->label_warn_pic3->setStyleSheet("border: 2px solid red");
+        ui->label_warn_pic1->setStyleSheet("border: 3px solid red");
+        ui->label_warn_pic2->setStyleSheet("border: 3px solid red");
+        ui->label_warn_pic3->setStyleSheet("border: 3px solid red");
     }else if(m_info->ticketInfo()->ticketResult() == notMatch){//票务
         show_ticketinfo();//显示票务
         ui->pushButton_warn_verifyno->hide();//隐藏认证不同
@@ -131,9 +131,9 @@ void WarnDialog::show_content()
         ui->label_warn_content->setText(TICKET_WARN_TEXT);
         show_label_pic();
         show_switch_bg(":/img/warndialog/bg/bg3.png");
-        ui->label_warn_pic1->setStyleSheet("border: 2px solid yellow");
-        ui->label_warn_pic2->setStyleSheet("border: 2px solid yellow");
-        ui->label_warn_pic3->setStyleSheet("border: 2px solid yellow");
+        ui->label_warn_pic1->setStyleSheet("border: 3px solid yellow");
+        ui->label_warn_pic2->setStyleSheet("border: 3px solid yellow");
+        ui->label_warn_pic3->setStyleSheet("border: 3px solid yellow");
     }else if(m_info->verifyResult() == notMatch){
         hide_ticketinfo();//隐藏票务
         ui->pushButton_warn_verifyno->show();//显示人证不同
@@ -142,9 +142,9 @@ void WarnDialog::show_content()
         ui->label_warn_content->setText(NOTMATCH_WARN_TEXT);
         show_label_pic();
         show_switch_bg(":/img/warndialog/bg/bg2.png");
-        ui->label_warn_pic1->setStyleSheet("border: 2px solid green");
-        ui->label_warn_pic2->setStyleSheet("border: 2px solid green");
-        ui->label_warn_pic3->setStyleSheet("border: 2px solid green");
+        ui->label_warn_pic1->setStyleSheet("border: 3px solid #2aa1d3");
+        ui->label_warn_pic2->setStyleSheet("border: 3px solid #2aa1d3");
+        ui->label_warn_pic3->setStyleSheet("border: 3px solid #2aa1d3");
     }
     show_cardinfo();
     show_gate();

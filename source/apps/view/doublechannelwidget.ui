@@ -1070,6 +1070,35 @@
        <string/>
       </property>
      </widget>
+     <widget class="QLabel" name="label_black_status_1">
+      <property name="geometry">
+       <rect>
+        <x>870</x>
+        <y>10</y>
+        <width>51</width>
+        <height>44</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_black_status_text_1">
+      <property name="geometry">
+       <rect>
+        <x>820</x>
+        <y>60</y>
+        <width>153</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>网络异常</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="page2">
      <widget class="QLabel" name="label_picchannel">
@@ -2391,6 +2420,90 @@
       </property>
       <property name="text">
        <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_warn_alise_2">
+      <property name="geometry">
+       <rect>
+        <x>340</x>
+        <y>110</y>
+        <width>136</width>
+        <height>135</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_warn_alise_3">
+      <property name="geometry">
+       <rect>
+        <x>820</x>
+        <y>110</y>
+        <width>136</width>
+        <height>135</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_black_status_2">
+      <property name="geometry">
+       <rect>
+        <x>390</x>
+        <y>10</y>
+        <width>51</width>
+        <height>44</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_black_status_3">
+      <property name="geometry">
+       <rect>
+        <x>880</x>
+        <y>10</y>
+        <width>51</width>
+        <height>44</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_black_status_text_2">
+      <property name="geometry">
+       <rect>
+        <x>340</x>
+        <y>68</y>
+        <width>153</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>网络异常</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_black_status_text_3">
+      <property name="geometry">
+       <rect>
+        <x>830</x>
+        <y>68</y>
+        <width>153</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>网络异常</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
       </property>
      </widget>
     </widget>
