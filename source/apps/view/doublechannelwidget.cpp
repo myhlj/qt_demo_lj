@@ -930,7 +930,7 @@ void DoubleChannelWidget::on_toolButton_search_clicked()
     pKeyDialog->setAttribute(Qt::WA_TranslucentBackground);//背景透明
     pKeyDialog->setModal(true);//modal
     ui->stackedWidget->setCurrentIndex(2);//背景
-    connect(pKeyDialog,SIGNAL(man_ok()),this,SLOT(keyboardOnOk()));
+    connect(pKeyDialog,SIGNAL(man_ok(QString)),this,SLOT(keyboardOnOk(QString)));
     connect(pKeyDialog,SIGNAL(man_destory()),this,SLOT(keyboardDestoryed()));
     pKeyDialog->show();
 }
@@ -941,7 +941,7 @@ void DoubleChannelWidget::on_toolButton_search_2_clicked()
     pKeyDialog->setAttribute(Qt::WA_TranslucentBackground);
     pKeyDialog->setModal(true);
     ui->stackedWidget->setCurrentIndex(2);
-    connect(pKeyDialog,SIGNAL(man_ok()),this,SLOT(keyboardOnOk()));
+    connect(pKeyDialog,SIGNAL(man_ok(QString)),this,SLOT(keyboardOnOk(QString)));
     connect(pKeyDialog,SIGNAL(man_destory()),this,SLOT(keyboardDestoryed()));
     pKeyDialog->show();
 }
@@ -959,12 +959,24 @@ void DoubleChannelWidget::keyboardDestoryed()
     }
 }
 
-void DoubleChannelWidget::keyboardOnOk()
+void DoubleChannelWidget::keyboardOnOk(QString cardno)
 {
-    //查询
-    ui->stackedWidget->setCurrentIndex(3);
-    ui->label_gif->setMovie(m_pMovie);
-    m_pMovie->start();
+    if(!verify_idnumber(cardno.toStdString())){
+        switch(ui->comboBox_chanel->currentIndex()){
+        case 0:
+        case 1:
+            ui->stackedWidget->setCurrentIndex(0);
+            break;
+        case 2:
+            ui->stackedWidget->setCurrentIndex(1);
+            break;
+        }
+    }else{
+        //查询
+        ui->stackedWidget->setCurrentIndex(3);
+        ui->label_gif->setMovie(m_pMovie);
+        m_pMovie->start();
+    }
 }
 
 void DoubleChannelWidget::ShowAcrossNum(const TransportInfo *info,int index)
@@ -1117,5 +1129,34 @@ void DoubleChannelWidget::ShowBlackStatusText(const TransportInfo *info, int ind
             }
         }
         break;
+    }
+}
+
+bool DoubleChannelWidget::verify_idnumber(string a)
+{
+    if (a.length() != 18){
+        return false;
+    }
+    int sum = (a[0] - '0') * 7 + (a[1] - '0') * 9 + (a[2] - '0') * 10
+            + (a[3] - '0') * 5 + (a[4] - '0') * 8 + (a[5] - '0') * 4
+            + (a[6] - '0') * 2 + (a[7] - '0') * 1 + (a[8] - '0') * 6
+            + (a[9] - '0') * 3 + (a[10] - '0') * 7 + (a[11] - '0') * 9
+            + (a[12] - '0') * 10 + (a[13] - '0') * 5 + (a[14] - '0') * 8
+            + (a[15] - '0') * 4 + (a[16] - '0') * 2;
+    int k = sum % 11;
+    char lastNumber;
+    if (k == 0){
+        lastNumber = '1';
+    }else if (k == 1){
+        lastNumber = '0';
+    }else if (k == 2){
+        lastNumber = 'X';
+    }else{
+        lastNumber = '0'+12-k;
+    }
+    if(a[17] == lastNumber){
+        return true;
+    }else{
+        return false;
     }
 }

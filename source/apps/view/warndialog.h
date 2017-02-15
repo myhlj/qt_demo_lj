@@ -21,7 +21,11 @@ class WarnDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit WarnDialog(int index,const TransportInfo* info,const QByteArray& data,IMainController *controller,QWidget *parent = 0);
+    explicit WarnDialog(int index,
+                        const TransportInfo* info,
+                        const QByteArray& data,
+                        IMainController *controller,
+                        QWidget *parent = 0);
     ~WarnDialog();
     void set_transport_info(const TransportInfo* info,const QByteArray& data);
 private:

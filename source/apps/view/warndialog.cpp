@@ -11,7 +11,11 @@ using namespace std;
 #define TICKET_WARN_TEXT "票务异常"
 #define NOTMATCH_WARN_TEXT "人员核验不匹配异常"
 
-WarnDialog::WarnDialog(int index,const TransportInfo *info,const QByteArray& data,IMainController *controller,QWidget *parent) :
+WarnDialog::WarnDialog(int index,
+                       const TransportInfo *info,
+                       const QByteArray& data,
+                       IMainController *controller,
+                       QWidget *parent) :
     QDialog(parent,Qt::FramelessWindowHint),
     ui(new Ui::WarnDialog)
 {

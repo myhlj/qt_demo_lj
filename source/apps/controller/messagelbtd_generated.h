@@ -4,43 +4,191 @@
 #define FLATBUFFERS_GENERATED_MESSAGELBTD_LBTDMESSAGE_H_
 
 #include "flatbuffers/flatbuffers.h"
+#if _MSC_VER >= 1600
+#pragma execution_character_set("utf-8")
+#endif
 
 namespace LBTDMessage {
 
+struct IDCardMessage;
+
 struct MessageLBTD;
 
+/// 消息类型
 enum MessType {
+  /// 开门
   MessType_OPENGATE = 1,
+  /// 常开
   MessType_SETGATE = 2,
+  /// 关机
   MessType_CLOSETEMINAL = 3,
+  /// 重启
   MessType_RESTART = 4,
+  /// 验证模式切换
   MessType_VERIFYMODE = 5,
+  /// 增加曝光
   MessType_ADDEXPOSE = 6,
+  /// 减少曝光
   MessType_MINUSEXPOSE = 7,
+  /// 更新参数
   MessType_UPDATAPARAM = 8,
-  MessType_EXIT = 9,
+  ///常口库比对
+  MessType_HANDLEVERIFY = 9,
+  /// 退出当前系统
+  MessType_EXIT = 10,
   MessType_MIN = MessType_OPENGATE,
   MessType_MAX = MessType_EXIT
 };
 
 inline const char **EnumNamesMessType() {
-  static const char *names[] = { "OPENGATE", "SETGATE", "CLOSETEMINAL", "RESTART", "VERIFYMODE", "ADDEXPOSE", "MINUSEXPOSE", "UPDATAPARAM", "EXIT", nullptr };
+  static const char *names[] = { "OPENGATE", "SETGATE", "CLOSETEMINAL", "RESTART", "VERIFYMODE", "ADDEXPOSE", "MINUSEXPOSE", "UPDATAPARAM", "HANDLEVERIFY", "EXIT", nullptr };
   return names;
 }
 
 inline const char *EnumNameMessType(MessType e) { return EnumNamesMessType()[static_cast<int>(e) - static_cast<int>(MessType_OPENGATE)]; }
 
+/// 身份证信息
+struct IDCardMessage FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
+  enum {
+    VT_NAME = 4,
+    VT_GENDER = 6,
+    VT_FOLK = 8,
+    VT_NATIONCODE = 10,
+    VT_BIRTHDAY = 12,
+    VT_CODE = 14,
+    VT_ADDRESS = 16,
+    VT_AGENCY = 18,
+    VT_EXPIRESTART = 20,
+    VT_EXPIREEND = 22,
+    VT_PHOTO = 24
+  };
+  const flatbuffers::String *name() const { return GetPointer<const flatbuffers::String *>(VT_NAME); }
+  ///性别
+  const flatbuffers::String *gender() const { return GetPointer<const flatbuffers::String *>(VT_GENDER); }
+  /// 民族
+  const flatbuffers::String *folk() const { return GetPointer<const flatbuffers::String *>(VT_FOLK); }
+  /// 民族代码
+  const flatbuffers::String *nationCode() const { return GetPointer<const flatbuffers::String *>(VT_NATIONCODE); }
+  const flatbuffers::String *birthday() const { return GetPointer<const flatbuffers::String *>(VT_BIRTHDAY); }
+  ///身份证号
+  const flatbuffers::String *code() const { return GetPointer<const flatbuffers::String *>(VT_CODE); }
+  const flatbuffers::String *address() const { return GetPointer<const flatbuffers::String *>(VT_ADDRESS); }
+  const flatbuffers::String *agency() const { return GetPointer<const flatbuffers::String *>(VT_AGENCY); }
+  const flatbuffers::String *expireStart() const { return GetPointer<const flatbuffers::String *>(VT_EXPIRESTART); }
+  const flatbuffers::String *expireEnd() const { return GetPointer<const flatbuffers::String *>(VT_EXPIREEND); }
+  const flatbuffers::Vector<uint8_t> *photo() const { return GetPointer<const flatbuffers::Vector<uint8_t> *>(VT_PHOTO); }
+  bool Verify(flatbuffers::Verifier &verifier) const {
+    return VerifyTableStart(verifier) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, VT_NAME) &&
+           verifier.Verify(name()) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, VT_GENDER) &&
+           verifier.Verify(gender()) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, VT_FOLK) &&
+           verifier.Verify(folk()) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, VT_NATIONCODE) &&
+           verifier.Verify(nationCode()) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, VT_BIRTHDAY) &&
+           verifier.Verify(birthday()) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, VT_CODE) &&
+           verifier.Verify(code()) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, VT_ADDRESS) &&
+           verifier.Verify(address()) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, VT_AGENCY) &&
+           verifier.Verify(agency()) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, VT_EXPIRESTART) &&
+           verifier.Verify(expireStart()) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, VT_EXPIREEND) &&
+           verifier.Verify(expireEnd()) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, VT_PHOTO) &&
+           verifier.Verify(photo()) &&
+           verifier.EndTable();
+  }
+};
+
+struct IDCardMessageBuilder {
+  flatbuffers::FlatBufferBuilder &fbb_;
+  flatbuffers::uoffset_t start_;
+  void add_name(flatbuffers::Offset<flatbuffers::String> name) { fbb_.AddOffset(IDCardMessage::VT_NAME, name); }
+  void add_gender(flatbuffers::Offset<flatbuffers::String> gender) { fbb_.AddOffset(IDCardMessage::VT_GENDER, gender); }
+  void add_folk(flatbuffers::Offset<flatbuffers::String> folk) { fbb_.AddOffset(IDCardMessage::VT_FOLK, folk); }
+  void add_nationCode(flatbuffers::Offset<flatbuffers::String> nationCode) { fbb_.AddOffset(IDCardMessage::VT_NATIONCODE, nationCode); }
+  void add_birthday(flatbuffers::Offset<flatbuffers::String> birthday) { fbb_.AddOffset(IDCardMessage::VT_BIRTHDAY, birthday); }
+  void add_code(flatbuffers::Offset<flatbuffers::String> code) { fbb_.AddOffset(IDCardMessage::VT_CODE, code); }
+  void add_address(flatbuffers::Offset<flatbuffers::String> address) { fbb_.AddOffset(IDCardMessage::VT_ADDRESS, address); }
+  void add_agency(flatbuffers::Offset<flatbuffers::String> agency) { fbb_.AddOffset(IDCardMessage::VT_AGENCY, agency); }
+  void add_expireStart(flatbuffers::Offset<flatbuffers::String> expireStart) { fbb_.AddOffset(IDCardMessage::VT_EXPIRESTART, expireStart); }
+  void add_expireEnd(flatbuffers::Offset<flatbuffers::String> expireEnd) { fbb_.AddOffset(IDCardMessage::VT_EXPIREEND, expireEnd); }
+  void add_photo(flatbuffers::Offset<flatbuffers::Vector<uint8_t>> photo) { fbb_.AddOffset(IDCardMessage::VT_PHOTO, photo); }
+  IDCardMessageBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
+  IDCardMessageBuilder &operator=(const IDCardMessageBuilder &);
+  flatbuffers::Offset<IDCardMessage> Finish() {
+    auto o = flatbuffers::Offset<IDCardMessage>(fbb_.EndTable(start_, 11));
+    return o;
+  }
+};
+
+inline flatbuffers::Offset<IDCardMessage> CreateIDCardMessage(flatbuffers::FlatBufferBuilder &_fbb,
+    flatbuffers::Offset<flatbuffers::String> name = 0,
+    flatbuffers::Offset<flatbuffers::String> gender = 0,
+    flatbuffers::Offset<flatbuffers::String> folk = 0,
+    flatbuffers::Offset<flatbuffers::String> nationCode = 0,
+    flatbuffers::Offset<flatbuffers::String> birthday = 0,
+    flatbuffers::Offset<flatbuffers::String> code = 0,
+    flatbuffers::Offset<flatbuffers::String> address = 0,
+    flatbuffers::Offset<flatbuffers::String> agency = 0,
+    flatbuffers::Offset<flatbuffers::String> expireStart = 0,
+    flatbuffers::Offset<flatbuffers::String> expireEnd = 0,
+    flatbuffers::Offset<flatbuffers::Vector<uint8_t>> photo = 0) {
+  IDCardMessageBuilder builder_(_fbb);
+  builder_.add_photo(photo);
+  builder_.add_expireEnd(expireEnd);
+  builder_.add_expireStart(expireStart);
+  builder_.add_agency(agency);
+  builder_.add_address(address);
+  builder_.add_code(code);
+  builder_.add_birthday(birthday);
+  builder_.add_nationCode(nationCode);
+  builder_.add_folk(folk);
+  builder_.add_gender(gender);
+  builder_.add_name(name);
+  return builder_.Finish();
+}
+
+inline flatbuffers::Offset<IDCardMessage> CreateIDCardMessageDirect(flatbuffers::FlatBufferBuilder &_fbb,
+    const char *name = nullptr,
+    const char *gender = nullptr,
+    const char *folk = nullptr,
+    const char *nationCode = nullptr,
+    const char *birthday = nullptr,
+    const char *code = nullptr,
+    const char *address = nullptr,
+    const char *agency = nullptr,
+    const char *expireStart = nullptr,
+    const char *expireEnd = nullptr,
+    const std::vector<uint8_t> *photo = nullptr) {
+  return CreateIDCardMessage(_fbb, name ? _fbb.CreateString(name) : 0, gender ? _fbb.CreateString(gender) : 0, folk ? _fbb.CreateString(folk) : 0, nationCode ? _fbb.CreateString(nationCode) : 0, birthday ? _fbb.CreateString(birthday) : 0, code ? _fbb.CreateString(code) : 0, address ? _fbb.CreateString(address) : 0, agency ? _fbb.CreateString(agency) : 0, expireStart ? _fbb.CreateString(expireStart) : 0, expireEnd ? _fbb.CreateString(expireEnd) : 0, photo ? _fbb.CreateVector<uint8_t>(*photo) : 0);
+}
+
+/// 左键按下消息控制闸机核验端
 struct MessageLBTD FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
   enum {
     VT_SIGN = 4,
     VT_MESSAGETYPE = 6,
     VT_PARAML = 8,
-    VT_PARAMR = 10
+    VT_PARAMR = 10,
+    VT_IDCARDMESSAGE = 12
   };
+  /// 暂时固定值："HisignMess"
   const flatbuffers::String *sign() const { return GetPointer<const flatbuffers::String *>(VT_SIGN); }
+  /// 消息类型
   MessType messageType() const { return static_cast<MessType>(GetField<int32_t>(VT_MESSAGETYPE, 1)); }
+  /// 当消息类型为常开模式时，1：设置常开；0：取消常开
+  /// 当消息类型为验证模式时，1：比对人脸模式；0：证件模式
   int32_t paramL() const { return GetField<int32_t>(VT_PARAML, 0); }
+  /// 参数
   const flatbuffers::String *paramR() const { return GetPointer<const flatbuffers::String *>(VT_PARAMR); }
+  ///当命令为常口库比对时,发送身份证信息
+  const IDCardMessage *idcardmessage() const { return GetPointer<const IDCardMessage *>(VT_IDCARDMESSAGE); }
   bool Verify(flatbuffers::Verifier &verifier) const {
     return VerifyTableStart(verifier) &&
            VerifyField<flatbuffers::uoffset_t>(verifier, VT_SIGN) &&
@@ -49,6 +197,8 @@ struct MessageLBTD FLATBUFFERS_FINAL_CLASS : private flatbuffers::Table {
            VerifyField<int32_t>(verifier, VT_PARAML) &&
            VerifyField<flatbuffers::uoffset_t>(verifier, VT_PARAMR) &&
            verifier.Verify(paramR()) &&
+           VerifyField<flatbuffers::uoffset_t>(verifier, VT_IDCARDMESSAGE) &&
+           verifier.VerifyTable(idcardmessage()) &&
            verifier.EndTable();
   }
 };
@@ -60,10 +210,11 @@ struct MessageLBTDBuilder {
   void add_messageType(MessType messageType) { fbb_.AddElement<int32_t>(MessageLBTD::VT_MESSAGETYPE, static_cast<int32_t>(messageType), 1); }
   void add_paramL(int32_t paramL) { fbb_.AddElement<int32_t>(MessageLBTD::VT_PARAML, paramL, 0); }
   void add_paramR(flatbuffers::Offset<flatbuffers::String> paramR) { fbb_.AddOffset(MessageLBTD::VT_PARAMR, paramR); }
+  void add_idcardmessage(flatbuffers::Offset<IDCardMessage> idcardmessage) { fbb_.AddOffset(MessageLBTD::VT_IDCARDMESSAGE, idcardmessage); }
   MessageLBTDBuilder(flatbuffers::FlatBufferBuilder &_fbb) : fbb_(_fbb) { start_ = fbb_.StartTable(); }
   MessageLBTDBuilder &operator=(const MessageLBTDBuilder &);
   flatbuffers::Offset<MessageLBTD> Finish() {
-    auto o = flatbuffers::Offset<MessageLBTD>(fbb_.EndTable(start_, 4));
+    auto o = flatbuffers::Offset<MessageLBTD>(fbb_.EndTable(start_, 5));
     return o;
   }
 };
@@ -72,8 +223,10 @@ inline flatbuffers::Offset<MessageLBTD> CreateMessageLBTD(flatbuffers::FlatBuffe
     flatbuffers::Offset<flatbuffers::String> sign = 0,
     MessType messageType = MessType_OPENGATE,
     int32_t paramL = 0,
-    flatbuffers::Offset<flatbuffers::String> paramR = 0) {
+    flatbuffers::Offset<flatbuffers::String> paramR = 0,
+    flatbuffers::Offset<IDCardMessage> idcardmessage = 0) {
   MessageLBTDBuilder builder_(_fbb);
+  builder_.add_idcardmessage(idcardmessage);
   builder_.add_paramR(paramR);
   builder_.add_paramL(paramL);
   builder_.add_messageType(messageType);
@@ -85,16 +238,14 @@ inline flatbuffers::Offset<MessageLBTD> CreateMessageLBTDDirect(flatbuffers::Fla
     const char *sign = nullptr,
     MessType messageType = MessType_OPENGATE,
     int32_t paramL = 0,
-    const char *paramR = nullptr) {
-  return CreateMessageLBTD(_fbb, sign ? _fbb.CreateString(sign) : 0, messageType, paramL, paramR ? _fbb.CreateString(paramR) : 0);
+    const char *paramR = nullptr,
+    flatbuffers::Offset<IDCardMessage> idcardmessage = 0) {
+  return CreateMessageLBTD(_fbb, sign ? _fbb.CreateString(sign) : 0, messageType, paramL, paramR ? _fbb.CreateString(paramR) : 0, idcardmessage);
 }
 
 inline const LBTDMessage::MessageLBTD *GetMessageLBTD(const void *buf) { return flatbuffers::GetRoot<LBTDMessage::MessageLBTD>(buf); }
 
-
 inline bool VerifyMessageLBTDBuffer(flatbuffers::Verifier &verifier) { return verifier.VerifyBuffer<LBTDMessage::MessageLBTD>(nullptr); }
-
-inline const char *MessageLBTDExtension() { return "bfbs"; }
 
 inline void FinishMessageLBTDBuffer(flatbuffers::FlatBufferBuilder &fbb, flatbuffers::Offset<LBTDMessage::MessageLBTD> root) { fbb.Finish(root); }
 

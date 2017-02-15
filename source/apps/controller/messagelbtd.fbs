@@ -1,25 +1,64 @@
 namespace LBTDMessage;
-//消息类型
+
+/// 消息类型
 enum MessType : int
 {
-        OPENGATE=1,       // 开门
-	SETGATE,          // 常开   
-	CLOSETEMINAL,     // 关机
-	RESTART,          // 重启
-	VERIFYMODE,       // 验证模式切换
-	ADDEXPOSE,        // 增加曝光
-	MINUSEXPOSE,      // 减少曝光
-	UPDATAPARAM,      // 更新参数
-	EXIT              // 退出当前系统
+    /// 开门
+    OPENGATE=1,
+    /// 常开
+	SETGATE,
+    /// 关机
+	CLOSETEMINAL,
+    /// 重启
+	RESTART,
+    /// 验证模式切换
+	VERIFYMODE,
+    /// 增加曝光
+	ADDEXPOSE,
+    /// 减少曝光
+	MINUSEXPOSE,
+    /// 更新参数
+	UPDATAPARAM,
+    ///常口库比对
+    HANDLEVERIFY,
+    /// 退出当前系统
+	EXIT
 }
 
-//左键按下消息控制闸机核验端
+/// 身份证信息
+table IDCardMessage
+{
+    name:string;
+    ///性别
+    gender:string;
+    /// 民族
+    folk:string;
+    /// 民族代码
+    nationCode:string;
+    birthday:string;
+    ///身份证号
+    code:string;
+    address:string;
+    agency:string;
+    expireStart:string;
+    expireEnd:string;
+    photo:[ubyte];
+}
+
+/// 左键按下消息控制闸机核验端
 table MessageLBTD
 {
-    sign:string;                 // “HisignMess”
-    messageType:MessType = OPENGATE;   //消息类型      
-    paramL:int;                  //当消息类型为常开模式时:1->设置常开0:取消常开 当消息类型为验证模式时:1->比对人脸模式0:证件模式
-    paramR:string;               // 参数
+    /// 暂时固定值："HisignMess"
+    sign:string;
+    /// 消息类型
+    messageType:MessType = OPENGATE;
+    /// 当消息类型为常开模式时，1：设置常开；0：取消常开
+    /// 当消息类型为验证模式时，1：比对人脸模式；0：证件模式
+    paramL:int;
+    /// 参数
+    paramR:string;
+    ///当命令为常口库比对时,发送身份证信息
+    idcardmessage:IDCardMessage; 
 }
 
 root_type MessageLBTD;

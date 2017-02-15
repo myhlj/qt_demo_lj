@@ -24,7 +24,7 @@ public slots:
     void reply_finished(QNetworkReply * reply);
     void reply_timeouted();
 signals:
-    void validate_complete(QString back,QNetworkReply::NetworkError error);
+    void validate_complete(QByteArray back,QNetworkReply::NetworkError error);
 private:
     QNetworkAccessManager* m_network_manager;
     MyReplyTimeout*        m_reply_timeout;

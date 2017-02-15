@@ -51,7 +51,7 @@ private:
     Ui::KeyDialog *ui;
 signals:
     void man_destory();
-    void man_ok();
+    void man_ok(QString cardno);
 };
 
 #endif // KEYDIALOG_H

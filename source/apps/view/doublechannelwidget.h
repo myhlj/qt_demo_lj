@@ -66,7 +66,7 @@ private slots:
     void on_toolButton_search_2_clicked();
 
     void keyboardDestoryed();
-    void keyboardOnOk();
+    void keyboardOnOk(QString cardno);
     void recive_showtime();
     void warnDialogDestoryed();
 private:
@@ -100,6 +100,7 @@ private:
     void GetNewBatchData();
     void write_acrossnum_to_file();
     void show_warndialog(int index,const TransportInfo* info,const QByteArray& data);
+    bool verify_idnumber(string a);
 };
 
 #endif // DOUBLECHANNELWIDGET_H

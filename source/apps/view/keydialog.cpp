@@ -106,35 +106,8 @@ void KeyDialog::on_pushButton_keyboard_back_clicked()
 
 void KeyDialog::on_pushButton_keyboard_ok_clicked()
 {
-    emit(man_ok());
-    destroy();
-}
+    QString cardno = ui->lineEdit_keyboard->text();
 
-bool KeyDialog::verify_idnumber(string a)
-{
-    if (a.length() != 18){
-        return false;
-    }
-    int sum = (a[0] - '0') * 7 + (a[1] - '0') * 9 + (a[2] - '0') * 10
-            + (a[3] - '0') * 5 + (a[4] - '0') * 8 + (a[5] - '0') * 4
-            + (a[6] - '0') * 2 + (a[7] - '0') * 1 + (a[8] - '0') * 6
-            + (a[9] - '0') * 3 + (a[10] - '0') * 7 + (a[11] - '0') * 9
-            + (a[12] - '0') * 10 + (a[13] - '0') * 5 + (a[14] - '0') * 8
-            + (a[15] - '0') * 4 + (a[16] - '0') * 2;
-    int k = sum % 11;
-    char lastNumber;
-    if (k == 0){
-        lastNumber = '1';
-    }else if (k == 1){
-        lastNumber = '0';
-    }else if (k == 2){
-        lastNumber = 'X';
-    }else{
-        lastNumber = '0'+12-k;
-    }
-    if(a[17] == lastNumber){
-        return true;
-    }else{
-        return false;
-    }
+    emit(man_ok(cardno));
+    destroy();
 }

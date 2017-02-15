@@ -14,7 +14,6 @@ hs_vf_core_http::~hs_vf_core_http()
 
 }
 
-
 bool hs_vf_core_http::init(const string& url)
 {
     QUrl qurl(QString::fromStdString(url));
@@ -55,9 +54,7 @@ void hs_vf_core_http::reply_finished(QNetworkReply *reply)
     if (reply->error() == QNetworkReply::NoError){
         m_reply_timeout->stop_timer();
         QByteArray bytes = reply->readAll();
-        QString back = QString::fromUtf8(bytes);
-        qDebug() << back;
-        emit validate_complete(back,reply->error());
+        emit validate_complete(bytes,reply->error());
     }else{
        qDebug()<< "replyFinished:  "<< reply->error() << " "<<reply->errorString();
        if(reply->error() == QNetworkReply::OperationCanceledError){
