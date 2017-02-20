@@ -5,6 +5,7 @@
 
 using namespace std;
 using namespace LBTDMessage;
+using namespace flatbuffers;
 #define GATESPORT 88991
 
 client::client(QObject *parent) : QThread(parent),m_bStop(false)
@@ -98,13 +99,16 @@ void client::displayError(QAbstractSocket::SocketError)
 
 }
 
-void client::SendCmd(int nChannelNum,LBTDMessage::MessType type,string sParamR,int paramL)
+void client::SendCmd(int nChannelNum,LBTDMessage::MessType type,IDCardInfo* info,string sParamR,int paramL)
 {
     cmd_data data;
     data.nChannelNum = nChannelNum;
     data.type = type;
     data.paramL = paramL;
     data.strParamR = sParamR;
+    if(info != NULL){
+        data.info = *info;
+    }
     m_qmutex.lock();
     m_list_data.push_back(data);
     m_qmutex.unlock();
@@ -117,7 +121,37 @@ void client::SendBuffer(const cmd_data &data)
     ChannelInfo info;
     if(pOptions->GetChannelInfo(data.nChannelNum,info)){
         flatbuffers::FlatBufferBuilder builder;
-        auto message = CreateMessageLBTDDirect(builder,"HisignMess",data.type,data.paramL,data.strParamR.c_str());
+
+        Offset<String> name=builder.CreateString(data.info.textInfo.name);
+        Offset<String> folk=builder.CreateString(data.info.textInfo.folk);
+        Offset<String> gender=builder.CreateString(data.info.textInfo.gender);
+        Offset<String> birthday= builder.CreateString(data.info.textInfo.birthday);
+        Offset<String> code= builder.CreateString(data.info.textInfo.code);
+        Offset<String> address= builder.CreateString(data.info.textInfo.address);
+        Offset<String> agency=builder.CreateString(data.info.textInfo.agency);
+        Offset<String> starttime = builder.CreateString(data.info.textInfo.expireStart);
+        Offset<String> endtime = builder.CreateString(data.info.textInfo.expireEnd);
+        Offset<String> folkcode = builder.CreateString("");
+        //身份证图片：
+        Offset<flatbuffers::Vector<uint8_t>> image = builder.CreateVector(data.info.photo,
+                                                                             data.info.photoLength);
+        Offset<IDCardMessage> cardInfobuff = CreateIDCardMessage(builder,
+                                                                   name,
+                                                                   gender,
+                                                                   folk,
+                                                                   folkcode,
+                                                                   birthday,
+                                                                   code,
+                                                                   address,
+                                                                   agency,
+                                                                   starttime,
+                                                                   endtime,
+                                                                   image
+                                                                 );
+        auto message = CreateMessageLBTDDirect(builder,"HisignMess",
+                                               data.type,data.paramL,
+                                               data.strParamR.c_str(),
+                                               cardInfobuff);
         builder.Finish(message);
         uint8_t *buf = builder.GetBufferPointer();
         int size = builder.GetSize();

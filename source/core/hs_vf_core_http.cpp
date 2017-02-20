@@ -14,22 +14,14 @@ hs_vf_core_http::~hs_vf_core_http()
 
 }
 
-bool hs_vf_core_http::init(const string& url)
+void hs_vf_core_http::init()
 {
-    QUrl qurl(QString::fromStdString(url));
-    if(!qurl.isValid()){
-        return false;
-    }
-
-    m_url = url;
     m_network_manager = new QNetworkAccessManager;
     connect(m_network_manager, SIGNAL(finished(QNetworkReply*))
             , this, SLOT(reply_finished(QNetworkReply*)));
 
     m_reply_timeout = new MyReplyTimeout(this);
     connect(m_reply_timeout,SIGNAL(timeout()),this,SLOT(reply_timeouted()));
-
-    return true;
 }
 
 void hs_vf_core_http::uninit()
@@ -54,15 +46,15 @@ void hs_vf_core_http::reply_finished(QNetworkReply *reply)
     if (reply->error() == QNetworkReply::NoError){
         m_reply_timeout->stop_timer();
         QByteArray bytes = reply->readAll();
-        emit validate_complete(bytes,reply->error());
+        emit request_complete(bytes,reply->error(),reply->errorString().toStdString());
     }else{
        qDebug()<< "replyFinished:  "<< reply->error() << " "<<reply->errorString();
        if(reply->error() == QNetworkReply::OperationCanceledError){
            //因为超时所以操作被取消
-           emit validate_complete("",QNetworkReply::TimeoutError);
+           emit request_complete("",QNetworkReply::TimeoutError,"访问超时");
        }else{
            m_reply_timeout->stop_timer();
-           emit validate_complete("",reply->error());
+           emit request_complete("",reply->error(),reply->errorString().toStdString());
        }
     }
     reply->deleteLater();
@@ -73,10 +65,13 @@ void hs_vf_core_http::reply_timeouted()
     qDebug() << "http get/post timeout";
 }
 
-void hs_vf_core_http::post(const QByteArray &bytes,int timeout_sec)
+void hs_vf_core_http::post(const string& url,const QByteArray &bytes,int timeout_sec)
 {
-    QUrl url(QString::fromStdString(m_url));
-    QNetworkRequest request(url);
+    QUrl qurl(QString::fromStdString(url));
+    if(!qurl.isValid()){
+        return;
+    }
+    QNetworkRequest request(qurl);
     request.setHeader(QNetworkRequest::ContentTypeHeader,
                       QVariant("application/json"));
 

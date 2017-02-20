@@ -32,7 +32,8 @@ DoubleChannelWidget::DoubleChannelWidget(QWidget *parent) :
     m_across_num_chanel2(0),
     m_across_warnnum_chanel1(0),
     m_across_warnnum_chanel2(0),
-    m_warndialog(NULL)
+    m_warndialog(NULL),
+    m_nocarddialog(NULL)
 {
     ui->setupUi(this);
     m_pMovie = new QMovie(":img/page/wait.gif");
@@ -286,7 +287,7 @@ void DoubleChannelWidget::ShowCardPic(const TransportInfo *pInfo, int index)
         case 0:{//单通道
             if(pInfo->header()->handle() == GATEONE){
                 QImage qTmp;
-                bool bRet = qTmp.loadFromData(pbyOutBuffer,nEncodeSize,"bmp");
+                bool bRet = qTmp.loadFromData(pbyOutBuffer,nEncodeSize);
                 if(bRet){
                     qTmp = qTmp.scaled(ui->label_idcardpic_3->width(),
                                            ui->label_idcardpic_3->height(), Qt::KeepAspectRatio);
@@ -311,7 +312,7 @@ void DoubleChannelWidget::ShowCardPic(const TransportInfo *pInfo, int index)
         case 1:{
             if(pInfo->header()->handle() == GATETWO){
                 QImage qTmp;
-                bool bRet = qTmp.loadFromData(pbyOutBuffer,nEncodeSize,"bmp");
+                bool bRet = qTmp.loadFromData(pbyOutBuffer,nEncodeSize);
                 if(bRet){
                     qTmp = qTmp.scaled(ui->label_idcardpic_3->width(),
                                            ui->label_idcardpic_3->height(), Qt::KeepAspectRatio);
@@ -505,14 +506,14 @@ void DoubleChannelWidget::on_toolButton_switch_clicked()
     int nIndex = ui->comboBox_chanel->currentIndex();
     switch(nIndex){
         case 0:
-        controller->SendCmd(GATEONE,LBTDMessage::MessType_VERIFYMODE,m_bSwitched);
+        controller->SendCmd(GATEONE,LBTDMessage::MessType_VERIFYMODE,NULL,m_bSwitched);
         break;
         case 1:
-        controller->SendCmd(GATETWO,LBTDMessage::MessType_VERIFYMODE,m_bSwitched);
+        controller->SendCmd(GATETWO,LBTDMessage::MessType_VERIFYMODE,NULL,m_bSwitched);
         break;
         case 2:
-        controller->SendCmd(GATEONE,LBTDMessage::MessType_VERIFYMODE,m_bSwitched);
-        controller->SendCmd(GATETWO,LBTDMessage::MessType_VERIFYMODE,m_bSwitched);
+        controller->SendCmd(GATEONE,LBTDMessage::MessType_VERIFYMODE,NULL,m_bSwitched);
+        controller->SendCmd(GATETWO,LBTDMessage::MessType_VERIFYMODE,NULL,m_bSwitched);
         break;
     }
 }
@@ -708,7 +709,7 @@ void DoubleChannelWidget::ShowPic(BottomPicLabel *pLabel, const TransportInfo *p
     int nEncodeSize = pInfo->cropImageSize();
 
     QImage qTmp;
-    bool bRet = qTmp.loadFromData((const uchar*)pbyOutBuffer,nEncodeSize,"jpg");
+    bool bRet = qTmp.loadFromData((const uchar*)pbyOutBuffer,nEncodeSize);
     if(bRet){
         QPixmap qPix;
         if(pInfo->blackInfo()->blackResult() == bingo){//比中黑名单
@@ -961,21 +962,37 @@ void DoubleChannelWidget::keyboardDestoryed()
 
 void DoubleChannelWidget::keyboardOnOk(QString cardno)
 {
-    if(!verify_idnumber(cardno.toStdString())){
-        switch(ui->comboBox_chanel->currentIndex()){
-        case 0:
-        case 1:
-            ui->stackedWidget->setCurrentIndex(0);
-            break;
-        case 2:
-            ui->stackedWidget->setCurrentIndex(1);
-            break;
-        }
-    }else{
-        //查询
-        ui->stackedWidget->setCurrentIndex(3);
-        ui->label_gif->setMovie(m_pMovie);
-        m_pMovie->start();
+    //显示等待
+    ui->stackedWidget->setCurrentIndex(3);
+    ui->label_gif->setMovie(m_pMovie);
+    m_pMovie->start();
+    //查询
+    controller->request_cardinfo(cardno.toStdString(),
+                                 options::get_instance()->
+                                 GetPopulationUrl());
+
+}
+
+void DoubleChannelWidget::ShowSearchInfo(const IDCardInfo& info,int status,string errordes)
+{
+    m_pMovie->stop();
+    switch(ui->comboBox_chanel->currentIndex()){
+    case 0:
+    case 1:
+        ui->stackedWidget->setCurrentIndex(0);
+        break;
+    case 2:
+        ui->stackedWidget->setCurrentIndex(1);
+        break;
+    }
+
+    if(m_nocarddialog == NULL){
+        m_nocarddialog = new NoCardDialog(controller,info,status,errordes,this);
+        m_nocarddialog->setAttribute(Qt::WA_TranslucentBackground);//背景透明
+        m_nocarddialog->setModal(true);
+        m_nocarddialog->move(this->pos());
+        connect(m_nocarddialog,SIGNAL(nocarddialog_destory()),this,SLOT(nocarddialogDestoryed()));
+        m_nocarddialog->show();
     }
 }
 
@@ -1070,6 +1087,7 @@ void DoubleChannelWidget::show_warndialog(int index,const TransportInfo *info,co
 
 void DoubleChannelWidget::warnDialogDestoryed()
 {
+    delete m_warndialog;
     m_warndialog = NULL;
 }
 
@@ -1132,31 +1150,8 @@ void DoubleChannelWidget::ShowBlackStatusText(const TransportInfo *info, int ind
     }
 }
 
-bool DoubleChannelWidget::verify_idnumber(string a)
+void DoubleChannelWidget::nocarddialogDestoryed()
 {
-    if (a.length() != 18){
-        return false;
-    }
-    int sum = (a[0] - '0') * 7 + (a[1] - '0') * 9 + (a[2] - '0') * 10
-            + (a[3] - '0') * 5 + (a[4] - '0') * 8 + (a[5] - '0') * 4
-            + (a[6] - '0') * 2 + (a[7] - '0') * 1 + (a[8] - '0') * 6
-            + (a[9] - '0') * 3 + (a[10] - '0') * 7 + (a[11] - '0') * 9
-            + (a[12] - '0') * 10 + (a[13] - '0') * 5 + (a[14] - '0') * 8
-            + (a[15] - '0') * 4 + (a[16] - '0') * 2;
-    int k = sum % 11;
-    char lastNumber;
-    if (k == 0){
-        lastNumber = '1';
-    }else if (k == 1){
-        lastNumber = '0';
-    }else if (k == 2){
-        lastNumber = 'X';
-    }else{
-        lastNumber = '0'+12-k;
-    }
-    if(a[17] == lastNumber){
-        return true;
-    }else{
-        return false;
-    }
+    delete m_nocarddialog;
+    m_nocarddialog = NULL;
 }

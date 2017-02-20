@@ -1,4 +1,4 @@
-#ifndef MAIN_VIEW_H
+﻿#ifndef MAIN_VIEW_H
 #define MAIN_VIEW_H
 
 #include <QWidget>
@@ -30,7 +30,7 @@ public:
     void Init();
     void ShowView();
     void ShowAcrossInfo(const QByteArray& data);
-
+    void ShowSearchInfo(const IDCardInfo& info,int status,string errordes="");
     // QWidget interface
 protected:
     void closeEvent(QCloseEvent *);

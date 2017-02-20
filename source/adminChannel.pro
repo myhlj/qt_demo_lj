@@ -33,7 +33,9 @@ SOURCES += apps/main.cpp\
     apps/view/keydialog.cpp \
     apps/view/warndialog.cpp \
     core/hs_vf_core_http_timeout.cpp \
-    core/hs_vf_core_http.cpp
+    core/hs_vf_core_http.cpp \
+    apps/view/nocarddialog.cpp \
+    apps/controller/producepopulationjson.cpp
 
 HEADERS  += apps/view/doublechannelwidget.h \
     apps/controller/main_controller.h \
@@ -58,7 +60,9 @@ HEADERS  += apps/view/doublechannelwidget.h \
     apps/controller/common_data.h \
     apps/view/warndialog.h \
     core/hs_vf_core_http_timeout.h \
-    core/hs_vf_core_http.h
+    core/hs_vf_core_http.h \
+    apps/view/nocarddialog.h \
+    apps/controller/producepopulationjson.h
 
 unix:!macx{
 LIBS += -L /usr/lib/hisign/VerifyEngine \
@@ -73,7 +77,8 @@ LIBS += -L../libs/windows \
 
 FORMS    += apps/view/doublechannelwidget.ui \
     apps/view/keydialog.ui \
-    apps/view/warndialog.ui
+    apps/view/warndialog.ui \
+    apps/view/nocarddialog.ui
 
 RESOURCES += \
     resource.qrc

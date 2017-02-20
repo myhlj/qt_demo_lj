@@ -257,17 +257,18 @@ QLabel
     font-family:"微软雅黑";
 }
 
-#widget_warn_main
+#widget_warn_main,#widget_nocard_main
 {
     background-color: #0f2b46;
     border-color: rgb(15, 70, 102);
 }
 
-#widget_page_switch
+#widget_page_switch_nocard
 {
+    border-image: url(:/img/warndialog/bg/bg4.png);
 }
 
-#label_warn_content
+#label_warn_content,#label_nocard_content
 {
     font-family:"微软雅黑";
     color: #ffffff;
@@ -276,7 +277,9 @@ QLabel
 
 #label_warn_static1,#label_warn_static2,#label_warn_static3,
 #label_warn_static4,#label_warn_static5,#label_warn_static6,
-#label_warn_static7,#label_warn_static8
+#label_warn_static7,#label_warn_static8,#label_nocard_static1,
+#label_nocard_static2,#label_nocard_static3,#label_nocard_static4,
+#label_nocard_static5,#label_nocard_static6,#label_nocard_static8
 {
     font-family:"微软雅黑";
     color: #ffffff;
@@ -305,12 +308,18 @@ QLabel
     border: 3px solid green;
 }
 
-#label_warn_gate
+#label_nocard_pic1
+{
+    border: 3px solid #2aa1d3;
+}
+
+#label_warn_gate,#label_nocard_gate
 {
     border-image: url(:/img/warndialog/warn_gate1.png);
 }
 
-#pushButton_warn_deal,#pushButton_warn_verifyno,#pushButton_warn_opengate
+#pushButton_warn_deal,#pushButton_warn_verifyno,#pushButton_warn_opengate,
+#pushButton_nocard_deal,#pushButton_nocard_verifyno
 {
     border-image: url(:/img/warndialog/btn.png);
     font-family:"微软雅黑";
@@ -318,7 +327,7 @@ QLabel
     font-size: 24px;
 }
 
-#pushButton_warn_deal:pressed,#pushButton_warn_verifyno:pressed,#pushButton_warn_opengate:pressed
+#pushButton_warn_deal:pressed,#pushButton_warn_verifyno:pressed,#pushButton_warn_opengate:pressed,#pushButton_nocard_deal:pressed,#pushButton_nocard_verifyno:pressed
 {
     border-image: url(:/img/warndialog/btn-press.png);
     font-family:"微软雅黑";

@@ -1,13 +1,15 @@
 ﻿#include "options.h"
 
-#define  CONFIGNAME "channel.ini"
-#define  CHANNELGROUP "ChannelOption"
-#define  TRANSGROUP "DataTransOption"
-#define  KEYCHANNELNUMBER "ChannelNumber"
-#define  KEYTRANSFLAG "IsTransFlag"
-#define  KEYTRANSIP "TransIP"
-#define  KEYTRANSPORT "TransPort"
-#define  KEYCHANNELINDEX "CurrentChannelIndex"
+#define  CONFIGNAME         "channel.ini"
+#define  CHANNELGROUP       "ChannelOption"
+#define  TRANSGROUP         "DataTransOption"
+#define  KEYCHANNELNUMBER   "ChannelNumber"
+#define  KEYTRANSFLAG       "IsTransFlag"
+#define  KEYTRANSIP         "TransIP"
+#define  KEYTRANSPORT       "TransPort"
+#define  KEYCHANNELINDEX    "CurrentChannelIndex"
+#define  KEYPOPULATIONURL   "PopulationUrl"
+#define  KEYPOPULATIONTIMEOUT "PopulationTimeout"
 
 options::options() : m_nChannelNumber(0)
   ,m_bDataTransFlag(false)
@@ -79,6 +81,22 @@ void options::SetCurrentChannelIndex(int nChannelIndex)
     m_p_qsetting->endGroup();
 }
 
+void options::SetPopulationUrl(const std::string &url)
+{
+    m_populationurl = url;
+    m_p_qsetting->beginGroup(TRANSGROUP);
+    m_p_qsetting->setValue(KEYPOPULATIONURL,m_populationurl.c_str());
+    m_p_qsetting->endGroup();
+}
+
+void options::SetPopulationtimeout(int time_sec)
+{
+    m_populationtimeout = time_sec;
+    m_p_qsetting->beginGroup(TRANSGROUP);
+    m_p_qsetting->setValue(KEYPOPULATIONTIMEOUT,m_populationtimeout);
+    m_p_qsetting->endGroup();
+}
+
 void options::ReadConfigIni()
 {
     //读取每个通道的信息
@@ -107,5 +125,7 @@ void options::ReadConfigIni()
     m_bDataTransFlag = m_p_qsetting->value(KEYTRANSFLAG).toBool();
     m_strDataTransIP = m_p_qsetting->value(KEYTRANSIP).toString().toStdString();
     m_nDataTransPort = m_p_qsetting->value(KEYTRANSPORT).toInt();
+    m_populationurl = m_p_qsetting->value(KEYPOPULATIONURL).toString().toStdString();
+    m_populationtimeout = m_p_qsetting->value(KEYPOPULATIONTIMEOUT).toInt();
     m_p_qsetting->endGroup();
 }

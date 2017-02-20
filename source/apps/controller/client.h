@@ -8,6 +8,7 @@
 #include <QThread>
 #include <QMutex>
 #include <QTcpSocket>
+#include "common_data.h"
 using namespace std;
 
 /*
@@ -20,7 +21,7 @@ public:
     explicit client(QObject *parent = 0);
     ~client();
     //向闸机发送命令,当消息type设置门状态和比对状态或者曝光时，param值有意义
-    void SendCmd(int nChannelNum,LBTDMessage::MessType type,string sParamR="",int paramL=0);
+    void SendCmd(int nChannelNum,LBTDMessage::MessType type,IDCardInfo* info=NULL,string sParamR="",int paramL=0);
 private:
     void run();
     bool Send(const std::string& sIP,int port,const char* data,int length,string& sError);
@@ -30,6 +31,7 @@ private:
         LBTDMessage::MessType   type;
         int                     paramL;
         string                  strParamR;
+        IDCardInfo              info;
     };
     std::list<cmd_data> m_list_data;
     volatile bool       m_bStop;

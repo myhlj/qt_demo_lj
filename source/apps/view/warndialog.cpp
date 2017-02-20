@@ -221,7 +221,7 @@ void WarnDialog::show_idcard_pic()
 {
     //身份证图片
     QImage qTmp;
-    bool bRet = qTmp.loadFromData(m_info->idImage()->data(),m_info->idImageSize(),"bmp");
+    bool bRet = qTmp.loadFromData(m_info->idImage()->data(),m_info->idImageSize());
     if(bRet){
         qTmp = qTmp.scaled(ui->label_warn_pic1->width(),
                                ui->label_warn_pic1->height(), Qt::KeepAspectRatio);
@@ -235,7 +235,7 @@ void WarnDialog::show_face_pic()
 {
     //人脸图
     QImage qTmp;
-    bool bRet = qTmp.loadFromData(m_info->cropImage()->data(),m_info->cropImageSize(),"jpg");
+    bool bRet = qTmp.loadFromData(m_info->cropImage()->data(),m_info->cropImageSize());
     if(bRet){
         qTmp = qTmp.scaled(ui->label_warn_pic2->width(),
                                ui->label_warn_pic2->height(), Qt::KeepAspectRatio);
@@ -249,7 +249,7 @@ void WarnDialog::show_screen_pic()
 {
     //场景图
     QImage qTmp;
-    bool bRet = qTmp.loadFromData(m_info->srcImage()->data(),m_info->scrImageSize(),"jpg");
+    bool bRet = qTmp.loadFromData(m_info->srcImage()->data(),m_info->scrImageSize());
     if(bRet){
         qTmp = qTmp.scaled(ui->label_warn_pic3->width(),
                                ui->label_warn_pic3->height(), Qt::KeepAspectRatio);
@@ -299,10 +299,10 @@ void WarnDialog::on_pushButton_warn_opengate_clicked()
         //发送开门消息
         this->controller->SendCmd(m_info->header()->handle(),
                                   LBTDMessage::MessType_OPENGATE);
-        emit(warndialog_destory());
+
         //销毁本窗口
         destroy();
-
+        emit(warndialog_destory());
     }
 }
 

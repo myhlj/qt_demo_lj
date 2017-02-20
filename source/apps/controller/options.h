@@ -42,6 +42,16 @@ public:
         return m_nCurrentChannelIndex;
     }
     void SetCurrentChannelIndex(int nChannelIndex);
+    //常口库url地址
+    std::string GetPopulationUrl()const{
+        return m_populationurl;
+    }
+    void SetPopulationUrl(const std::string& url);
+    //查询常口库timeout
+    int GetPoplationTimeout()const{
+        return m_populationtimeout;
+    }
+    void SetPopulationtimeout(int time_sec);
 private:
     void ReadConfigIni();
 private:
@@ -53,6 +63,8 @@ private:
     std::string                 m_strDataTransIP;
     int                         m_nDataTransPort;
     int                         m_nCurrentChannelIndex;//当前通道配置(当前管理屏对应哪个通道)1--通道1 2--通道2 3--双通道(既显示通道一,又显示通道二)
+    std::string                 m_populationurl;//常口库url地址
+    int                         m_populationtimeout;//查询常口库timeout
 };
 
 #endif // options_H

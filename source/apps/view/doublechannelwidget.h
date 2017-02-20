@@ -6,6 +6,7 @@
 #include <QMovie>
 #include "IMainView.h"
 #include "warndialog.h"
+#include "nocarddialog.h"
 
 #if _MSC_VER >= 1600
 #pragma execution_character_set("utf-8")
@@ -30,6 +31,7 @@ public:
     void Init();
     void ShowView();
     void ShowAcrossInfo(const QByteArray& data);
+    void ShowSearchInfo(const IDCardInfo& info,int status,string errordes="");
 protected:
     void closeEvent(QCloseEvent *);
 
@@ -69,6 +71,7 @@ private slots:
     void keyboardOnOk(QString cardno);
     void recive_showtime();
     void warnDialogDestoryed();
+    void nocarddialogDestoryed();
 private:
     Ui::DoubleChannelWidget *ui;
     IMainController *controller;
@@ -81,6 +84,7 @@ private:
     int             m_across_num_chanel2;
     int             m_across_warnnum_chanel2;
     WarnDialog*     m_warndialog;
+    NoCardDialog*   m_nocarddialog;
 private:
     void InitComboxChanel();
     void SaveToVector(const QByteArray& data);
@@ -100,7 +104,6 @@ private:
     void GetNewBatchData();
     void write_acrossnum_to_file();
     void show_warndialog(int index,const TransportInfo* info,const QByteArray& data);
-    bool verify_idnumber(string a);
 };
 
 #endif // DOUBLECHANNELWIDGET_H

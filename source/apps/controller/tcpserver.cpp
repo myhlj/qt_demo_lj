@@ -48,24 +48,34 @@ void tcpserver::readClient(QTcpSocket* pClient)
             return;
         }
 
+        bool first_read = true;
         //然后读数据
         char* pBuffer = new char[nLength];
         int nTotalLen = 0;
         while(true){
+            if(first_read){
+                first_read = false;
+                int readLen = pClient->read(pBuffer,nLength);
+                if(readLen > 0){
+                    data.append(pBuffer,readLen);
+                    nTotalLen += readLen;
+                    if(nTotalLen == nLength)
+                        break;
+                }
+            }
             if(pClient->waitForReadyRead()){
                 int readLen = pClient->read(pBuffer,nLength);
-                if(readLen == 0 || readLen == -1){//读取报错
-                    cout<<"read failed:"<<nTotalLen<<endl;
-                    return;
+                if(readLen > 0){
+                    data.append(pBuffer,readLen);
+                    nTotalLen += readLen;
+                    if(nTotalLen == nLength)
+                        break;
                 }
-                data.append(pBuffer,readLen);
-                nTotalLen += readLen;
-                if(nTotalLen == nLength)
-                    break;
             }
         }
         connect(pClient, SIGNAL(disconnected()), pClient, SLOT(deleteLater()));
         pClient->disconnectFromHost();
+        delete [] pBuffer;
     }
 
     emit(ShowTransinfo(data));

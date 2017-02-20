@@ -1,4 +1,4 @@
-#include "main_view.h"
+﻿#include "main_view.h"
 
 #include <QUiLoader>
 #include <QApplication>
@@ -66,6 +66,11 @@ void MainView::closeEvent(QCloseEvent *event)
 }
 
 void MainView::ShowAcrossInfo(const QByteArray& data)
+{
+
+}
+
+void MainView::ShowSearchInfo(const IDCardInfo &info, int status, string errordes)
 {
 
 }
