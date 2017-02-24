@@ -130,8 +130,11 @@ void DoubleChannelWidget::ShowView()
 
 void DoubleChannelWidget::closeEvent(QCloseEvent *event)
 {
-    int ret = QMessageBox::question(this, tr("Are you sure?"), tr("Are you sure?"), QMessageBox::Yes, QMessageBox::No);
-    if(ret == QMessageBox::No)
+    QMessageBox msg_box(QMessageBox::Question, tr("Question"), tr("Are you sure?"));
+    msg_box.setStandardButtons (QMessageBox::Ok | QMessageBox::Cancel);
+    msg_box.setButtonText(QMessageBox::Ok, QString("确 定"));
+    msg_box.setButtonText(QMessageBox::Cancel, QString("取 消"));
+    if(msg_box.exec() == QMessageBox::Cancel)
     {
         event->ignore();
     }

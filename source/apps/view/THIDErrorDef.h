@@ -1,4 +1,4 @@
-#ifndef __THIDERRORDEF_H_INCLUDE__
+﻿#ifndef __THIDERRORDEF_H_INCLUDE__
 #define __THIDERRORDEF_H_INCLUDE__
 
 #ifdef __cplusplus

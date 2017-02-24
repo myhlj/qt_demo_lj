@@ -66,5 +66,6 @@
         <file>img/page/facebox-yellow2-normal.png</file>
         <file>img/page/check-china2.png</file>
         <file>img/page/black-status.png</file>
+        <file>i18n/zh-CN.qm</file>
     </qresource>
 </RCC>

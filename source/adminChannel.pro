@@ -16,6 +16,8 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = adminChannel
 TEMPLATE = app
 
+TRANSLATIONS += i18n/zh-CN.ts
+
 INCLUDEPATH += . ./include ./include/bson \
                 ./core \
                 ./apps/include ./apps/common ./apps/controller ./apps/factory ./apps/view \
