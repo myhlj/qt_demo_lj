@@ -1,0 +1,720 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>WarnDialog</class>
+ <widget class="QDialog" name="WarnDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1024</width>
+    <height>768</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <widget class="QWidget" name="widget_head" native="true">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1024</width>
+     <height>80</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
+   <widget class="QToolButton" name="toolButton_exit">
+    <property name="geometry">
+     <rect>
+      <x>958</x>
+      <y>19</y>
+      <width>44</width>
+      <height>43</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="toolButton_switch">
+    <property name="geometry">
+     <rect>
+      <x>766</x>
+      <y>19</y>
+      <width>44</width>
+      <height>43</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_1">
+    <property name="geometry">
+     <rect>
+      <x>22</x>
+      <y>25</y>
+      <width>91</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>通道选择</string>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="comboBox_chanel">
+    <property name="geometry">
+     <rect>
+      <x>118</x>
+      <y>23</y>
+      <width>111</width>
+      <height>33</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="toolButton_shutdown">
+    <property name="geometry">
+     <rect>
+      <x>830</x>
+      <y>19</y>
+      <width>44</width>
+      <height>43</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="toolButton_opengate">
+    <property name="geometry">
+     <rect>
+      <x>342</x>
+      <y>19</y>
+      <width>44</width>
+      <height>43</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="toolButton_restart">
+    <property name="geometry">
+     <rect>
+      <x>894</x>
+      <y>19</y>
+      <width>44</width>
+      <height>43</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>245</x>
+      <y>25</y>
+      <width>91</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>手动开闸</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_curtime">
+    <property name="geometry">
+     <rect>
+      <x>530</x>
+      <y>31</y>
+      <width>231</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QToolButton" name="toolButton_opengate_2">
+    <property name="geometry">
+     <rect>
+      <x>402</x>
+      <y>19</y>
+      <width>44</width>
+      <height>43</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QWidget" name="widget_warn_main" native="true">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>80</y>
+     <width>1024</width>
+     <height>688</height>
+    </rect>
+   </property>
+   <widget class="QWidget" name="widget_page_switch" native="true">
+    <property name="geometry">
+     <rect>
+      <x>22</x>
+      <y>0</y>
+      <width>980</width>
+      <height>666</height>
+     </rect>
+    </property>
+    <widget class="QLabel" name="label_warn_content">
+     <property name="geometry">
+      <rect>
+       <x>312</x>
+       <y>10</y>
+       <width>400</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>人员不匹配异常</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_warn_gate">
+     <property name="geometry">
+      <rect>
+       <x>880</x>
+       <y>10</y>
+       <width>50</width>
+       <height>48</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_warn_pic1">
+     <property name="geometry">
+      <rect>
+       <x>136</x>
+       <y>100</y>
+       <width>145</width>
+       <height>178</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_warn_pic2">
+     <property name="geometry">
+      <rect>
+       <x>417</x>
+       <y>100</y>
+       <width>145</width>
+       <height>178</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_warn_pic3">
+     <property name="geometry">
+      <rect>
+       <x>698</x>
+       <y>100</y>
+       <width>145</width>
+       <height>178</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_warn_static1">
+     <property name="geometry">
+      <rect>
+       <x>136</x>
+       <y>337</y>
+       <width>81</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>姓    名:</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_warn_static2">
+     <property name="geometry">
+      <rect>
+       <x>136</x>
+       <y>378</y>
+       <width>81</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>性    别:</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_warn_static3">
+     <property name="geometry">
+      <rect>
+       <x>136</x>
+       <y>419</y>
+       <width>81</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>民    族:</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_warn_static4">
+     <property name="geometry">
+      <rect>
+       <x>136</x>
+       <y>460</y>
+       <width>81</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>出生年月:</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_warn_name">
+     <property name="geometry">
+      <rect>
+       <x>222</x>
+       <y>337</y>
+       <width>221</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_warn_sex">
+     <property name="geometry">
+      <rect>
+       <x>222</x>
+       <y>378</y>
+       <width>221</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_warn_nation">
+     <property name="geometry">
+      <rect>
+       <x>222</x>
+       <y>460</y>
+       <width>221</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_warn_birthday">
+     <property name="geometry">
+      <rect>
+       <x>222</x>
+       <y>419</y>
+       <width>221</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_warn_static5">
+     <property name="geometry">
+      <rect>
+       <x>465</x>
+       <y>337</y>
+       <width>81</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>住    址:</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_warn_static6">
+     <property name="geometry">
+      <rect>
+       <x>465</x>
+       <y>378</y>
+       <width>81</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>身份证号:</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_warn_static7">
+     <property name="geometry">
+      <rect>
+       <x>465</x>
+       <y>419</y>
+       <width>81</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>签发机关:</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_warn_static8">
+     <property name="geometry">
+      <rect>
+       <x>465</x>
+       <y>460</y>
+       <width>81</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>有 效 期:</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_warn_address">
+     <property name="geometry">
+      <rect>
+       <x>550</x>
+       <y>337</y>
+       <width>420</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_warn_cardno">
+     <property name="geometry">
+      <rect>
+       <x>550</x>
+       <y>378</y>
+       <width>420</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_warn_department">
+     <property name="geometry">
+      <rect>
+       <x>550</x>
+       <y>419</y>
+       <width>420</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_warn_date">
+     <property name="geometry">
+      <rect>
+       <x>550</x>
+       <y>460</y>
+       <width>420</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_warn_deal">
+     <property name="geometry">
+      <rect>
+       <x>644</x>
+       <y>560</y>
+       <width>200</width>
+       <height>47</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>处理完成</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_warn_static9">
+     <property name="geometry">
+      <rect>
+       <x>270</x>
+       <y>520</y>
+       <width>41</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>至</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_warn_ticket_start">
+     <property name="geometry">
+      <rect>
+       <x>140</x>
+       <y>520</y>
+       <width>111</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>北京</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_warn_ticket_end">
+     <property name="geometry">
+      <rect>
+       <x>330</x>
+       <y>520</y>
+       <width>111</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>成都</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_warn_static10">
+     <property name="geometry">
+      <rect>
+       <x>136</x>
+       <y>561</y>
+       <width>81</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>客票编号:</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_warn_ticket_num">
+     <property name="geometry">
+      <rect>
+       <x>222</x>
+       <y>561</y>
+       <width>121</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>1234567878</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_warn_static11">
+     <property name="geometry">
+      <rect>
+       <x>353</x>
+       <y>560</y>
+       <width>81</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>承运人:</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_warn_ticket_people">
+     <property name="geometry">
+      <rect>
+       <x>439</x>
+       <y>560</y>
+       <width>121</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>1234567878</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_warn_static12">
+     <property name="geometry">
+      <rect>
+       <x>136</x>
+       <y>602</y>
+       <width>81</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>乘车日期:</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_warn_ticket_date">
+     <property name="geometry">
+      <rect>
+       <x>222</x>
+       <y>602</y>
+       <width>121</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>20161026</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_warn_static13">
+     <property name="geometry">
+      <rect>
+       <x>353</x>
+       <y>600</y>
+       <width>81</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>车次:</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_warn_ticket_stationnum">
+     <property name="geometry">
+      <rect>
+       <x>440</x>
+       <y>600</y>
+       <width>121</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>1234567878</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_warn_verifyno">
+     <property name="geometry">
+      <rect>
+       <x>136</x>
+       <y>560</y>
+       <width>200</width>
+       <height>47</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>人证不同</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_warn_opengate">
+     <property name="geometry">
+      <rect>
+       <x>644</x>
+       <y>560</y>
+       <width>200</width>
+       <height>47</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>开闸放行</string>
+     </property>
+    </widget>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

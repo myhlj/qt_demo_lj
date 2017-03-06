@@ -115,12 +115,12 @@ QComboBox QAbstractItemView
     background-color: #0f2b46;
 }
 
-#page1,#page2
+#page1,#page2,#page3
 {
     border-image: url(:/img/page/bg/background.png);
 }
 
-#page3,#page4
+#page4
 {
     border-image: url(:/img/keyboard/flat-black.png);
 }
@@ -140,12 +140,12 @@ QLabel
 
 #label_idcardpic_3,#label_idcardpic,#label_idcardpic_2
 {
-    border: 2px solid green;
+    border: 3px solid green;
 }
 
 #label_acrosstime_3,#label_37,#label_ticket_department,#label_station_start,#label_station_end,
-#label_ticket_num,#label_ticket_date,#label_ticket_index,#label_8,#label_11,#label_acrosstime_2
-,#label_acrosstime,#label_station_start_2,#label_station_start_3,#label_station_end_2,#label_station_end_3,
+#label_ticket_num,#label_ticket_date,#label_ticket_index,#label_8,#label_11,#label_acrosstime_2,
+#label_acrosstime,#label_station_start_2,#label_station_start_3,#label_station_end_2,#label_station_end_3,
 #label_ticket_num_2,#label_ticket_num_3,#label_ticket_date_2,#label_ticket_date_3,#label_ticket_index_2,
 #label_ticket_index_3,#label_ticket_department_2,#label_ticket_department_3
 {
@@ -208,7 +208,11 @@ QLabel
 {
     border-image: url(:/img/page/check-china.png);
 }
-/*¼üÅÌcss*/
+#label_warn_alise_2,#label_warn_alise_3
+{
+    border-image: url(:/img/page/check-china2.png);
+}
+
 #widget_keyboard
 {
     border-image: url(:/img/keyboard/keyboard-back.png);
@@ -251,4 +255,94 @@ QLabel
     color: #ffffff;
     font: Black;
     font-family:"微软雅黑";
+}
+
+#widget_warn_main,#widget_nocard_main
+{
+    background-color: #0f2b46;
+    border-color: rgb(15, 70, 102);
+}
+
+#widget_page_switch_nocard
+{
+    border-image: url(:/img/warndialog/bg/bg4.png);
+}
+
+#label_warn_content,#label_nocard_content
+{
+    font-family:"微软雅黑";
+    color: #ffffff;
+    font-size: 24px;
+}
+
+#label_warn_static1,#label_warn_static2,#label_warn_static3,
+#label_warn_static4,#label_warn_static5,#label_warn_static6,
+#label_warn_static7,#label_warn_static8,#label_nocard_static1,
+#label_nocard_static2,#label_nocard_static3,#label_nocard_static4,
+#label_nocard_static5,#label_nocard_static6,#label_nocard_static8
+{
+    font-family:"微软雅黑";
+    color: #ffffff;
+    font-size: 18px;
+}
+
+#label_warn_static10,#label_warn_static12,#label_warn_static11,
+#label_warn_static13,#label_warn_static9
+{
+    font-family:"微软雅黑";
+    font-size: 18px;
+    color: #ffffff;
+}
+
+#label_warn_ticket_start,#label_warn_ticket_end,
+#label_warn_ticket_num,#label_warn_ticket_people,
+#label_warn_ticket_date,#label_warn_ticket_stationnum
+{
+    font-family:"微软雅黑";
+    font-size:18px;
+    color: #daee00;
+}
+
+#label_warn_pic1,#label_warn_pic2,#label_warn_pic3
+{
+    border: 3px solid green;
+}
+
+#label_nocard_pic1
+{
+    border: 3px solid #2aa1d3;
+}
+
+#label_warn_gate,#label_nocard_gate
+{
+    border-image: url(:/img/warndialog/warn_gate1.png);
+}
+
+#pushButton_warn_deal,#pushButton_warn_verifyno,#pushButton_warn_opengate,
+#pushButton_nocard_deal,#pushButton_nocard_verifyno
+{
+    border-image: url(:/img/warndialog/btn.png);
+    font-family:"微软雅黑";
+    color: #ffffff;
+    font-size: 24px;
+}
+
+#pushButton_warn_deal:pressed,#pushButton_warn_verifyno:pressed,#pushButton_warn_opengate:pressed,#pushButton_nocard_deal:pressed,#pushButton_nocard_verifyno:pressed
+{
+    border-image: url(:/img/warndialog/btn-press.png);
+    font-family:"微软雅黑";
+    color: #ffffff;
+    font-size: 24px;
+}
+
+#label_black_status_1,#label_black_status_2,#label_black_status_3
+{
+    border-image: url(:/img/page/black-status.png);
+}
+
+#label_black_status_text_1,#label_black_status_text_2,#label_black_status_text_3
+{
+    font-family:"微软雅黑";
+    color: red;
+    font-size: 18px;
 }
