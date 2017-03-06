@@ -1,5 +1,6 @@
 #include "doublechannelwidget.h"
 #include <QApplication>
+#include <QTranslator>
 #include <QFile>
 #include <QLabel>
 #include <QPixmap>
@@ -11,10 +12,6 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    ViewFactory fct;
-    MainController ctl(&fct);
-    ctl.Execute();
-
     QString qss;
     QFile qssFile(":/qss/css.qss");
     qssFile.open(QFile::ReadOnly);
@@ -24,6 +21,17 @@ int main(int argc, char *argv[])
         a.setStyleSheet(qss);
         qssFile.close();
     }
+
+    QTranslator trans;
+    bool success = trans.load(":/i18n/zh-CN.qm");
+    if(success)
+    {
+        a.installTranslator(&trans);
+    }
+
+    ViewFactory fct;
+    MainController ctl(&fct);
+    ctl.Execute();
 
     return a.exec();
 }
